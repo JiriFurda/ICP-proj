@@ -16,17 +16,20 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
     creditsdialog.cpp \
-    schemeview.cpp
+    schemeview.cpp \
+    blockwidget.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     creditsdialog.h \
-    schemeview.h
+    schemeview.h \
+    blockwidget.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
     creditsdialog.ui \
-    schemeview.ui
+    schemeview.ui \
+    blockwidget.ui
 
 RESOURCES += \
     imagesresource.qrc
