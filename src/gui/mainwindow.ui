@@ -6,20 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>500</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>BlockEditor</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="SchemeView" name="schemeView" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>471</width>
+      <height>381</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>500</width>
      <height>22</height>
     </rect>
    </property>
@@ -36,23 +47,36 @@
    </widget>
    <widget class="QMenu" name="menuScheme">
     <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout_BlockEditor"/>
-    <addaction name="actionCredits"/>
-   </widget>
-   <widget class="QMenu" name="menuScheme_2">
-    <property name="title">
      <string>Scheme</string>
     </property>
     <addaction name="actionRun"/>
     <addaction name="actionStep"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout_BlockEditor"/>
+    <addaction name="actionCredits"/>
+   </widget>
+   <widget class="QMenu" name="menuBlock">
+    <property name="title">
+     <string>Block</string>
+    </property>
+    <addaction name="actionAdd"/>
+    <addaction name="actionRemove"/>
+    <addaction name="actionMove"/>
+    <addaction name="actionLink"/>
+   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuScheme_2"/>
    <addaction name="menuScheme"/>
+   <addaction name="menuBlock"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="windowTitle">
+    <string>ToolBar</string>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -61,6 +85,11 @@
    </attribute>
    <addaction name="actionRun"/>
    <addaction name="actionStep"/>
+   <addaction name="separator"/>
+   <addaction name="actionAdd"/>
+   <addaction name="actionRemove"/>
+   <addaction name="actionMove"/>
+   <addaction name="actionLink"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew_File">
@@ -95,7 +124,7 @@
   </action>
   <action name="actionRun">
    <property name="icon">
-    <iconset resource="iconsresource.qrc">
+    <iconset resource="imagesresource.qrc">
      <normaloff>:/toolbar/img/buttons/run.png</normaloff>:/toolbar/img/buttons/run.png</iconset>
    </property>
    <property name="text">
@@ -104,7 +133,7 @@
   </action>
   <action name="actionStep">
    <property name="icon">
-    <iconset resource="iconsresource.qrc">
+    <iconset resource="imagesresource.qrc">
      <normaloff>:/toolbar/img/buttons/step-forward.png</normaloff>:/toolbar/img/buttons/step-forward.png</iconset>
    </property>
    <property name="text">
@@ -116,10 +145,54 @@
     <string>Credits</string>
    </property>
   </action>
+  <action name="actionAdd">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/toolbar/img/buttons/add.png</normaloff>:/toolbar/img/buttons/add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionMove">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/toolbar/img/buttons/move.png</normaloff>:/toolbar/img/buttons/move.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move</string>
+   </property>
+  </action>
+  <action name="actionRemove">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/toolbar/img/buttons/remove.png</normaloff>:/toolbar/img/buttons/remove.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove</string>
+   </property>
+  </action>
+  <action name="actionLink">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/toolbar/img/buttons/link.png</normaloff>:/toolbar/img/buttons/link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Link</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SchemeView</class>
+   <extends>QWidget</extends>
+   <header>schemeview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="iconsresource.qrc"/>
+  <include location="imagesresource.qrc"/>
  </resources>
  <connections/>
 </ui>

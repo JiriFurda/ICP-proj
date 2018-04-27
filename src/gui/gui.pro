@@ -13,11 +13,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    aboutdialog.cpp \
+    creditsdialog.cpp \
+    schemeview.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    aboutdialog.h \
+    creditsdialog.h \
+    schemeview.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    aboutdialog.ui \
+    creditsdialog.ui \
+    schemeview.ui
 
 RESOURCES += \
-    iconsresource.qrc
+    imagesresource.qrc

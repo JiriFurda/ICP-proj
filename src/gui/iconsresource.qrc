@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/toolbar">
-        <file>img/buttons/run.png</file>
-        <file>img/buttons/step-forward.png</file>
-    </qresource>
-</RCC>
