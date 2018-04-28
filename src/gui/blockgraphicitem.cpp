@@ -1,10 +1,11 @@
 #include "blockgraphicitem.h"
 
-BlockGraphicItem::BlockGraphicItem()
+BlockGraphicItem::BlockGraphicItem(QString name)
 {
     this->setFlag(QGraphicsItem::ItemIsMovable);
 
     this->pressed = false;
+    this->name = name;
 }
 
 QRectF BlockGraphicItem::boundingRect() const
@@ -30,7 +31,7 @@ void BlockGraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->fillPath(path, Qt::white);
 
     // --- Name ---
-    painter->drawText(boundingRect(), Qt::AlignCenter|Qt::TextWrapAnywhere, "Test Block");   // @todo Choose if Qt::TextWrapAnywhere or Qt::TextWordWrap and if adding Qt::TextDontClip is a good idea
+    painter->drawText(boundingRect(), Qt::AlignCenter|Qt::TextWrapAnywhere, this->name);   // @todo Choose if Qt::TextWrapAnywhere or Qt::TextWordWrap and if adding Qt::TextDontClip is a good idea
 
 
 

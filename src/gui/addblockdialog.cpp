@@ -7,7 +7,6 @@ AddBlockDialog::AddBlockDialog(QWidget *parent) :
 {
     //ui->setupUi(this);
 
-
     // --- Setup window ---
     this->setWindowTitle("Add new block - BlockEditor");
     this->setMinimumWidth(400);
@@ -25,10 +24,13 @@ AddBlockDialog::AddBlockDialog(QWidget *parent) :
     // --- Buttons ---
     QPushButton *addBlockButton = new QPushButton("Add");
     addBlockButton->setDefault(true);
+    //QObject::connect(addBlockButton, SIGNAL(clicked()), this, SLOT(on_addBlockButton_clicked()));
+    QObject::connect(addBlockButton, SIGNAL(clicked()), this->parentWidget(), SLOT(debug())); ///////////////////////////
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox();
     buttonBox->addButton(addBlockButton, QDialogButtonBox::ActionRole);
     buttonBox->addButton(QDialogButtonBox::Close);
+
     this->layout()->addWidget(buttonBox);
 }
 
@@ -70,4 +72,12 @@ void AddBlockDialog::addTreeItem(QString name, QString decsription, QTreeWidgetI
 
 }
 
+void AddBlockDialog::on_addBlockButton_clicked()
+{
+    ///////////////////////////////////////////
+    //QObject::connect(this, SIGNAL(createBlockRequest()), this->parentWidget(), SLOT(createBlock(tree->selectedItems().text(0))));
+    //QObject::connect(this, SIGNAL(createBlockRequest()), this->parentWidget(), SLOT(createBlock("Test")));
+    //emit(createBlockRequest());
+    //this->parentWidget()->createBlock("Test");
+}
 

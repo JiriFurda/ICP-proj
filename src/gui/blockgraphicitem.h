@@ -10,7 +10,7 @@
 class BlockGraphicItem : public QGraphicsItem
 {
 public:
-    BlockGraphicItem();
+    BlockGraphicItem(QString name);
 
     QRectF boundingRect() const;
 
@@ -22,6 +22,7 @@ protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
     bool pressed;
+    QString name;
 };
 
 #endif // BLOCKGRAPHICITEM_H

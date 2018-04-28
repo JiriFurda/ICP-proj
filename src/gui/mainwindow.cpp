@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     item1->setFlag(QGraphicsItem::ItemIsMovable);
     scene->addItem(item1);
     */
-    scene->addItem(new BlockGraphicItem);
-
+    //scene->addItem(new BlockGraphicItem("Add"));
+    this->createBlock("Default");
 
 }
 
@@ -47,7 +47,18 @@ void MainWindow::on_actionCredits_triggered()
 
 void MainWindow::on_actionAdd_triggered()
 {
-    AddBlockDialog dialog;
+    AddBlockDialog dialog(this);
     dialog.setModal(true);
     dialog.exec();
 }
+
+void MainWindow::createBlock(QString name)
+{
+    scene->addItem(new BlockGraphicItem(name)); // This doesn't work
+}
+
+void MainWindow::debug()
+{
+    scene->addItem(new BlockGraphicItem("Debug"));  // This works
+}
+

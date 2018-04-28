@@ -32,6 +32,11 @@ private slots:
 
     void on_actionAdd_triggered();
 
+    void debug();
+
+public slots:
+    void createBlock(QString name);
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;

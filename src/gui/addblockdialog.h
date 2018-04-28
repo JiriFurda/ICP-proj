@@ -25,6 +25,13 @@ private:
     void fillTree();
     QTreeWidgetItem* addTreeGroup(QString name, QString decsription);
     void addTreeItem(QString name, QString decsription, QTreeWidgetItem *parent);
+
+private slots:
+    void on_addBlockButton_clicked();
+
+
+signals:
+    void createBlockRequest();
 };
 
 #endif // ADDBLOCKDIALOG_H
