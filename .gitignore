@@ -6,3 +6,8 @@
 src/build-*
 *.pro.user
 
+
+# Custom
+*.ignore
+ignore
+

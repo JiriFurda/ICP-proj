@@ -16,20 +16,21 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
     creditsdialog.cpp \
-    schemeview.cpp \
-    blockwidget.cpp
+    blockgraphicitem.cpp \
+    addblockdialog.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     creditsdialog.h \
-    schemeview.h \
-    blockwidget.h
+    blockgraphicitem.h \
+    addblockdialog.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
     creditsdialog.ui \
-    schemeview.ui \
-    blockwidget.ui
+    addblockdialog.ui
 
 RESOURCES += \
     imagesresource.qrc
+
+CONFIG += c++11 # Overriding functions
