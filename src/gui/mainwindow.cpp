@@ -7,23 +7,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //this->showFullScreen();
+
     // === Scheme view ===
     QGraphicsView *view = new QGraphicsView(this);
     this->centralWidget()->layout()->addWidget(view);
 
     scene = new QGraphicsScene(this);
     view->setScene(scene);
-
-    // --- Blocks ---
-    /*
-    QGraphicsRectItem* item1 = new QGraphicsRectItem(0,0,100,100);
-    item1->setBrush(QBrush(Qt::white));
-    item1->setFlag(QGraphicsItem::ItemIsMovable);
-    scene->addItem(item1);
-    */
-    //scene->addItem(new BlockGraphicItem("Add"));
-    this->createBlock("Default");
-
+//    view->centerOn(0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -52,13 +44,12 @@ void MainWindow::on_actionAdd_triggered()
     dialog.exec();
 }
 
-void MainWindow::createBlock(QString name)
+void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_requested (don't know why the fuck it's not working rename) -> QMetaObject::connectSlotsByName: No matching signal for on_addBlock_requested(QString)
 {
-    scene->addItem(new BlockGraphicItem(name)); // This doesn't work
+    scene->addItem(new BlockGraphicItem(name));
 }
 
-void MainWindow::debug()
+void MainWindow::on_actionExit_triggered()
 {
-    scene->addItem(new BlockGraphicItem("Debug"));  // This works
+    this->close();
 }
-

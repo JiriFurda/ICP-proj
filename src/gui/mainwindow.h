@@ -32,10 +32,10 @@ private slots:
 
     void on_actionAdd_triggered();
 
-    void debug();
+    void on_actionExit_triggered();
 
 public slots:
-    void createBlock(QString name);
+    void createBlock(QString);
 
 private:
     Ui::MainWindow *ui;

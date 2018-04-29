@@ -24,12 +24,14 @@ AddBlockDialog::AddBlockDialog(QWidget *parent) :
     // --- Buttons ---
     QPushButton *addBlockButton = new QPushButton("Add");
     addBlockButton->setDefault(true);
-    //QObject::connect(addBlockButton, SIGNAL(clicked()), this, SLOT(on_addBlockButton_clicked()));
-    QObject::connect(addBlockButton, SIGNAL(clicked()), this->parentWidget(), SLOT(debug())); ///////////////////////////
+    QObject::connect(addBlockButton, SIGNAL(clicked()), this, SLOT(on_addBlockButton_triggered()));
+
+    QPushButton *closeButton = new QPushButton("Close");
+    QObject::connect(closeButton, SIGNAL(clicked()), this, SLOT(on_closeButton_triggered()));
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox();
     buttonBox->addButton(addBlockButton, QDialogButtonBox::ActionRole);
-    buttonBox->addButton(QDialogButtonBox::Close);
+    buttonBox->addButton(closeButton, QDialogButtonBox::ActionRole);    // Could use StandartButton Close but I don't know how to implement it
 
     this->layout()->addWidget(buttonBox);
 }
@@ -72,12 +74,24 @@ void AddBlockDialog::addTreeItem(QString name, QString decsription, QTreeWidgetI
 
 }
 
-void AddBlockDialog::on_addBlockButton_clicked()
+void AddBlockDialog::on_addBlockButton_triggered()
 {
-    ///////////////////////////////////////////
-    //QObject::connect(this, SIGNAL(createBlockRequest()), this->parentWidget(), SLOT(createBlock(tree->selectedItems().text(0))));
-    //QObject::connect(this, SIGNAL(createBlockRequest()), this->parentWidget(), SLOT(createBlock("Test")));
-    //emit(createBlockRequest());
-    //this->parentWidget()->createBlock("Test");
+    QObject::connect(this, SIGNAL(addBlock_request(QString)), this->parentWidget(), SLOT(createBlock(QString)));    // Connect signal to MainWindow's slot
+
+    QTreeWidgetItem *selectedItem = tree->currentItem();
+
+    if(selectedItem->childCount() != 0)   // Check if group selected instead of block
+    {
+        QMessageBox::warning(this, tr("Add block error"), tr("Invalid block selected.") );
+        return;
+    }
+
+    emit(addBlock_request(selectedItem->text(0)));   // @warning currenItem is set to first one when no item is selected
+
+    this->close();  // Close this window
 }
 
+void AddBlockDialog::on_closeButton_triggered()
+{
+    this->close();
+}

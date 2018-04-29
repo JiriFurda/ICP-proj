@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include <QTreeWidgetItem>
+#include <QMessageBox>
 
 namespace Ui {
 class AddBlockDialog;
@@ -27,11 +28,11 @@ private:
     void addTreeItem(QString name, QString decsription, QTreeWidgetItem *parent);
 
 private slots:
-    void on_addBlockButton_clicked();
-
+    void on_addBlockButton_triggered();
+    void on_closeButton_triggered();
 
 signals:
-    void createBlockRequest();
+    void addBlock_request(QString);
 };
 
 #endif // ADDBLOCKDIALOG_H
