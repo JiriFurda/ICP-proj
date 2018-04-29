@@ -55,6 +55,9 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton)   // Pressed left mouse button
     {
         this->pressed = false;
+
+        //if(this->collidingItems().count() != 0) @todo
+
         this->update(); // Force paint()
         QGraphicsItem::mouseReleaseEvent(event);  // Propagate further
     }
@@ -64,11 +67,11 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     // --- Context menu ---
     QMenu *menu = new QMenu();
-    menu->addAction("Remove block");
+    QAction *removeAction = menu->addAction("Remove block");
 
     // -- Input ports submenu --
     QMenu *inputMenu = menu->addMenu("Connect input port");
-    inputMenu->addAction("Operand 1 [float]");
+    QAction *connectDebugAction = inputMenu->addAction("Operand 1 [float]");
     inputMenu->addAction("Operand 2 [float]");
 
     // -- Output ports submenu --
@@ -76,10 +79,21 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     outputMenu->addAction("Result [float]");
 
     // -- Show menu --
-    menu->popup(event->screenPos());
+    QAction *selectedAction = menu->exec(event->screenPos());
 
     /* @todo
+    menu->popup(event->screenPos()); // Someone said this is better than exec because it does't block loop but whatever
     connect(menu, SIGNAL(triggered(QAction *)),
                  object, SLOT(triggered(QAction *)));
     */
+    if(selectedAction)  // Some action was selected
+    {
+        if(selectedAction == removeAction)
+            delete this;
+        /*else if(selectedAction == connectDebugAction)
+        {
+
+        }
+        */
+    }
 }
