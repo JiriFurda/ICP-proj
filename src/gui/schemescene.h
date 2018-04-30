@@ -5,11 +5,19 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
+//#include "blockgraphicitem.h";
+
+class BlockGraphicItem;
+class ConnectionLineItem;
+
 class SchemeScene : public QGraphicsScene
 {
 public:
     SchemeScene();
-    bool connectingBlocks;
+
+    bool isConnectingBlocks;  // Is user connecting blocks?
+    BlockGraphicItem *connecting_startingBlock;
+    ConnectionLineItem *connecting_temporaryLine;
 
 /*
 protected:

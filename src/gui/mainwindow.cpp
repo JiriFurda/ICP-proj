@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // === Scheme view ===
     QGraphicsView *view = new QGraphicsView(this);
+    view->setRenderHint(QPainter::Antialiasing);
     this->centralWidget()->layout()->addWidget(view);
 
     scene = new SchemeScene();
@@ -24,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addItem(blockB);
     blockA->moveBy(150,50);
 
-    ConnectionLineItem *line = new ConnectionLineItem(blockA, blockB);
-    scene->addItem(line);
+    //ConnectionLineItem *line = new ConnectionLineItem(blockA, blockB);
+    //scene->addItem(line);
 
 }
 

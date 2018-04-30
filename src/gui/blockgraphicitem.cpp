@@ -62,16 +62,28 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton)   // Pressed left mouse button
     {
         // --- Debug: @todo for creating connections ---
-        if(this->parentScene->connectingBlocks == true)
-            qDebug("connecting blocks");
-        else
-             qDebug("not connecting blocks");
+        if(this->parentScene->isConnectingBlocks == true)
+        {
+            // --- Remove new connection indicator ---
+            if(parentScene->connecting_temporaryLine != NULL)  // Temporary line exists
+            {
+                parentScene->removeItem(parentScene->connecting_temporaryLine);
+                parentScene->connecting_temporaryLine = NULL;
+            }
+
+            // --- Exit connecting mode ---
+            this->parentScene->isConnectingBlocks = false;
+
+            // --- Create new connection ---
+            ConnectionLineItem *line = new ConnectionLineItem(this->parentScene->connecting_startingBlock, this);
+            parentScene->addItem(line);
+        }
+
 
         this->on_moving_ended();
 
-        //if(this->collidingItems().count() != 0) @todo
-
         this->update(); // Force paint()
+
         QGraphicsItem::mouseReleaseEvent(event);  // Propagate further
     }
 }
@@ -105,14 +117,45 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
             delete this;
 
         else if(selectedAction == connectDebugAction)
-            this->parentScene->connectingBlocks = true;
-
+        {
+            this->parentScene->isConnectingBlocks = true;
+            this->parentScene->connecting_startingBlock = this;
+        }
     }
 }
 
 void BlockGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    qDebug("hover");
+    if(this->parentScene->isConnectingBlocks == true    // User is connecting blocks
+            && this->parentScene->connecting_startingBlock != this) // Hovered block is not starting one
+    {
+        ConnectionLineItem *line = new ConnectionLineItem(this->parentScene->connecting_startingBlock, this);
+
+        QPen temporaryConnectionPen;
+        temporaryConnectionPen.setStyle(Qt::DashLine);
+        temporaryConnectionPen.setWidth(2);
+        temporaryConnectionPen.setBrush(Qt::gray);
+        line->setPen(temporaryConnectionPen);
+
+        parentScene->connecting_temporaryLine = line;
+        parentScene->addItem(line);
+    }
+
+    QGraphicsItem::hoverEnterEvent(event);
+}
+
+void BlockGraphicItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    if(this->parentScene->isConnectingBlocks == true)
+    {
+        if(parentScene->connecting_temporaryLine != NULL)  // Temporary line exists
+        {
+            parentScene->removeItem(parentScene->connecting_temporaryLine);
+            parentScene->connecting_temporaryLine = NULL;
+        }
+    }
+
+    QGraphicsItem::hoverLeaveEvent(event);
 }
 
 QVariant BlockGraphicItem::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -150,6 +193,8 @@ void BlockGraphicItem::on_moving_ended()
 
 BlockGraphicItem::~BlockGraphicItem()
 {
+    qDebug("Deleting block with %d connections", connections.count());
+
     // --- Destroy connections ---
     for(int i=0; i<connections.count(); ++i)
     {
