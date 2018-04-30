@@ -67,8 +67,9 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             // --- Remove new connection indicator ---
             if(parentScene->connecting_temporaryLine != NULL)  // Temporary line exists
             {
-                parentScene->removeItem(parentScene->connecting_temporaryLine);
-                parentScene->connecting_temporaryLine = NULL;
+                // @todo This is also in hoverLeaveEvent -> make a new method
+                delete parentScene->connecting_temporaryLine;
+                parentScene->connecting_temporaryLine_exists = false;
             }
 
             // --- Exit connecting mode ---
@@ -139,6 +140,7 @@ void BlockGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 
         parentScene->connecting_temporaryLine = line;
         parentScene->addItem(line);
+        parentScene->connecting_temporaryLine_exists = true;
     }
 
     QGraphicsItem::hoverEnterEvent(event);
@@ -148,10 +150,11 @@ void BlockGraphicItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     if(this->parentScene->isConnectingBlocks == true)
     {
-        if(parentScene->connecting_temporaryLine != NULL)  // Temporary line exists
+        if(parentScene->connecting_temporaryLine_exists)  // Temporary line exists
         {
-            parentScene->removeItem(parentScene->connecting_temporaryLine);
-            parentScene->connecting_temporaryLine = NULL;
+            // @todo This is also in mousePressedEvent -> make a new method
+            delete parentScene->connecting_temporaryLine;
+            parentScene->connecting_temporaryLine_exists = false;
         }
     }
 
@@ -170,7 +173,7 @@ QVariant BlockGraphicItem::itemChange(GraphicsItemChange change, const QVariant 
         // --- Redraw connections ---
         for(int i=0; i<connections.count(); ++i)
         {
-            connections[i]->refreshPos();
+            this->connections[i]->refreshPos();
         }
     }
     return QGraphicsItem::itemChange(change, value);
@@ -193,11 +196,15 @@ void BlockGraphicItem::on_moving_ended()
 
 BlockGraphicItem::~BlockGraphicItem()
 {
-    qDebug("Deleting block with %d connections", connections.count());
-
     // --- Destroy connections ---
     for(int i=0; i<connections.count(); ++i)
     {
-        delete connections[i];
+        ConnectionLineItem *removedConnection = connections[i];
+        //this->connections.removeOne(connections[i]);
+        //delete connections[i];
+        this->connections.removeAt(i);
+        delete removedConnection;
     }
+
+    this->scene()->removeItem(this);
 }

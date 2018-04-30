@@ -18,11 +18,7 @@ public:
     bool isConnectingBlocks;  // Is user connecting blocks?
     BlockGraphicItem *connecting_startingBlock;
     ConnectionLineItem *connecting_temporaryLine;
-
-/*
-protected:
-    //void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-*/
+    bool connecting_temporaryLine_exists;
 };
 
 #endif // SCHEMESCENE_H

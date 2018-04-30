@@ -19,12 +19,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // --- Debug ---
+    /*
     BlockGraphicItem *blockA = new BlockGraphicItem(scene, QString("A"));
     BlockGraphicItem *blockB = new BlockGraphicItem(scene, QString("B"));
     scene->addItem(blockA);
     scene->addItem(blockB);
     blockA->moveBy(150,50);
-
+*/
     //ConnectionLineItem *line = new ConnectionLineItem(blockA, blockB);
     //scene->addItem(line);
 
