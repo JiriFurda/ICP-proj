@@ -12,7 +12,7 @@
 
 #include "schemescene.h"
 #include "blockgraphicitem.h"
-#include "connectiongraphicsitem.h"
+#include "connectionlineitem.h"
 
 namespace Ui {
 class MainWindow;

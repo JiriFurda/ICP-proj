@@ -22,9 +22,10 @@ MainWindow::MainWindow(QWidget *parent) :
     BlockGraphicItem *blockB = new BlockGraphicItem(scene, QString("B"));
     scene->addItem(blockA);
     scene->addItem(blockB);
-    blockA->moveBy(150,0);
-    ConnectionGraphicsItem *connection = new ConnectionGraphicsItem(blockA, blockB);
-    scene->addItem(connection);
+    blockA->moveBy(150,50);
+
+    ConnectionLineItem *line = new ConnectionLineItem(blockA, blockB);
+    scene->addItem(line);
 
 }
 

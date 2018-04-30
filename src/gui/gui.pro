@@ -19,7 +19,7 @@ SOURCES += main.cpp\
     blockgraphicitem.cpp \
     addblockdialog.cpp \
     schemescene.cpp \
-    connectiongraphicsitem.cpp
+    connectionlineitem.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -27,7 +27,7 @@ HEADERS  += mainwindow.h \
     blockgraphicitem.h \
     addblockdialog.h \
     schemescene.h \
-    connectiongraphicsitem.h
+    connectionlineitem.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
