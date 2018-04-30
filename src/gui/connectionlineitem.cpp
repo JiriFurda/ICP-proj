@@ -13,10 +13,9 @@ ConnectionLineItem::ConnectionLineItem(BlockGraphicItem *blockA, BlockGraphicIte
 
     // --- Link blocks to this ---
     // (Used for moving with objects etc)
-    /*
     blockA->connections.append(this);
     blockB->connections.append(this);
-    */
+
 
     // --- Prepare to draw ---
     this->refreshPos();
@@ -35,3 +34,11 @@ void ConnectionLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 
     QGraphicsLineItem::hoverEnterEvent(event);
 }
+
+ConnectionLineItem::~ConnectionLineItem()
+{
+    // --- Remove links to this connection  ---
+    blockA->connections.removeOne(this);
+    blockB->connections.removeOne(this);
+}
+

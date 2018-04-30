@@ -7,10 +7,15 @@
 
 #include <blockgraphicitem.h>
 
+class BlockGraphicItem; // Forward declaration beacuse of mutual including of connectionlineitem.h and blockgraphicitem.h
+
+
 class ConnectionLineItem : public QGraphicsLineItem
 {
 public:
     ConnectionLineItem(BlockGraphicItem *blockA, BlockGraphicItem *blockB);
+    ~ConnectionLineItem();
+
     void refreshPos();
 
 protected:

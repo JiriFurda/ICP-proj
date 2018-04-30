@@ -8,18 +8,21 @@
 #include <QList>
 
 #include "schemescene.h"
-//#include "connectionlineitem.h"
+#include "connectionlineitem.h"
+
+class ConnectionLineItem; // Forward declaration beacuse of mutual including of connectionlineitem.h and blockgraphicitem.h
 
 
 class BlockGraphicItem : public QGraphicsItem
 {
 public:
     BlockGraphicItem(SchemeScene *scene, QString name);
+    ~BlockGraphicItem();
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    //QList<ConnectionLineItem *> connections;
+    QList<ConnectionLineItem *> connections;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

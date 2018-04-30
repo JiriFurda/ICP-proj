@@ -119,20 +119,16 @@ QVariant BlockGraphicItem::itemChange(GraphicsItemChange change, const QVariant 
 {
     if(change == ItemPositionChange && scene())
     {
+        // --- Movement started ---
         if(this->isPressed && isMoving == false)    // Moving just started
             this->on_moving_started();
 
-        qDebug("moving");
-        /*
-        // value is the new position.
-        QPointF newPos = value.toPointF();
-        QRectF rect = scene()->sceneRect();
-        if (!rect.contains(newPos)) {
-            // Keep the item inside the scene rect.
-            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
-            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
-            return newPos;
-        */
+
+        // --- Redraw connections ---
+        for(int i=0; i<connections.count(); ++i)
+        {
+            connections[i]->refreshPos();
+        }
     }
     return QGraphicsItem::itemChange(change, value);
 }
@@ -150,4 +146,13 @@ void BlockGraphicItem::on_moving_ended()
     this->setZValue(0); // Set draw priority to standard
 
     // @todo Check if colliding with other blocks, if yes -> move to previous location
+}
+
+BlockGraphicItem::~BlockGraphicItem()
+{
+    // --- Destroy connections ---
+    for(int i=0; i<connections.count(); ++i)
+    {
+        delete connections[i];
+    }
 }
