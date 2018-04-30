@@ -4,10 +4,13 @@ BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name)
 {
     // --- Settings ---
     this->setFlag(QGraphicsItem::ItemIsMovable);
+    this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     this->setAcceptHoverEvents(true);
+    this->setZValue(0);
 
     // --- Defautl values ---
-    this->pressed = false;
+    this->isMoving = false;
+    this->isPressed = false;
     this->name = name;
     this->parentScene = scene;
 }
@@ -23,9 +26,9 @@ void BlockGraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->setRenderHint(QPainter::Antialiasing); // Enable antialiasing
     painter->setPen(QPen(Qt::black, 2));    // 2px black border
 
-    // --- Transparent ---
-    if(this->pressed == true)
-        painter->setOpacity(0.7);   // Block is dragged
+    // --- Transparent when dragged ---
+    if(this->isMoving == true)
+        painter->setOpacity(0.7);
     else
         painter->setOpacity(1);
 
@@ -48,8 +51,8 @@ void BlockGraphicItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     // @todo check if also changes position or only pressed
     if(event->button() == Qt::LeftButton)   // Pressed left mouse button
     {
-        this->pressed = true;
         this->update(); // Force paint()
+        this->isPressed = true;
         QGraphicsItem::mousePressEvent(event);  // Propagate further
     }
 }
@@ -58,14 +61,13 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)   // Pressed left mouse button
     {
-        //SchemeScene *myParent = qobject_cast<SchemeScene *>(this->parentObject());
-
+        // --- Debug: @todo for creating connections ---
         if(this->parentScene->connectingBlocks == true)
             qDebug("connecting blocks");
         else
              qDebug("not connecting blocks");
 
-        this->pressed = false;
+        this->on_moving_ended();
 
         //if(this->collidingItems().count() != 0) @todo
 
@@ -111,4 +113,41 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 void BlockGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     qDebug("hover");
+}
+
+QVariant BlockGraphicItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if(change == ItemPositionChange && scene())
+    {
+        if(this->isPressed && isMoving == false)    // Moving just started
+            this->on_moving_started();
+
+        qDebug("moving");
+        /*
+        // value is the new position.
+        QPointF newPos = value.toPointF();
+        QRectF rect = scene()->sceneRect();
+        if (!rect.contains(newPos)) {
+            // Keep the item inside the scene rect.
+            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
+            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
+            return newPos;
+        */
+    }
+    return QGraphicsItem::itemChange(change, value);
+}
+
+void BlockGraphicItem::on_moving_started()
+{
+    this->isMoving = true;
+    this->setZValue(1); // Draw on top of already placed blocks
+}
+
+void BlockGraphicItem::on_moving_ended()
+{
+    this->isPressed = false;
+    this->isMoving = false;
+    this->setZValue(0); // Set draw priority to standard
+
+    // @todo Check if colliding with other blocks, if yes -> move to previous location
 }

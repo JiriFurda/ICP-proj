@@ -11,6 +11,13 @@ ConnectionLineItem::ConnectionLineItem(BlockGraphicItem *blockA, BlockGraphicIte
     this->blockA = blockA;
     this->blockB = blockB;
 
+    // --- Link blocks to this ---
+    // (Used for moving with objects etc)
+    /*
+    blockA->connections.append(this);
+    blockB->connections.append(this);
+    */
+
     // --- Prepare to draw ---
     this->refreshPos();
 }
