@@ -33,8 +33,13 @@ bool Port::setValue(string name, double value)
 {
 	map<string, double>::iterator it = content.find(name); 
 	if (it != content.end())
-	    it->second = value;
-	
+	{
+		it->second = value;
+		return true;
+	}
+		
+	else
+		return false;
 }
 
 double Port::getValue(string name)
