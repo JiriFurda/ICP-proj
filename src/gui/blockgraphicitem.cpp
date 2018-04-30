@@ -1,11 +1,15 @@
 #include "blockgraphicitem.h"
 
-BlockGraphicItem::BlockGraphicItem(QString name)
+BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name)
 {
+    // --- Settings ---
     this->setFlag(QGraphicsItem::ItemIsMovable);
+    this->setAcceptHoverEvents(true);
 
+    // --- Defautl values ---
     this->pressed = false;
     this->name = name;
+    this->parentScene = scene;
 }
 
 QRectF BlockGraphicItem::boundingRect() const
@@ -17,7 +21,7 @@ void BlockGraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 {
     // --- Painter settings ---
     painter->setRenderHint(QPainter::Antialiasing); // Enable antialiasing
-    painter->setPen(QPen(Qt::black, 2));    // 1px black border
+    painter->setPen(QPen(Qt::black, 2));    // 2px black border
 
     // --- Transparent ---
     if(this->pressed == true)
@@ -54,6 +58,13 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)   // Pressed left mouse button
     {
+        //SchemeScene *myParent = qobject_cast<SchemeScene *>(this->parentObject());
+
+        if(this->parentScene->connectingBlocks == true)
+            qDebug("connecting blocks");
+        else
+             qDebug("not connecting blocks");
+
         this->pressed = false;
 
         //if(this->collidingItems().count() != 0) @todo
@@ -90,10 +101,14 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     {
         if(selectedAction == removeAction)
             delete this;
-        /*else if(selectedAction == connectDebugAction)
-        {
 
-        }
-        */
+        else if(selectedAction == connectDebugAction)
+            this->parentScene->connectingBlocks = true;
+
     }
+}
+
+void BlockGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    qDebug("hover");
 }

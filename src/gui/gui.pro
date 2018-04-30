@@ -17,13 +17,17 @@ SOURCES += main.cpp\
     aboutdialog.cpp \
     creditsdialog.cpp \
     blockgraphicitem.cpp \
-    addblockdialog.cpp
+    addblockdialog.cpp \
+    schemescene.cpp \
+    connectiongraphicsitem.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     creditsdialog.h \
     blockgraphicitem.h \
-    addblockdialog.h
+    addblockdialog.h \
+    schemescene.h \
+    connectiongraphicsitem.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \

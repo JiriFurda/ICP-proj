@@ -13,9 +13,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QGraphicsView *view = new QGraphicsView(this);
     this->centralWidget()->layout()->addWidget(view);
 
-    scene = new QGraphicsScene(this);
+    scene = new SchemeScene();
     view->setScene(scene);
-//    view->centerOn(0, 0);
+
+
+    // --- Debug ---
+    BlockGraphicItem *blockA = new BlockGraphicItem(scene, QString("A"));
+    BlockGraphicItem *blockB = new BlockGraphicItem(scene, QString("B"));
+    scene->addItem(blockA);
+    scene->addItem(blockB);
+    blockA->moveBy(150,0);
+    ConnectionGraphicsItem *connection = new ConnectionGraphicsItem(blockA, blockB);
+    scene->addItem(connection);
+
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +56,7 @@ void MainWindow::on_actionAdd_triggered()
 
 void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_requested (don't know why the fuck it's not working rename) -> QMetaObject::connectSlotsByName: No matching signal for on_addBlock_requested(QString)
 {
-    scene->addItem(new BlockGraphicItem(name));
+    scene->addItem(new BlockGraphicItem(scene, name));
 }
 
 void MainWindow::on_actionExit_triggered()

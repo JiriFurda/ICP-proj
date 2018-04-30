@@ -10,9 +10,9 @@
 #include "creditsdialog.h"
 #include "addblockdialog.h"
 
+#include "schemescene.h"
 #include "blockgraphicitem.h"
-
-//#include "schemeview.h"
+#include "connectiongraphicsitem.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,7 +39,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene;
+    SchemeScene *scene;
 };
 
 #endif // MAINWINDOW_H
