@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //this->showFullScreen();
+    this->showMaximized();
 
     // === Scheme view ===
     QGraphicsView *view = new QGraphicsView(this);
@@ -65,4 +65,13 @@ void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_reque
 void MainWindow::on_actionExit_triggered()
 {
     this->close();
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    event->ignore();
+    if (QMessageBox::Yes == QMessageBox::question(this, "Quit application", "Do you really want to quit this application?", QMessageBox::Yes | QMessageBox::No))
+    {
+        event->accept();
+    }
 }

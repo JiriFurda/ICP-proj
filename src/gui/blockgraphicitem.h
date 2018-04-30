@@ -6,6 +6,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QMenu>
 #include <QList>
+#include <QMessageBox>
 
 #include "schemescene.h"
 #include "connectionlineitem.h"
@@ -41,6 +42,8 @@ private:
 
     void on_moving_started();
     void on_moving_ended();
+
+    void connectFinishingBlock(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // BLOCKGRAPHICITEM_H

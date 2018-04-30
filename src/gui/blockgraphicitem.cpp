@@ -64,20 +64,7 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         // --- Debug: @todo for creating connections ---
         if(this->parentScene->isConnectingBlocks == true)
         {
-            // --- Remove new connection indicator ---
-            if(parentScene->connecting_temporaryLine != NULL)  // Temporary line exists
-            {
-                // @todo This is also in hoverLeaveEvent -> make a new method
-                delete parentScene->connecting_temporaryLine;
-                parentScene->connecting_temporaryLine_exists = false;
-            }
-
-            // --- Exit connecting mode ---
-            this->parentScene->isConnectingBlocks = false;
-
-            // --- Create new connection ---
-            ConnectionLineItem *line = new ConnectionLineItem(this->parentScene->connecting_startingBlock, this);
-            parentScene->addItem(line);
+            this->connectFinishingBlock(event);
         }
 
 
@@ -115,8 +102,17 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     if(selectedAction)  // Some action was selected
     {
         if(selectedAction == removeAction)
-            delete this;
+        {
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(0, QString("Delete block"),
+                QString("Do you really want to delete block \""+this->name+"\"?"),
+                QMessageBox::Yes | QMessageBox::No);
 
+             if(reply == QMessageBox::Yes)
+                delete this;
+             else
+                 return;
+        }
         else if(selectedAction == connectDebugAction)
         {
             this->parentScene->isConnectingBlocks = true;
@@ -207,4 +203,43 @@ BlockGraphicItem::~BlockGraphicItem()
     }
 
     this->scene()->removeItem(this);
+}
+
+
+
+
+
+void BlockGraphicItem::connectFinishingBlock(QGraphicsSceneMouseEvent *event)
+{
+    // --- Context menu ---
+    QMenu *menu = new QMenu();
+    menu->addAction("[float] Operand A");
+    menu->addAction("[float] Operand A (used)");
+
+    // -- Show menu --
+    QAction *selectedAction = menu->exec(event->screenPos());
+
+
+    if(selectedAction)  // Some action was selected
+    {
+        // @todo
+    }
+    else
+        return;
+
+
+    // --- Remove new connection indicator ---
+    if(this->parentScene->connecting_temporaryLine_exists)  // Temporary line exists
+    {
+        // @todo This is also in connectFinishingBlock -> make a new method
+        delete this->parentScene->connecting_temporaryLine;
+        this->parentScene->connecting_temporaryLine_exists = false;
+    }
+
+    // --- Exit connecting mode ---
+    this->parentScene->isConnectingBlocks = false;
+
+    // --- Create new connection ---
+    ConnectionLineItem *line = new ConnectionLineItem(this->parentScene->connecting_startingBlock, this);
+    this->parentScene->addItem(line);
 }

@@ -26,6 +26,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void on_actionAbout_BlockEditor_triggered();
     void on_actionCredits_triggered();
