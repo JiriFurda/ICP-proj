@@ -64,7 +64,7 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         // --- Debug: @todo for creating connections ---
         if(this->parentScene->isConnectingBlocks == true)
         {
-            this->connectFinishingBlock(event);
+            this->on_connectingToThisBlock(event);
         }
 
 
@@ -192,14 +192,12 @@ void BlockGraphicItem::on_moving_ended()
 
 BlockGraphicItem::~BlockGraphicItem()
 {
+    int count = connections.count(); // Save because it's decreasing every loop
+
     // --- Destroy connections ---
-    for(int i=0; i<connections.count(); ++i)
+    for(int i = 0; i < count; ++i)
     {
-        ConnectionLineItem *removedConnection = connections[i];
-        //this->connections.removeOne(connections[i]);
-        //delete connections[i];
-        this->connections.removeAt(i);
-        delete removedConnection;
+        delete this->connections.first();
     }
 
     this->scene()->removeItem(this);
@@ -209,7 +207,7 @@ BlockGraphicItem::~BlockGraphicItem()
 
 
 
-void BlockGraphicItem::connectFinishingBlock(QGraphicsSceneMouseEvent *event)
+void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
 {
     // --- Context menu ---
     QMenu *menu = new QMenu();
@@ -231,7 +229,7 @@ void BlockGraphicItem::connectFinishingBlock(QGraphicsSceneMouseEvent *event)
     // --- Remove new connection indicator ---
     if(this->parentScene->connecting_temporaryLine_exists)  // Temporary line exists
     {
-        // @todo This is also in connectFinishingBlock -> make a new method
+        // @todo This is also in on_connectingToThisBlock -> make a new method
         delete this->parentScene->connecting_temporaryLine;
         this->parentScene->connecting_temporaryLine_exists = false;
     }

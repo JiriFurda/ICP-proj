@@ -43,7 +43,7 @@ private:
     void on_moving_started();
     void on_moving_ended();
 
-    void connectFinishingBlock(QGraphicsSceneMouseEvent *event);
+    void on_connectingToThisBlock(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // BLOCKGRAPHICITEM_H
