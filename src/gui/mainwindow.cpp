@@ -59,7 +59,7 @@ void MainWindow::on_actionAdd_triggered()
 
 void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_requested (don't know why the fuck it's not working rename) -> QMetaObject::connectSlotsByName: No matching signal for on_addBlock_requested(QString)
 {
-    scene->addItem(new BlockGraphicItem(scene, name));
+    new BlockGraphicItem(scene, name);
 }
 
 void MainWindow::on_actionExit_triggered()

@@ -2,17 +2,32 @@
 
 BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name)
 {
+    scene->addItem(this);
+
     // --- Settings ---
     this->setFlag(QGraphicsItem::ItemIsMovable);
     this->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     this->setAcceptHoverEvents(true);
     this->setZValue(0);
 
-    // --- Defautl values ---
+    // --- Default values ---
     this->isMoving = false;
     this->isPressed = false;
     this->name = name;
     this->parentScene = scene;
+
+    // --- Move if stacked on other block ---
+    if(this->collidingItems().count() > 0)  // If colliding with some item
+    {
+        for(int i=0; i<this->collidingItems().count(); ++i) // For every colliding item
+        {
+            if(this->collidingItems().at(i)->scenePos() == this->scenePos())    // Check if they are stacked on each other
+            {
+                this->moveBy(5,5);  // Move it
+                i = -1; // Start over the check
+            }
+        }
+    }
 }
 
 QRectF BlockGraphicItem::boundingRect() const
@@ -40,40 +55,37 @@ void BlockGraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     // --- Name ---
     painter->drawText(boundingRect(), Qt::AlignCenter|Qt::TextWrapAnywhere, this->name);   // @todo Choose if Qt::TextWrapAnywhere or Qt::TextWordWrap and if adding Qt::TextDontClip is a good idea
 
-
-
     // --- Draw result ---
     painter->drawPath(path);
 }
 
 void BlockGraphicItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    // @todo check if also changes position or only pressed
+    // --- Left Button ---
     if(event->button() == Qt::LeftButton)   // Pressed left mouse button
-    {
-        this->update(); // Force paint()
         this->isPressed = true;
-        QGraphicsItem::mousePressEvent(event);  // Propagate further
-    }
+
+    // --- Propagate further ---
+    QGraphicsItem::mousePressEvent(event);
 }
 
 void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    // --- Left Button ---
     if(event->button() == Qt::LeftButton)   // Pressed left mouse button
     {
-        // --- Debug: @todo for creating connections ---
+        this->isPressed = false;
+
+        // -- Call events --
         if(this->parentScene->isConnectingBlocks == true)
-        {
             this->on_connectingToThisBlock(event);
-        }
 
-
-        this->on_moving_ended();
-
-        this->update(); // Force paint()
-
-        QGraphicsItem::mouseReleaseEvent(event);  // Propagate further
+        if(this->isMoving)
+            this->on_moving_ended();
     }
+
+    // --- Propagate further ---
+    QGraphicsItem::mouseReleaseEvent(event);  // Propagate further
 }
 
 void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
@@ -183,9 +195,9 @@ void BlockGraphicItem::on_moving_started()
 
 void BlockGraphicItem::on_moving_ended()
 {
-    this->isPressed = false;
     this->isMoving = false;
     this->setZValue(0); // Set draw priority to standard
+    this->update(); // Force paint()
 
     // @todo Check if colliding with other blocks, if yes -> move to previous location
 }
