@@ -19,7 +19,7 @@ Block::Block(Port in, Port out)
 
 Block::Block(vector<Port> in, Port out)
 {
-	cout << "this: " << this << "\n";
+	//cout << "this: " << this << "\n";
 	//cout << "Block::Block\n";
 	inputPorts = in;
 	outputPorts.push_back(out);
@@ -79,16 +79,19 @@ void Block::setID(int ID)
 
 void Block::setPorts()
 {
-	for (Port port : inputPorts)
+	//for (Port port : inputPorts)
+	for (vector<Port>::iterator it = inputPorts.begin(); it != inputPorts.end(); ++it) 
+//    if (*it < 0) *it = -*it;
 	{
-		cout << "**********" << this << "*********\n";
-		port.setOwnerBlock(this);
-		cout << "__________" << port.getOwnerBlock() << "________\n";
+	//	cout << "**********" << this << "*********\n";
+		(*it).setOwnerBlock(this);
+	//	cout << "__________" << (*it).getOwnerBlock() << "________\n";
 	}
 
-	for (Port port : outputPorts)
+	//for (Port port : outputPorts)
+	for (vector<Port>::iterator it = outputPorts.begin(); it != outputPorts.end(); ++it) 
 	{
-		port.setOwnerBlock(this);
+		(*it).setOwnerBlock(this);
 	}
 }
 

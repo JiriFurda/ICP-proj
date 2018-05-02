@@ -23,7 +23,7 @@ Scheme::~Scheme()
 
 int Scheme::createBlock(int blockType)
 {
-	cout << "Scheme::createBlock\n";
+	//cout << "Scheme::createBlock\n";
 	switch(blockType)
 	{
 		case ADD:
@@ -59,10 +59,10 @@ int Scheme::createBlock(int blockType)
 			break;
 
 	}
-	cout << "1\n";
+	//cout << "1\n";
 	blockScheme[existingBlocks]->setID(createdBlocks);
-	cout << blockScheme[existingBlocks]->getID() << "\n";
-	cout << "2\n";
+	//cout << blockScheme[existingBlocks]->getID() << "\n";
+	//cout << "2\n";
 	existingBlocks += 1;
 	createdBlocks +=1;
 	return createdBlocks-1;
@@ -94,7 +94,7 @@ void Scheme::destroyBlock(int ID)
 int main()
 {
 	BlockAdd blockA;
-	//BlockAdd blockB;
+	BlockAdd blockB;
 
 	blockA.getInputPort(0)->setValue("float",6);
 	blockA.getInputPort(1)->setValue("float",12);
@@ -102,22 +102,22 @@ int main()
 	blockA.executeSpecific();
 	cout << blockA.getOutputPort(0)->getValue("float") << "\n";
 	
-	cout << &(blockA) << "\n";
-	cout << blockA.getInputPort(0)->getOwnerBlock() << "-----------------------\n";
-/*
+	//cout << &(blockA) << "\n";
+	//cout << blockA.getInputPort(0)->getOwnerBlock() << "-----------------------\n";
+
 	cout << blockA.getOutputPort(0)->getOwnerBlock()->getOutputPort(0)->getValue("float") << "\n";
 
-	cout << blockA.getOutputPort(0)->getOwnerBlock()->getID() << "\n";*/
+	cout << blockA.getOutputPort(0)->getOwnerBlock()->getID() << "\n";
 
-	//blockA.getOutputPort(0)->setConnectedPort(blockB.getInputPort(0));
+	blockA.getOutputPort(0)->setConnectedPort(blockB.getInputPort(0));
 
-	//blockB.getInputPort(1)->setValue("float",2);
-
-	
+	blockB.getInputPort(1)->setValue("float",2);
 
 	
+
 	
-/*	Scheme myScheme;
+	
+	Scheme myScheme;
 	myScheme.createBlock(ADD);
 	myScheme.createBlock(MUL);
 	myScheme.createBlock(DIV);
@@ -129,5 +129,5 @@ int main()
 	myScheme.createBlock(AND);
 	myScheme.createBlock(OR);
 	myScheme.createBlock(XOR);
-	myScheme.createBlock(NOT);*/
+	myScheme.createBlock(NOT);
 }
