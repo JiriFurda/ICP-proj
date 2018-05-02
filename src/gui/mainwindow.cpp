@@ -75,3 +75,22 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->accept();
     }
 }
+
+void MainWindow::on_actionSave_File_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Save scheme to file"), "",
+        tr("Block scheme (*.scheme);;All Files (*)"));
+}
+
+void MainWindow::on_actionOpen_File_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open scheme from file"), "",
+        tr("Block scheme (*.scheme);;All Files (*)"));
+}
+
+void MainWindow::on_actionNew_File_triggered()
+{
+    scene->clear();
+}
