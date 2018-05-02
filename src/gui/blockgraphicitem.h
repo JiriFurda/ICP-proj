@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QList>
 #include <QMessageBox>
+#include <QGraphicsDropShadowEffect>
 
 #include "schemescene.h"
 #include "connectionlineitem.h"

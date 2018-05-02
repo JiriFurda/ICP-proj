@@ -138,16 +138,15 @@ void BlockGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     if(this->parentScene->isConnectingBlocks == true    // User is connecting blocks
             && this->parentScene->connecting_startingBlock != this) // Hovered block is not starting one
     {
-        ConnectionLineItem *line = new ConnectionLineItem(this->parentScene->connecting_startingBlock, this);
+        ConnectionLineItem *temporaryLine = new ConnectionLineItem(this->parentScene, this->parentScene->connecting_startingBlock, this);
 
         QPen temporaryConnectionPen;
         temporaryConnectionPen.setStyle(Qt::DashLine);
         temporaryConnectionPen.setWidth(2);
         temporaryConnectionPen.setBrush(Qt::gray);
-        line->setPen(temporaryConnectionPen);
+        temporaryLine->visibleLine->setPen(temporaryConnectionPen);
 
-        parentScene->connecting_temporaryLine = line;
-        parentScene->addItem(line);
+        parentScene->connecting_temporaryLine = temporaryLine;
         parentScene->connecting_temporaryLine_exists = true;
     }
 
@@ -250,6 +249,5 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
     this->parentScene->isConnectingBlocks = false;
 
     // --- Create new connection ---
-    ConnectionLineItem *line = new ConnectionLineItem(this->parentScene->connecting_startingBlock, this);
-    this->parentScene->addItem(line);
+    ConnectionLineItem *line = new ConnectionLineItem(this->parentScene, this->parentScene->connecting_startingBlock, this);
 }

@@ -13,13 +13,16 @@ class BlockGraphicItem; // Forward declaration beacuse of mutual including of co
 class ConnectionLineItem : public QGraphicsLineItem
 {
 public:
-    ConnectionLineItem(BlockGraphicItem *blockA, BlockGraphicItem *blockB);
+    ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *blockA, BlockGraphicItem *blockB);
     ~ConnectionLineItem();
 
     void refreshPos();
 
+    QGraphicsLineItem *visibleLine;
+
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 private:
     BlockGraphicItem *blockA;

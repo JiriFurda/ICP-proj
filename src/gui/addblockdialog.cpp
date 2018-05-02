@@ -58,6 +58,7 @@ QTreeWidgetItem *AddBlockDialog::addTreeGroup(QString name, QString decsription)
     QTreeWidgetItem *item = new QTreeWidgetItem(tree);
     item->setText(0,name);
     item->setText(1,decsription);
+    item->setExpanded(true);
 
     tree->addTopLevelItem(item); // @todo There is also AddTopLevelItems
 
