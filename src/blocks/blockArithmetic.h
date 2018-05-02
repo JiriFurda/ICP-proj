@@ -1,6 +1,12 @@
 #ifndef BLOCK_ARITHMETIC_H
 #define BLOCK_ARITHMETIC_H
 
+#define ADD 100
+#define MUL 101
+#define DIV 102
+#define SUB 103
+
+
 #include <iostream>
 #include <vector>
 #include <map>

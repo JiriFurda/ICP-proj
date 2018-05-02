@@ -19,10 +19,14 @@ class Block
 		Block(Port in, vector<Port> out);
 		void execute();
 		virtual void executeSpecific() = 0;
-		Port getInputPort(int index);
-		Port getOutputPort(int index);
+		Port* getInputPort(int index);
+		Port* getOutputPort(int index);
+		int getID();
+		void setID(int ID);
+		virtual ~Block() {};
 
 	private:
+		int blockID;
 		vector<Port> inputPorts;
 		vector<Port> outputPorts;
 		bool executed = false;

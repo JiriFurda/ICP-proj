@@ -16,8 +16,10 @@ Block::Block(Port in, Port out)
 
 Block::Block(vector<Port> in, Port out)
 {
+	cout << "Block::Block\n";
 	inputPorts = in;
 	outputPorts.push_back(out);
+	cout << "Block::Block\n";
 }
 
 Block::Block(Port in, vector<Port> out)
@@ -44,13 +46,27 @@ void Block::execute()
 	exit(-1);
 }*/
 
-Port Block::getInputPort(int index)
+Port* Block::getInputPort(int index)
 {
-	return inputPorts[index];
+	return &(inputPorts[index]);
 }
 
-Port Block::getOutputPort(int index)
+Port* Block::getOutputPort(int index)
 {
-	return outputPorts[index];
+	return &(outputPorts[index]);
 }
 
+int Block::getID()
+{
+	return blockID;
+}
+
+void Block::setID(int ID)
+{
+	blockID = ID;
+}
+
+/*Block::~Block()
+{
+}
+*/

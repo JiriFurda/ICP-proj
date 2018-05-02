@@ -14,13 +14,17 @@ Port::Port ()
 
 Port::Port (string name) 
 {
+	cout << "Port::Port (string name)1\n";
 	content.insert(std::make_pair(name, numeric_limits<double>::quiet_NaN()));
+	cout << "Port::Port (string name)2\n";
 }
 
 Port::Port (vector<string> arrayOfNames) 
 {
+	cout << "Port::Port (vector<string> arrayOfNames) \n";
 	for (string name : arrayOfNames)
 		content.insert(std::make_pair(name, numeric_limits<double>::quiet_NaN()));
+	cout << "Port::Port (vector<string> arrayOfNames) \n";
 }
 
 bool Port::compatible(Port other)
@@ -88,11 +92,4 @@ bool Port::setConnectedPort(Port* other)
 Port* Port::getConnectedPort()
 {
 	return connectedPort;
-}
-
-int main(void)
-{
-	
-	
-
 }
