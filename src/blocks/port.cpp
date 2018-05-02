@@ -5,6 +5,7 @@
 #include <limits>*/
 
 #include "port.h"
+#include "block.h"
 
 
 
@@ -14,17 +15,17 @@ Port::Port ()
 
 Port::Port (string name) 
 {
-	cout << "Port::Port (string name)1\n";
+	//cout << "Port::Port (string name)1\n";
 	content.insert(std::make_pair(name, numeric_limits<double>::quiet_NaN()));
-	cout << "Port::Port (string name)2\n";
+	//cout << "Port::Port (string name)2\n";
 }
 
 Port::Port (vector<string> arrayOfNames) 
 {
-	cout << "Port::Port (vector<string> arrayOfNames) \n";
+	//cout << "Port::Port (vector<string> arrayOfNames) \n";
 	for (string name : arrayOfNames)
 		content.insert(std::make_pair(name, numeric_limits<double>::quiet_NaN()));
-	cout << "Port::Port (vector<string> arrayOfNames) \n";
+	//cout << "Port::Port (vector<string> arrayOfNames) \n";
 }
 
 bool Port::compatible(Port other)
@@ -92,4 +93,17 @@ bool Port::setConnectedPort(Port* other)
 Port* Port::getConnectedPort()
 {
 	return connectedPort;
+}
+
+		
+Block* Port::getOwnerBlock()
+{
+	//cout << "Port::getOwnerBlock" << ownerBlock << "\n";
+	return ownerBlock;
+}
+
+void Port::setOwnerBlock(Block* otherBlock)
+{
+	//cout << "______Port::setOwnerBlock___   " << otherBlock << "\n";
+	ownerBlock = otherBlock;
 }

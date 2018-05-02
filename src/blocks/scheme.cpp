@@ -26,46 +26,53 @@ int Scheme::createBlock(int blockType)
 	cout << "Scheme::createBlock\n";
 	switch(blockType)
 	{
-		case 100:
+		case ADD:
 			blockScheme.push_back(new BlockAdd());
 			
 			cout << "0\n";
 			break;
-		case 101:
+		case MUL:
 			blockScheme.push_back(new BlockMul());
 			break;
 
-		case 102:
+		case DIV:
 			blockScheme.push_back(new BlockDiv());
 			break;
 
-		case 103:
+		case SUB:
 			blockScheme.push_back(new BlockSub());
 			break;
 
-		case 104:
+		case AND:
 			blockScheme.push_back(new BlockAnd());
 			break;
 
-		case 105:
+		case OR:
 			blockScheme.push_back(new BlockOr());
 			break;
-		case 106:
+		case XOR:
 			blockScheme.push_back(new BlockXor());
 			break;
 
-		case 107:
+		case NOT:
 			blockScheme.push_back(new BlockNot());
 			break;
 
 	}
 	cout << "1\n";
 	blockScheme[existingBlocks]->setID(createdBlocks);
+	cout << blockScheme[existingBlocks]->getID() << "\n";
 	cout << "2\n";
 	existingBlocks += 1;
 	createdBlocks +=1;
 	return createdBlocks-1;
 	
+}
+
+void Scheme::evalScheme()
+{
+
+
 }
 
 /*Block* Scheme::getBlock(int ID)
@@ -76,28 +83,35 @@ int Scheme::createBlock(int blockType)
 			return 
 	}
 
-	existingBlocks -= 1;
 }
 
 void Scheme::destroyBlock(int ID)
 {
-	erase(myvector.begin() + getblock(ID));		
-
+	erase(myvector.begin() + getblock(ID));
+	existingBlocks -= 1;
 }*/
 
 int main()
 {
 	BlockAdd blockA;
-	BlockAdd blockB;
+	//BlockAdd blockB;
 
 	blockA.getInputPort(0)->setValue("float",6);
 	blockA.getInputPort(1)->setValue("float",12);
+	blockA.setID(0);
 	blockA.executeSpecific();
 	cout << blockA.getOutputPort(0)->getValue("float") << "\n";
+	
+	cout << &(blockA) << "\n";
+	cout << blockA.getInputPort(0)->getOwnerBlock() << "-----------------------\n";
+/*
+	cout << blockA.getOutputPort(0)->getOwnerBlock()->getOutputPort(0)->getValue("float") << "\n";
 
-	blockA.getOutputPort(0)->setConnectedPort(blockB.getInputPort(0));
+	cout << blockA.getOutputPort(0)->getOwnerBlock()->getID() << "\n";*/
 
-	blockB.getInputPort(1)->setValue("float",2);
+	//blockA.getOutputPort(0)->setConnectedPort(blockB.getInputPort(0));
+
+	//blockB.getInputPort(1)->setValue("float",2);
 
 	
 

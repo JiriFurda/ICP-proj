@@ -6,7 +6,9 @@
 #include <map>
 #include <string>
 #include <limits>
-#include <algorithm> 
+#include <algorithm>
+
+class Block;
 
 using namespace std;
 class Port
@@ -23,14 +25,15 @@ class Port
 	//	string getName(); not needed?
 		bool setConnectedPort(Port* other);
 		Port* getConnectedPort();
-		//Block getOwnerBlock();
-		//setOwnerBlock(Block ownerBlock);
+		Block* getOwnerBlock();
+		void setOwnerBlock(Block* otherBlock);
 		
 
 	protected:
 		map<string, double> content;
 	private:
-		Port* connectedPort = NULL;
+		Port* connectedPort;
+		Block* ownerBlock;
 		//Block ownerBlock = NULL;
 };
 

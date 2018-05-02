@@ -7,7 +7,8 @@
 #include <string>
 #include <limits>
 #include <algorithm> 
-#include "port.h"
+
+class Port;
 
 using namespace std;
 class Block
@@ -24,6 +25,7 @@ class Block
 		int getID();
 		void setID(int ID);
 		virtual ~Block() {};
+		void setPorts();
 
 	private:
 		int blockID;
