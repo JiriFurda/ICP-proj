@@ -71,11 +71,14 @@ void Block::execute()
 
 Port* Block::getInputPort(int index)
 {
+	//cout << "Block::getInputPort\n";
 	return &(inputPorts[index]);
 }
 
 Port* Block::getOutputPort(int index)
 {
+
+	//cout << "Block::getOutputPort\n";
 	return &(outputPorts[index]);
 }
 

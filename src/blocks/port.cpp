@@ -13,15 +13,19 @@ Port::Port ()
 {
 }
 
-Port::Port (string name) 
+Port::Port (string name, bool declaredType) 
 {
+
+	type = declaredType;
 	////cout << "Port::Port (string name)1\n";
+	
 	content.insert(std::make_pair(name, numeric_limits<double>::quiet_NaN()));
 	////cout << "Port::Port (string name)2\n";
 }
 
-Port::Port (vector<string> arrayOfNames) 
+Port::Port (vector<string> arrayOfNames, bool declaredType) 
 {
+	type = declaredType;
 	////cout << "Port::Port (vector<string> arrayOfNames) \n";
 	for (string name : arrayOfNames)
 		content.insert(std::make_pair(name, numeric_limits<double>::quiet_NaN()));
@@ -36,20 +40,25 @@ bool Port::compatible(Port other)
 
 bool Port::setValue(string name, double value)
 {
+	//cout << "Port::setValue\n";
 	map<string, double>::iterator it = content.find(name); 
 	if (it != content.end())
 	{
 		it->second = value;
-		return true;
 	}
 		
 	else
 		return false;
-	
+
+	if (type && connectedPort != NULL)
+		return connectedPort->setValue(name, value);
+
+	return true;	
 }
 
 double Port::getValue(string name)
 {
+	//cout << "Port::getValue\n";
 	map<string, double>::iterator it = content.find(name);
 	if (it != content.end())
 		return it->second;
@@ -106,5 +115,6 @@ Block* Port::getOwnerBlock()
 void Port::setOwnerBlock(Block* otherBlock)
 {
 	////cout << "______Port::setOwnerBlock___   " << otherBlock << "\n";
+
 	ownerBlock = otherBlock;
 }

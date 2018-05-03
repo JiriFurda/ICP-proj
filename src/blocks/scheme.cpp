@@ -100,7 +100,7 @@ Block* Scheme::step(Block* expectedNextBlock)
 //	cout << "Scheme::step " << expectedNextBlock << "\n";
 	Block* realNextBlock = findNonDependentBlock(expectedNextBlock);	
 
-	cout << realNextBlock << "\n";
+	//cout << realNextBlock << "\n";
 	realNextBlock->execute();
 	notExecutedBlocks.erase(std::remove(notExecutedBlocks.begin(), notExecutedBlocks.end(), realNextBlock), notExecutedBlocks.end());
 	if (realNextBlock->getOutputPorts().size() != 0)
@@ -251,13 +251,13 @@ int main()
 	blockG.getInputPort(0)->setValue("float", 1);  
 	blockG.getInputPort(1)->setValue("float", 2);*/
 
-	cout << "blockA: " << blockA->getInputPort(0)->getOwnerBlock() << "\n";
+/*	cout << "blockA: " << blockA->getInputPort(0)->getOwnerBlock() << "\n";
 	cout << "blockB: " << blockB->getInputPort(0)->getOwnerBlock() << "\n";
 	cout << "blockC: " << blockC->getInputPort(0)->getOwnerBlock() << "\n";
 	cout << "blockD: " << blockD->getInputPort(0)->getOwnerBlock() << "\n";
 	cout << "blockE: " << blockE->getInputPort(0)->getOwnerBlock() << "\n";
 	cout << "blockF: " << blockF->getInputPort(0)->getOwnerBlock() << "\n";
-	cout << "blockG: " << blockG->getInputPort(0)->getOwnerBlock() << "\n";
+	cout << "blockG: " << blockG->getInputPort(0)->getOwnerBlock() << "\n";*/
 	
 	myScheme->run();
 

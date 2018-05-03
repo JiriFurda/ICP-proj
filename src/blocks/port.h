@@ -15,8 +15,8 @@ class Port
 {
 	public:
 		Port();
-		Port(string name);
-		Port(vector<string> arrayOfNames);
+		Port(string name, bool declaredType);
+		Port(vector<string> arrayOfNames, bool declaredType);
 		bool compatible(Port other);
 		bool setValue(string name, double value);
 		double getValue(string name);
@@ -27,11 +27,13 @@ class Port
 		Port* getConnectedPort();
 		Block* getOwnerBlock();
 		void setOwnerBlock(Block* otherBlock);
-		
+		static const bool inputType = true;
+		static const bool outputType = false;
 
 	protected:
 		map<string, double> content;
 	private:
+		bool type;
 		Port* connectedPort = NULL;
 		Block* ownerBlock = NULL;
 };

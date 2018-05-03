@@ -4,7 +4,7 @@
 
 
 BlockArithmetic::BlockArithmetic()
-	: Block(vector<Port> {Port("float"), Port("float")}, Port("float")){};
+	: Block(vector<Port> {Port("float", false), Port("float", false)}, Port("float", true)){};
 		
 void BlockAdd::executeSpecific()
 {

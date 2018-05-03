@@ -4,7 +4,7 @@
 
 
 BlockLogic::BlockLogic()
-	: Block(vector<Port> {Port("bool"), Port("bool")}, Port("bool")){};
+	: Block(vector<Port> {Port("bool", false), Port("bool", false)}, Port("bool", true)){};
 		
 void BlockAnd::executeSpecific()
 {
