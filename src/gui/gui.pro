@@ -31,8 +31,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
-    creditsdialog.ui \
-    addblockdialog.ui
+    creditsdialog.ui
 
 RESOURCES += \
     imagesresource.qrc

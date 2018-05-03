@@ -1,12 +1,7 @@
 #include "addblockdialog.h"
-#include "ui_addblockdialog.h"
 
-AddBlockDialog::AddBlockDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AddBlockDialog)
+AddBlockDialog::AddBlockDialog(QWidget *parent) : QDialog(parent)
 {
-    //ui->setupUi(this);
-
     // --- Setup window ---
     this->setWindowTitle("Add new block - BlockEditor");
     this->setMinimumWidth(400);
@@ -38,8 +33,6 @@ AddBlockDialog::AddBlockDialog(QWidget *parent) :
 
 AddBlockDialog::~AddBlockDialog()
 {
-    // @todo Crashes when exiting
-    delete ui;
 }
 
 void AddBlockDialog::fillTree()

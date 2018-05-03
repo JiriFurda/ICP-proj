@@ -5,10 +5,9 @@
 
 #include <QTreeWidgetItem>
 #include <QMessageBox>
-
-namespace Ui {
-class AddBlockDialog;
-}
+#include <QGridLayout>
+#include <QPushButton>
+#include <QDialogButtonBox>
 
 class AddBlockDialog : public QDialog
 {
@@ -19,7 +18,6 @@ public:
     ~AddBlockDialog();
 
 private:
-    Ui::AddBlockDialog *ui;
 
     QTreeWidget *tree;
 

@@ -51,11 +51,28 @@ void ConnectionLineItem::refreshPos()
 
 void ConnectionLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
+    QToolTip::hideText();
     QToolTip::showText(event->screenPos(),QString("[float] 42.0 (Result -> Operand A)\n[float] 69.0 (Reuslt 2 -> Operand B"));
 
     QGraphicsLineItem::hoverEnterEvent(event);
 }
 
+void ConnectionLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    if(!QToolTip::isVisible())
+    {
+        QToolTip::showText(event->screenPos(),QString("[float] 42.0 (Result -> Operand A)\n[float] 69.0 (Reuslt 2 -> Operand B"));
+    }
+
+    QGraphicsLineItem::hoverMoveEvent(event);
+}
+
+void ConnectionLineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    QToolTip::hideText();
+
+    QGraphicsLineItem::hoverLeaveEvent(event);
+}
 
 
 void ConnectionLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
