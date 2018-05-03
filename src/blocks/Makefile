@@ -1,0 +1,11 @@
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -g
+OBJECTS = port.o block.o blockArithmetic.o blockLogic.o scheme.o
+
+icp: $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+clean:
+	rm -f *.o icp
+
+$(OBJECTS): port.h block.h blockArithmetic.h blockLogic.h scheme.h
