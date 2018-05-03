@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall
+CXXFLAGS = -std=c++17 -Wall -g
 OBJECTS = port.o block.o blockArithmetic.o blockLogic.o scheme.o
 
 icp: $(OBJECTS)

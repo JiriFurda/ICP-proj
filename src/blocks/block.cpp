@@ -3,28 +3,28 @@
 
 using namespace std;
 
-Block::Block(vector<Port> in, vector<Port> out)
+Block::Block(const vector<Port>& in, const vector<Port>& out)
 {
 	inputPorts = in;
 	outputPorts = out;
 	setPorts();
 }
 
-Block::Block(Port in, Port out)
+Block::Block(const Port& in, const Port& out)
 {
 	inputPorts.push_back(in);
 	outputPorts.push_back(out);
 	setPorts();
 }
 
-Block::Block(vector<Port> in, Port out)
+Block::Block(const vector<Port>& in, const Port& out)
 {
 	inputPorts = in;
 	outputPorts.push_back(out);
 	setPorts();
 }
 
-Block::Block(Port in, vector<Port> out)
+Block::Block(const Port& in, const vector<Port>& out)
 {
 	inputPorts.push_back(in);
 	outputPorts = out;

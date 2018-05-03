@@ -72,7 +72,7 @@ bool Scheme::addBlock(Block* block)
 {
 	if (block == NULL)
 	{
-		//cout << "Scheme::addBlock: Attempt to add NULL Block";
+		cerr << "Scheme::addBlock: Attempt to add NULL Block";
 		return false;
 	}
 
@@ -97,12 +97,12 @@ void Scheme::run()
 
 Block* Scheme::step(Block* expectedNextBlock)
 {
-	cout << "Scheme::step " << expectedNextBlock << "\n";
+//	cout << "Scheme::step " << expectedNextBlock << "\n";
 	Block* realNextBlock = findNonDependentBlock(expectedNextBlock);	
 
+	cout << realNextBlock << "\n";
 	realNextBlock->execute();
 	notExecutedBlocks.erase(std::remove(notExecutedBlocks.begin(), notExecutedBlocks.end(), realNextBlock), notExecutedBlocks.end());
-
 	if (realNextBlock->getOutputPorts().size() != 0)
 	{
 		if (realNextBlock->getOutputPort(0)->getConnectedPort() != NULL)
@@ -115,23 +115,26 @@ Block* Scheme::step(Block* expectedNextBlock)
 
 Block* Scheme::findNonDependentBlock(Block* block)
 {
-	cout << "Scheme::findNonDependentBlock" << block << "\n";
-
-	for (vector<Port>::iterator it = block->getInputPorts().begin(); it != block->getInputPorts().end(); ++it) 
+	//cout << "Scheme::findNonDependentBlock" << block << "\n";
+//	int i = 0;
+	vector<Port> inputPorts = block->getInputPorts();
+//	for (vector<Port>::iterator it = block->getInputPorts().begin(); it != block->getInputPorts().end(); ++it) 
+	for (vector<Port>::iterator it = inputPorts.begin(); it != inputPorts.end(); ++it)
 	{
-		cout << "haha\n";
+	//	cout << i << "\n";
+	//	i+=1;
+		//cout << "haha\n";
 		Port* connectedPort = it->getConnectedPort();
-		cout << connectedPort << "\n";
-		cout << "hihi\n";
+		//cout << connectedPort << "\n";
+		//cout << "hihi\n";
 		if (connectedPort == NULL)
 		{
-		//	continue;
+			continue;
 			//TODO needed?
 		} 
 
 		else
 		{	
-			cout << "hehe\n";
 			if (connectedPort->getOwnerBlock()->wasExecuted() == false)
 			{
 				return findNonDependentBlock(connectedPort->getOwnerBlock());
@@ -248,13 +251,13 @@ int main()
 	blockG.getInputPort(0)->setValue("float", 1);  
 	blockG.getInputPort(1)->setValue("float", 2);*/
 
-	/*//cout << "blockA: " << blockA.getInputPort(0)->getOwnerBlock() << "\n";
-	//cout << "blockB: " << blockB.getInputPort(0)->getOwnerBlock() << "\n";
-	//cout << "blockC: " << blockC.getInputPort(0)->getOwnerBlock() << "\n";
-	//cout << "blockD: " << blockD.getInputPort(0)->getOwnerBlock() << "\n";
-	//cout << "blockE: " << blockE.getInputPort(0)->getOwnerBlock() << "\n";
-	//cout << "blockF: " << blockF.getInputPort(0)->getOwnerBlock() << "\n";
-	//cout << "blockG: " << blockG.getInputPort(0)->getOwnerBlock() << "\n";*/
+	cout << "blockA: " << blockA->getInputPort(0)->getOwnerBlock() << "\n";
+	cout << "blockB: " << blockB->getInputPort(0)->getOwnerBlock() << "\n";
+	cout << "blockC: " << blockC->getInputPort(0)->getOwnerBlock() << "\n";
+	cout << "blockD: " << blockD->getInputPort(0)->getOwnerBlock() << "\n";
+	cout << "blockE: " << blockE->getInputPort(0)->getOwnerBlock() << "\n";
+	cout << "blockF: " << blockF->getInputPort(0)->getOwnerBlock() << "\n";
+	cout << "blockG: " << blockG->getInputPort(0)->getOwnerBlock() << "\n";
 	
 	myScheme->run();
 

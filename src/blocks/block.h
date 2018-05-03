@@ -14,10 +14,10 @@ using namespace std;
 class Block
 {
 	public:
-		Block(vector<Port> in, vector<Port> out);
-		Block(Port in, Port out);
-		Block(vector<Port> in, Port out);
-		Block(Port in, vector<Port> out);
+		Block(const vector<Port>& in, const vector<Port>& out);
+		Block(const Port& in, const Port& out);
+		Block(const vector<Port>& in, const Port& out);
+		Block(const Port& in, const vector<Port>& out);
 		void execute();
 		virtual void executeSpecific() = 0;
 		Port* getInputPort(int index);
