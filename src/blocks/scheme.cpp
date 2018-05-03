@@ -226,13 +226,9 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
 void testAdvanced();
 void testLoop();
 
-/*int main()
+int main()
 {
-
-
-	testAdvanced();
-	testLoop();
-}*/
+}
 
 void testLoop()
 {
