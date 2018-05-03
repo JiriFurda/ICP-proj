@@ -14,22 +14,31 @@ using namespace std;
 class Scheme
 {
 	public:
-		Scheme();
-		//~Scheme();
+		Scheme(string declaredName);
 		int createBlock(int blockType);
 		void destroyBlock(int ID);
-		void run();
+		bool run();
 		Block* getBlock(int ID);
 		Block* step(Block* expectedNextBlock);
 		Block* findNonDependentBlock(Block* block);
-		bool addBlock(Block* block);
-		//testValues();
-		//addBlock();		
+		bool addBlock(Block* block);	
+		void searchUserDependentBlocks();
+		Block* step_internal(Block* SIexpectedNextBlock);
+		bool preRun();
+		bool runStep();
 	private:
+		Block* findNonDependentBlock_private(Block* block);
+
+		Block* LoopDetected = new BlockAdd();
+		string name;
+		bool readOnly = false;
+		bool finished = false;
 		int existingBlocks = 0;
 		int createdBlocks = 0;
 		vector<Block*> notExecutedBlocks;
 		vector<Block*> blockScheme;
+		vector<Block*> loopDetectionTrace;
+		Block* expectedNextBlock = NULL;
 };
 
 #endif // SCHEME_H
