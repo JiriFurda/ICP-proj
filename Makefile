@@ -5,9 +5,10 @@ run: all
 	./blockeditor
 
 doxygen:
+	cd ./src && doxygen
 
 pack: clean
 	zip xfurda00-xhavan00 ./src/ ./examples/ ./doc/ ./README.txt ./Makefile
 
 clean:
-	rm -f *.o blockeditor doc/*
+	rm -r -f *.o blockeditor doc/*
