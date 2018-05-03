@@ -3,7 +3,7 @@
 
 
 # Qt files
-src/build-*
+build-*
 *.pro.user
 
 

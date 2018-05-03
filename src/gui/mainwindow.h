@@ -10,9 +10,9 @@
 #include "creditsdialog.h"
 #include "addblockdialog.h"
 
-#include "schemescene.h"
-#include "blockgraphicitem.h"
-#include "connectionlineitem.h"
+#include "gui/schemescene.h"
+#include "gui/blockgraphicitem.h"
+#include "gui/connectionlineitem.h"
 
 namespace Ui {
 class MainWindow;

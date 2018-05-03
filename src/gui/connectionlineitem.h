@@ -5,7 +5,7 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QToolTip>
 
-#include <blockgraphicitem.h>
+#include <gui/blockgraphicitem.h>
 
 class BlockGraphicItem; // Forward declaration beacuse of mutual including of connectionlineitem.h and blockgraphicitem.h
 

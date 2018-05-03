@@ -9,8 +9,8 @@
 #include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 
-#include "schemescene.h"
-#include "connectionlineitem.h"
+#include "gui/schemescene.h"
+#include "gui/connectionlineitem.h"
 
 class ConnectionLineItem; // Forward declaration beacuse of mutual including of connectionlineitem.h and blockgraphicitem.h
 
