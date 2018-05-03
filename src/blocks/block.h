@@ -26,7 +26,9 @@ class Block
 		void setID(int ID);
 		virtual ~Block() {};
 		void setPorts();
-
+		vector<Port>getInputPorts();
+		vector<Port>getOutputPorts();
+		bool wasExecuted();
 	private:
 		int blockID;
 		vector<Port> inputPorts;

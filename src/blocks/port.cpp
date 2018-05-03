@@ -78,8 +78,11 @@ bool Port::setConnectedPort(Port* other)
 {
 	if (compatible(*other))
 	{
+	//	cout << "Port::setConnectedPort before: " << connectedPort->getOwnerBlock() << "\n";
 		connectedPort = other;
+	//	cout << "Port::setConnectedPort after: " << connectedPort->getOwnerBlock() << "\n";
 		other->connectedPort = this;
+		//cout << "Port::setConnectedPort after: " << other->connectedPort->getOwnerBlock() << "\n";
 		return true;
 	}
 

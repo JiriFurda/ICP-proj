@@ -1,4 +1,6 @@
 #include "blockArithmetic.h"
+#include "port.h"
+#include "block.h"
 
 
 BlockArithmetic::BlockArithmetic()

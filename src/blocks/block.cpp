@@ -42,8 +42,28 @@ void Block::execute()
 		exit(-1);
 	}
 
+/*	for (Port port : getInputPorts())
+	{
+		vector<double> values;
+		for(map<string,double>::iterator it = port.getContent().begin(); it != port.getContent().end(); ++it) 
+		{
+			values.push_back(it->second);
+			cout << it->second << "\n";
+		}
+		for (double value : values)
+		{
+			if (value != value) //is value NaN ... value != value is true if value is NaN
+			{
+				return false;
+			}
+
+		}
+
+	}*/
+
 	executeSpecific();
 	executed = true;
+	//return true;
 }
 
 /*void Block::executeSpecific()
@@ -60,6 +80,21 @@ Port* Block::getInputPort(int index)
 Port* Block::getOutputPort(int index)
 {
 	return &(outputPorts[index]);
+}
+
+vector<Port> Block::getInputPorts()
+{
+	return inputPorts;
+}
+
+vector<Port> Block::getOutputPorts()
+{
+	return outputPorts;
+}
+
+bool Block::wasExecuted()
+{
+	return executed;
 }
 
 int Block::getID()

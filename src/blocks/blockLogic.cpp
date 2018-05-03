@@ -1,4 +1,6 @@
 #include "blockLogic.h"
+#include "port.h"
+#include "block.h"
 
 
 BlockLogic::BlockLogic()

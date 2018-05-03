@@ -13,8 +13,9 @@
 #include <string>
 #include <limits>
 #include <algorithm> 
-#include "port.h"
 #include "block.h"
+
+class Block;
 
 using namespace std;
 class BlockArithmetic : public Block

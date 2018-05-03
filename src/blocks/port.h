@@ -32,8 +32,8 @@ class Port
 	protected:
 		map<string, double> content;
 	private:
-		Port* connectedPort;
-		Block* ownerBlock;
+		Port* connectedPort = NULL;
+		Block* ownerBlock = NULL;
 		//Block ownerBlock = NULL;
 };
 

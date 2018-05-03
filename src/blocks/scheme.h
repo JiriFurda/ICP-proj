@@ -15,16 +15,20 @@ class Scheme
 {
 	public:
 		Scheme();
-		~Scheme();
+		//~Scheme();
 		int createBlock(int blockType);
 		void destroyBlock(int ID);
-		void evalScheme();
+		void run();
 		Block* getBlock(int ID);
+		Block* step(Block* expectedNextBlock);
+		Block* findNonDependentBlock(Block* block);
+		bool addBlock(Block* block);
 		//testValues();
 		//addBlock();		
 	private:
 		int existingBlocks = 0;
 		int createdBlocks = 0;
+		vector<Block*> notExecutedBlocks;
 		vector<Block*> blockScheme;
 };
 
