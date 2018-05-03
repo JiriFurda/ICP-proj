@@ -19,11 +19,8 @@ Block::Block(Port in, Port out)
 
 Block::Block(vector<Port> in, Port out)
 {
-	//cout << "this: " << this << "\n";
-	//cout << "Block::Block\n";
 	inputPorts = in;
 	outputPorts.push_back(out);
-	//cout << "Block::Block\n";
 	setPorts();
 }
 
@@ -48,7 +45,7 @@ void Block::execute()
 		for(map<string,double>::iterator it = port.getContent().begin(); it != port.getContent().end(); ++it) 
 		{
 			values.push_back(it->second);
-			cout << it->second << "\n";
+			//cout << it->second << "\n";
 		}
 		for (double value : values)
 		{
@@ -99,31 +96,25 @@ bool Block::wasExecuted()
 
 int Block::getID()
 {
-	//cout << "Block::getID\n";
-	//cout << blockID << "\n";
-	//cout << "Block::getID\n";	
+
 	return blockID;
 }
 
 void Block::setID(int ID)
 {
 	blockID = ID;
-	//cout << "Block::setID\n";
-	//cout << blockID << "\n";
+
 }
 
 void Block::setPorts()
 {
-	//for (Port port : inputPorts)
+
 	for (vector<Port>::iterator it = inputPorts.begin(); it != inputPorts.end(); ++it) 
-//    if (*it < 0) *it = -*it;
 	{
-	//	cout << "**********" << this << "*********\n";
 		(*it).setOwnerBlock(this);
-	//	cout << "__________" << (*it).getOwnerBlock() << "________\n";
 	}
 
-	//for (Port port : outputPorts)
+
 	for (vector<Port>::iterator it = outputPorts.begin(); it != outputPorts.end(); ++it) 
 	{
 		(*it).setOwnerBlock(this);

@@ -34,7 +34,6 @@ class Port
 	private:
 		Port* connectedPort = NULL;
 		Block* ownerBlock = NULL;
-		//Block ownerBlock = NULL;
 };
 
 
