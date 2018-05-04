@@ -14,6 +14,9 @@
 #include "gui/blockgraphicitem.h"
 #include "gui/connectionlineitem.h"
 
+// Backend
+#include "blocks/scheme.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -32,15 +35,10 @@ protected:
 private slots:
     void on_actionAbout_BlockEditor_triggered();
     void on_actionCredits_triggered();
-
     void on_actionAdd_triggered();
-
     void on_actionExit_triggered();
-
     void on_actionSave_File_triggered();
-
     void on_actionOpen_File_triggered();
-
     void on_actionNew_File_triggered();
 
 public slots:
@@ -49,6 +47,8 @@ public slots:
 private:
     Ui::MainWindow *ui;
     SchemeScene *scene;
+
+    Scheme *scheme;
 };
 
 #endif // MAINWINDOW_H

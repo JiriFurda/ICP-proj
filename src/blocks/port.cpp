@@ -118,3 +118,42 @@ void Port::setOwnerBlock(Block* otherBlock)
 
 	ownerBlock = otherBlock;
 }
+
+QString Port::print()
+{
+    vector<string> names = this->getNames();
+    QString result;
+
+    for(vector<string>::iterator name = names.begin(); name != names.end(); ++name)
+    {
+        result.append("["+QString::fromStdString(*name)+"]");
+    }
+
+    if(this->getConnectedPort() == NULL)
+        result.append(" Not connected");
+    else
+        result.append(" Connected");
+
+    return result;  // [real][imaginary] Not connected
+}
+
+QString Port::printConnection()
+{
+/*    vector<string> names = this->getNames();
+    QString result;
+    bool first = true; // Don't insert comma at beginning
+
+    for(vector<string>::iterator name = names.begin(); name != names.end(); ++name)
+    {
+        if(!first)
+            result.append(", ");
+        else
+            first = false;
+
+        //result.append("["+name+"] ");
+        result.append(this->getValue(name));
+    }
+
+    return result;  // [real] 42, [imaginary] 78*/
+}
+

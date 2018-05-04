@@ -7,10 +7,12 @@
 #include <QMenu>
 #include <QList>
 #include <QMessageBox>
-#include <QGraphicsDropShadowEffect>
 
 #include "gui/schemescene.h"
 #include "gui/connectionlineitem.h"
+
+#include "blocks/block.h"
+#include "blocks/port.h"
 
 class ConnectionLineItem; // Forward declaration beacuse of mutual including of connectionlineitem.h and blockgraphicitem.h
 
@@ -18,7 +20,7 @@ class ConnectionLineItem; // Forward declaration beacuse of mutual including of 
 class BlockGraphicItem : public QGraphicsItem
 {
 public:
-    BlockGraphicItem(SchemeScene *scene, QString name);
+    BlockGraphicItem(SchemeScene *scene, QString name, Block *backendObject);
     ~BlockGraphicItem();
 
     QRectF boundingRect() const;
@@ -37,6 +39,7 @@ protected:
     bool isMoving;
     bool isPressed;
     QString name;
+    Block *backendObject;
 
 private:
     SchemeScene *parentScene;

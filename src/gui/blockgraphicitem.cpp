@@ -1,6 +1,6 @@
 #include "blockgraphicitem.h"
 
-BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name)
+BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name, Block *backendObject)
 {
     scene->addItem(this);
 
@@ -15,6 +15,9 @@ BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name)
     this->isPressed = false;
     this->name = name;
     this->parentScene = scene;
+
+    // --- Backend ---
+    this->backendObject = backendObject;
 
     // --- Move if stacked on other block ---
     if(this->collidingItems().count() > 0)  // If colliding with some item
@@ -94,14 +97,41 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     QMenu *menu = new QMenu();
     QAction *removeAction = menu->addAction("Remove block");
 
+
+    /* Not working! .contains(selectedAction) is always false
     // -- Input ports submenu --
     QMenu *inputMenu = menu->addMenu("Connect input port");
-    QAction *connectDebugAction = inputMenu->addAction("Operand 1 [float]");
-    inputMenu->addAction("Operand 2 [float]");
+    QList<QAction *> connectInputActions;
+
+    vector<Port> ports = this->backendObject->getInputPorts();
+    for(vector<Port>::iterator port = ports.begin(); port != ports.end(); ++port)
+    {
+        connectInputActions.append(new QAction(inputMenu->addAction(port->print())));
+    }
+
 
     // -- Output ports submenu --
     QMenu *outputMenu = menu->addMenu("Connect output port");
-    outputMenu->addAction("Result [float]");
+    QList<QAction *> connectOutputActions;
+
+    ports = this->backendObject->getOutputPorts();
+    for(vector<Port>::iterator port = ports.begin(); port != ports.end(); ++port)
+    {
+        QAction *action = new QAction(outputMenu->addAction(port->print()));
+        qDebug(qUtf8Printable(action->text()));
+        connectOutputActions.append(action);
+    }
+    */
+
+    // -- Input ports submenu --
+    QMenu *inputMenu = menu->addMenu("Connect input port");
+    QAction *connectInput0Action(inputMenu->addAction(this->backendObject->getInputPort(0)->print()));
+    QAction *connectInput1Action(inputMenu->addAction(this->backendObject->getInputPort(1)->print()));
+
+    // -- Output ports submenu --
+    QMenu *outputMenu = menu->addMenu("Connect output port");
+    QAction *connectOutput0Action(outputMenu->addAction(this->backendObject->getOutputPort(0)->print()));
+
 
     // -- Show menu --
     QAction *selectedAction = menu->exec(event->screenPos());
@@ -111,6 +141,8 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     connect(menu, SIGNAL(triggered(QAction *)),
                  object, SLOT(triggered(QAction *)));
     */
+
+
     if(selectedAction)  // Some action was selected
     {
         if(selectedAction == removeAction)
@@ -125,11 +157,27 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
              else
                  return;
         }
-        else if(selectedAction == connectDebugAction)
+        else if(selectedAction == connectInput0Action)
+            this->parentScene->startConnectingBlocks(this, this->backendObject->getInputPort(0));
+        else if(selectedAction == connectInput1Action)
+            this->parentScene->startConnectingBlocks(this, this->backendObject->getInputPort(1));
+        else if(selectedAction == connectOutput0Action)
+            this->parentScene->startConnectingBlocks(this, this->backendObject->getOutputPort(0));
+        else
+            QMessageBox::critical(0, "Connecting port error", "Unexpected action selected");
+
+        /*  Not working! .contains(selectedAction) is always false
+        if(connectInputActions.contains(selectedAction))
         {
-            this->parentScene->isConnectingBlocks = true;
-            this->parentScene->connecting_startingBlock = this;
+            this->parentScene->startConnectingBlocks(this,
+                this->backendObject->getInputPort(connectInputActions.indexOf(selectedAction)));
         }
+        else if(connectOutputActions.contains(selectedAction))
+        {
+            this->parentScene->startConnectingBlocks(this,
+                this->backendObject->getOutputPort(connectOutputActions.indexOf(selectedAction)));
+        }
+        */
     }
 }
 
@@ -212,6 +260,7 @@ BlockGraphicItem::~BlockGraphicItem()
     }
 
     this->scene()->removeItem(this);
+    delete this->backendObject;
 }
 
 
@@ -222,6 +271,7 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
 {
     // --- Context menu ---
     QMenu *menu = new QMenu();
+
     menu->addAction("[float] Operand A");
     menu->addAction("[float] Operand A (used)");
 

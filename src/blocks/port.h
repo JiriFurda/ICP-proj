@@ -8,6 +8,8 @@
 #include <limits>
 #include <algorithm>
 
+#include <QString>
+
 class Block;
 
 using namespace std;
@@ -29,6 +31,8 @@ class Port
 		void setOwnerBlock(Block* otherBlock);
 		static const bool inputType = true;
 		static const bool outputType = false;
+        QString print();
+        QString printConnection();
 
 	protected:
 		map<string, double> content;

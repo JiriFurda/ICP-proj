@@ -17,18 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new SchemeScene();
     view->setScene(scene);
 
-
-    // --- Debug ---
-    /*
-    BlockGraphicItem *blockA = new BlockGraphicItem(scene, QString("A"));
-    BlockGraphicItem *blockB = new BlockGraphicItem(scene, QString("B"));
-    scene->addItem(blockA);
-    scene->addItem(blockB);
-    blockA->moveBy(150,50);
-*/
-    //ConnectionLineItem *line = new ConnectionLineItem(blockA, blockB);
-    //scene->addItem(line);
-
+    // --- Backend ---
+    this->scheme = new Scheme("Test Scheme");
 }
 
 MainWindow::~MainWindow()
@@ -59,7 +49,12 @@ void MainWindow::on_actionAdd_triggered()
 
 void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_requested (don't know why the fuck it's not working rename) -> QMetaObject::connectSlotsByName: No matching signal for on_addBlock_requested(QString)
 {
-    new BlockGraphicItem(scene, name);
+    if(name == "Add")
+        new BlockGraphicItem(this->scene, name, new BlockAdd());
+    else if(name == "Sub")
+        new BlockGraphicItem(this->scene, name, new BlockSub());
+    else
+        QMessageBox::critical(this, "Error creating block", "Unexpect name received when creating block");
 }
 
 void MainWindow::on_actionExit_triggered()
