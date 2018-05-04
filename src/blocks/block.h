@@ -32,9 +32,10 @@ class Block
 		vector<Port>getOutputPorts();
 		bool wasExecuted();
         QString printPorts();
+        vector<Port> inputPorts;
+
 	private:
 		int blockID;
-		vector<Port> inputPorts;
 		vector<Port> outputPorts;
 		bool executed = false;
 };

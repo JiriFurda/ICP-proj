@@ -23,6 +23,9 @@ bool Scheme::addBlock(Block* block)
 	}
 
 	blockScheme.push_back(block);
+
+    std::cerr << "Pushing " << block << " to scheme (saved: " << blockScheme.back() << ")\n";
+
 	return true;	
 }
 
@@ -112,24 +115,36 @@ void Scheme::searchUserDependentBlocks()
 {
 	for (Block* block : blockScheme)
 	{
-		for (Port port : block->getInputPorts())
+        //for (Port port : *block->getInputPortsPointer())
+        //for (vector<Port>::iterator it = block->getInputPorts().begin(); it != block->getInputPorts().end(); ++it)
+        //for (vector<Port>::iterator it = (*block->getInputPortsPointer()).begin(); it != (*block->getInputPortsPointer()).end(); ++it)
+
+        /* Gotta love pointers ^.^
+           ____
+           |/  |
+           |   O
+           |  /|\
+           |  / \
+           |
+        */
+
+        for (vector<Port>::iterator port = block->inputPorts.begin(); port != block->inputPorts.end(); ++port)
 		{
-			if (port.getConnectedPort() == NULL)
+            //Port port = *it;
+            if (port->getConnectedPort() == NULL)
 			{
-				for (string name : port.getNames())
+                for (string name : port->getNames())
 				{
-					double value = port.getValue(name);
+                    double value = port->getValue(name);
 					if (value != value) //is value NaN ... value != value is true if value is NaN
 					{
-						cerr << "Scheme::searchUserDependentBlocks()\n";
-
                         bool ok;
                         double value = QInputDialog::getDouble(0, QString("Missing value"),
                                 QString("Insert "+QString::fromStdString(name)+" value:"),
                                 0, -2147483647, 2147483647, 5, &ok);
 
                         if(ok)
-                            port.setValue(name, value);
+                            port->setValue(name, value);
                         else
                             QMessageBox::critical(0, "Error inserting value", "Value was not inserted");
                             // @todo End run
