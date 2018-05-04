@@ -10,6 +10,13 @@ ConnectionLineItem::ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *
     // --- Fill attributes ---
     this->blockA = blockA;
     this->blockB = blockB;
+
+    // --- Backend ---
+    if(portA != NULL && portB != NULL)  // It's not temporary line indicator
+    {
+        portA->setConnectedPort(portB);
+        portB->setConnectedPort(portA);
+    }
     this->backendPortA = portA;
     this->backendPortB = portB;
 

@@ -26,10 +26,11 @@ class Scheme
 		Block* step(Block* expectedNextBlock);
 		Block* findNonDependentBlock(Block* block);
 		bool addBlock(Block* block);	
-		void searchUserDependentBlocks();
+        Block* searchUserDependentBlocks();
 		Block* step_internal(Block* SIexpectedNextBlock);
 		bool preRun();
 		bool runStep();
+
 	private:
 		Block* findNonDependentBlock_private(Block* block);
 

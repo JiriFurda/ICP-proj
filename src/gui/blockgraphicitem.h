@@ -28,6 +28,9 @@ public:
 
     QList<ConnectionLineItem *> connections;
 
+    void highlight();
+    void unhighlight();
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -36,20 +39,20 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
-    bool isMoving;
-    bool isPressed;
-    QString name;
-    Block *backendObject;
-
 private:
     SchemeScene *parentScene;
 
     void on_moving_started();
     void on_moving_ended();
-
     void on_connectingToThisBlock(QGraphicsSceneMouseEvent *event);
 
     void showToolTip(QGraphicsSceneMouseEvent *event);
+
+    bool isMoving;
+    bool isPressed;
+    bool isHighlighted;
+    QString name;
+    Block *backendObject;
 };
 
 #endif // BLOCKGRAPHICITEM_H

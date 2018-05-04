@@ -15,9 +15,11 @@ BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name, Block *back
     this->isPressed = false;
     this->name = name;
     this->parentScene = scene;
+    this->isHighlighted = false;
 
     // --- Backend ---
     this->backendObject = backendObject;
+    backendObject->linkGUIobject(this);
     //this->parentScene->parent()->backendScheme->addBlock(backendObject);  // @todo Temporary in mainwindow
 
     // --- Move if stacked on other block ---
@@ -51,10 +53,17 @@ void BlockGraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     else
         painter->setOpacity(1);
 
+    // --- Highlight ---
+    QBrush brush;
+    if(this->isHighlighted)
+        brush = Qt::yellow;
+    else
+        brush = Qt::white;
+
     // --- Image ---
     QPainterPath path;  // something like group??
     path.addRoundedRect(boundingRect(), 10, 10);
-    painter->fillPath(path, Qt::white);
+    painter->fillPath(path, brush);
 
     // --- Name ---
     painter->drawText(boundingRect(), Qt::AlignCenter|Qt::TextWrapAnywhere, this->name);   // @todo Choose if Qt::TextWrapAnywhere or Qt::TextWordWrap and if adding Qt::TextDontClip is a good idea
@@ -347,3 +356,24 @@ void BlockGraphicItem::showToolTip(QGraphicsSceneMouseEvent *event)
     QToolTip::showText(event->screenPos(),this->backendObject->printPorts());
 }
 
+void BlockGraphicItem::highlight()
+{
+    if(this->parentScene->highlightedBlock != NULL)
+        this->parentScene->highlightedBlock->unhighlight();
+
+    this->parentScene->highlightedBlock = this;
+    this->isHighlighted = true;
+
+    this->update(); // Force paint()
+}
+
+void BlockGraphicItem::unhighlight()
+{
+    if(this->parentScene->highlightedBlock == this)
+        this->parentScene->highlightedBlock = NULL;
+    // else qDebug
+
+    this->isHighlighted = false;
+
+    this->update(); // Force paint()
+}

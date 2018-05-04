@@ -79,7 +79,10 @@ bool Scheme::preRun()
 {
 	readOnly = true;
 
-	searchUserDependentBlocks();
+    Block* lastBlock = searchUserDependentBlocks();
+
+    if(lastBlock != NULL)
+        lastBlock->GUIobject->unhighlight();
 
 	notExecutedBlocks = blockScheme;
 
@@ -111,10 +114,13 @@ Block* Scheme::step_internal(Block* SIexpectedNextBlock)
 	return NULL;
 }
 
-void Scheme::searchUserDependentBlocks()
+Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to last block for .unhiglihts
 {
-	for (Block* block : blockScheme)
+    Block* lastBlock = NULL;
+    for (Block* block : blockScheme)
 	{
+        lastBlock = block;
+
         //for (Port port : *block->getInputPortsPointer())
         //for (vector<Port>::iterator it = block->getInputPorts().begin(); it != block->getInputPorts().end(); ++it)
         //for (vector<Port>::iterator it = (*block->getInputPortsPointer()).begin(); it != (*block->getInputPortsPointer()).end(); ++it)
@@ -138,6 +144,8 @@ void Scheme::searchUserDependentBlocks()
                     double value = port->getValue(name);
 					if (value != value) //is value NaN ... value != value is true if value is NaN
 					{
+                        block->GUIobject->highlight();
+
                         bool ok;
                         double value = QInputDialog::getDouble(0, QString("Missing value"),
                                 QString("Insert "+QString::fromStdString(name)+" value:"),
@@ -153,6 +161,8 @@ void Scheme::searchUserDependentBlocks()
 			}
 		}
 	}
+
+    return lastBlock;
 }
 
 

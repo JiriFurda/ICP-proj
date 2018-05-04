@@ -8,6 +8,7 @@ Block::Block(const vector<Port>& in, const vector<Port>& out)
 	inputPorts = in;
 	outputPorts = out;
 	setPorts();
+    this->GUIobject = NULL;
 }
 
 Block::Block(const Port& in, const Port& out)
@@ -143,5 +144,10 @@ QString Block::printPorts()
         result.append(port.printConnection()+"\n");
     }
 
-    return result.trimmed();
+    return result.trimmed();    // Remove last \n
+}
+
+void Block::linkGUIobject(BlockGraphicItem *GUIobject)
+{
+    this->GUIobject = GUIobject;
 }

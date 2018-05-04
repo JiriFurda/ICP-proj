@@ -9,6 +9,7 @@
 #include <algorithm> 
 
 #include <QString>
+#include "gui/blockgraphicitem.h"
 
 class Port;
 
@@ -33,6 +34,8 @@ class Block
 		bool wasExecuted();
         QString printPorts();
         vector<Port> inputPorts;
+        void linkGUIobject(BlockGraphicItem *GUIobject);
+        BlockGraphicItem *GUIobject;
 
 	private:
 		int blockID;
