@@ -104,3 +104,8 @@ void MainWindow::on_actionRun_triggered()
 {
     this->backendScheme->run();
 }
+
+void MainWindow::on_actionStep_triggered()
+{
+    this->backendScheme->runStep(true);
+}

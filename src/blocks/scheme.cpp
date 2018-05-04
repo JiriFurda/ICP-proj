@@ -24,8 +24,6 @@ bool Scheme::addBlock(Block* block)
 
 	blockScheme.push_back(block);
 
-    std::cerr << "Pushing " << block << " to scheme (saved: " << blockScheme.back() << ")\n";
-
 	return true;	
 }
 
@@ -33,7 +31,7 @@ bool Scheme::run()
 {
 	do 
 	{
-		bool runStepOk = runStep();
+        bool runStepOk = runStep(false);
 	
 		if(!runStepOk)
 			return false;
@@ -44,7 +42,7 @@ bool Scheme::run()
  
 }
 
-bool Scheme::runStep()
+bool Scheme::runStep(bool highlight)
 {
 
 	if (finished)
@@ -63,16 +61,18 @@ bool Scheme::runStep()
 	if(expectedNextBlock == NULL)
 		expectedNextBlock = notExecutedBlocks[0];
 
-	expectedNextBlock = step_internal(expectedNextBlock);	
+    expectedNextBlock = step_internal(expectedNextBlock, highlight);
 
 	if (expectedNextBlock == Scheme::LoopDetected)
 		return false;
 
 	if (notExecutedBlocks.empty())
+    {
 		finished = true;
+        QMessageBox::information(0, "Execution", "Scheme successfuly finished execution.");
+    }
 
 	return true;
-
 }
 
 bool Scheme::preRun()
@@ -93,7 +93,7 @@ bool Scheme::preRun()
 
 }
 
-Block* Scheme::step_internal(Block* SIexpectedNextBlock)
+Block* Scheme::step_internal(Block* SIexpectedNextBlock, bool highlight)
 {
 	Block* realNextBlock = findNonDependentBlock(SIexpectedNextBlock);
 
@@ -104,6 +104,9 @@ Block* Scheme::step_internal(Block* SIexpectedNextBlock)
 	
 	realNextBlock->execute();
 	notExecutedBlocks.erase(std::remove(notExecutedBlocks.begin(), notExecutedBlocks.end(), realNextBlock), notExecutedBlocks.end());
+
+    if(highlight)
+        realNextBlock->GUIobject->highlight();
 
 	if (realNextBlock->getOutputPorts().size() != 0)
 	{

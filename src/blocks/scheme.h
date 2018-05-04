@@ -27,9 +27,9 @@ class Scheme
 		Block* findNonDependentBlock(Block* block);
 		bool addBlock(Block* block);	
         Block* searchUserDependentBlocks();
-		Block* step_internal(Block* SIexpectedNextBlock);
+        Block* step_internal(Block* SIexpectedNextBlock, bool highlight);
 		bool preRun();
-		bool runStep();
+        bool runStep(bool highlight);
 
 	private:
 		Block* findNonDependentBlock_private(Block* block);

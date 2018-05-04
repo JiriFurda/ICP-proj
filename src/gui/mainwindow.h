@@ -45,6 +45,8 @@ private slots:
 
     void on_actionRun_triggered();
 
+    void on_actionStep_triggered();
+
 public slots:
     void createBlock(QString);
 
