@@ -48,6 +48,8 @@ private:
     void on_moving_ended();
 
     void on_connectingToThisBlock(QGraphicsSceneMouseEvent *event);
+
+    void showToolTip(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // BLOCKGRAPHICITEM_H

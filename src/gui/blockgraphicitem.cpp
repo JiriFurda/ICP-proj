@@ -84,6 +84,9 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         if(this->parentScene->isConnectingBlocks == true)
             this->on_connectingToThisBlock(event);
 
+        if(this->parentScene->isConnectingBlocks == false && this->isMoving == false)
+            this->showToolTip(event); // Show port values
+
         if(this->isMoving)
             this->on_moving_ended();
     }
@@ -94,6 +97,9 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
+    // --- Hide tooltip ---
+    QToolTip::hideText();
+
     // --- Context menu ---
     QMenu *menu = new QMenu();
     QAction *removeAction = menu->addAction("Remove block");
@@ -204,6 +210,8 @@ void BlockGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 
 void BlockGraphicItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
+    QToolTip::hideText();
+
     if(this->parentScene->isConnectingBlocks == true)
     {
         if(parentScene->connecting_temporaryLine_exists)  // Temporary line exists
@@ -333,3 +341,9 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
                                     this->parentScene->connecting_startingBlock, this,
                                     this->parentScene->connecting_startingPort, finishingPort);
 }
+
+void BlockGraphicItem::showToolTip(QGraphicsSceneMouseEvent *event)
+{
+    QToolTip::showText(event->screenPos(),this->backendObject->printPorts());
+}
+

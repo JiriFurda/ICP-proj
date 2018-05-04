@@ -8,6 +8,8 @@
 #include <limits>
 #include <algorithm> 
 
+#include <QString>
+
 class Port;
 
 using namespace std;
@@ -29,6 +31,7 @@ class Block
 		vector<Port>getInputPorts();
 		vector<Port>getOutputPorts();
 		bool wasExecuted();
+        QString printPorts();
 	private:
 		int blockID;
 		vector<Port> inputPorts;

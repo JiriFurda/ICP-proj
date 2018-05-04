@@ -128,3 +128,20 @@ void Block::setPorts()
 {
 }
 */
+
+QString Block::printPorts()
+{
+    QString result = "Input:\n";
+    for(Port port : this->getInputPorts())
+    {
+        result.append(port.printConnection()+"\n");
+    }
+
+    result.append("\nOutput:\n");
+    for(Port port : this->getOutputPorts())
+    {
+        result.append(port.printConnection()+"\n");
+    }
+
+    return result.trimmed();
+}
