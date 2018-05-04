@@ -29,10 +29,12 @@ class Port
 		Port* getConnectedPort();
 		Block* getOwnerBlock();
 		void setOwnerBlock(Block* otherBlock);
-		static const bool inputType = true;
-		static const bool outputType = false;
+        //static const bool inputType = true;
+        //static const bool outputType = false;
         QString print();
         QString printConnection();
+        bool isInputType();
+        bool isOutputType();
 
 	protected:
 		map<string, double> content;

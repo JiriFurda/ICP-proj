@@ -7,13 +7,15 @@
 
 #include <gui/blockgraphicitem.h>
 
+#include <blocks/port.h>
+
 class BlockGraphicItem; // Forward declaration beacuse of mutual including of connectionlineitem.h and blockgraphicitem.h
 
 
 class ConnectionLineItem : public QGraphicsLineItem
 {
 public:
-    ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *blockA, BlockGraphicItem *blockB);
+    ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *blockA, BlockGraphicItem *blockB, Port *portA, Port *portB);
     ~ConnectionLineItem();
 
     void refreshPos();
@@ -29,6 +31,10 @@ protected:
 private:
     BlockGraphicItem *blockA;
     BlockGraphicItem *blockB;
+    Port *backendPortA;
+    Port *backendPortB;
+
+    void showToolTip(QGraphicsSceneHoverEvent *event);
 };
 
 #endif // CONNECTIONLINEITEM_H

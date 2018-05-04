@@ -186,7 +186,7 @@ void BlockGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     if(this->parentScene->isConnectingBlocks == true    // User is connecting blocks
             && this->parentScene->connecting_startingBlock != this) // Hovered block is not starting one
     {
-        ConnectionLineItem *temporaryLine = new ConnectionLineItem(this->parentScene, this->parentScene->connecting_startingBlock, this);
+        ConnectionLineItem *temporaryLine = new ConnectionLineItem(this->parentScene, this->parentScene->connecting_startingBlock, this, NULL, NULL);
 
         QPen temporaryConnectionPen;
         temporaryConnectionPen.setStyle(Qt::DashLine);
@@ -271,20 +271,49 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
 {
     // --- Context menu ---
     QMenu *menu = new QMenu();
-
-    menu->addAction("[float] Operand A");
-    menu->addAction("[float] Operand A (used)");
-
-    // -- Show menu --
-    QAction *selectedAction = menu->exec(event->screenPos());
+    Port *finishingPort;
 
 
-    if(selectedAction)  // Some action was selected
+    if(this->parentScene->connecting_startingPort->isOutputType())
     {
-        // @todo
+        // -- Input ports submenu --
+        QAction *connectInput0Action(menu->addAction(this->backendObject->getInputPort(0)->print()));
+        QAction *connectInput1Action(menu->addAction(this->backendObject->getInputPort(1)->print()));
+
+        // -- Show menu --
+        QAction *selectedAction = menu->exec(event->screenPos());
+
+
+        if(selectedAction)  // Some action was selected
+        {
+            if(selectedAction == connectInput0Action)
+                finishingPort = this->backendObject->getInputPort(0);
+            else if(selectedAction == connectInput1Action)
+                finishingPort = this->backendObject->getInputPort(1);
+            else
+                QMessageBox::critical(0, "Connecting port error", "Unexpected action selected");
+        }
+        else
+            return;
     }
     else
-        return;
+    {
+        // -- Output ports submenu --
+        QAction *connectOutput0Action(menu->addAction(this->backendObject->getOutputPort(0)->print()));
+
+        // -- Show menu --
+        QAction *selectedAction = menu->exec(event->screenPos());
+
+        if(selectedAction)  // Some action was selected
+        {
+            if(selectedAction == connectOutput0Action)
+                finishingPort = this->backendObject->getOutputPort(0);
+            else
+                QMessageBox::critical(0, "Connecting port error", "Unexpected action selected");
+        }
+        else
+            return;
+    }
 
 
     // --- Remove new connection indicator ---
@@ -299,5 +328,7 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
     this->parentScene->isConnectingBlocks = false;
 
     // --- Create new connection ---
-    ConnectionLineItem *line = new ConnectionLineItem(this->parentScene, this->parentScene->connecting_startingBlock, this);
+    ConnectionLineItem *line = new ConnectionLineItem(this->parentScene,
+                                    this->parentScene->connecting_startingBlock, this,
+                                    this->parentScene->connecting_startingPort, finishingPort);
 }

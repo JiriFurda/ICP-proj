@@ -139,7 +139,7 @@ QString Port::print()
 
 QString Port::printConnection()
 {
-/*    vector<string> names = this->getNames();
+    vector<string> names = this->getNames();
     QString result;
     bool first = true; // Don't insert comma at beginning
 
@@ -150,10 +150,20 @@ QString Port::printConnection()
         else
             first = false;
 
-        //result.append("["+name+"] ");
-        result.append(this->getValue(name));
+        result.append("["+QString::fromStdString(*name)+"] ");
+        result.append(QString::number(this->getValue(*name)));
     }
 
-    return result;  // [real] 42, [imaginary] 78*/
+    return result;  // [real] 42, [imaginary] 78
+    return NULL;
 }
 
+bool Port::isInputType()
+{
+    return !this->isOutputType();
+}
+
+bool Port::isOutputType()
+{
+    return this->type;
+}

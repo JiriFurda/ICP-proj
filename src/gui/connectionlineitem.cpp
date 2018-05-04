@@ -1,6 +1,6 @@
 #include "connectionlineitem.h"
 
-ConnectionLineItem::ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *blockA, BlockGraphicItem *blockB)
+ConnectionLineItem::ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *blockA, BlockGraphicItem *blockB, Port *portA, Port *portB)
 {
     // --- Settings ---
     this->setAcceptHoverEvents(true);
@@ -10,6 +10,8 @@ ConnectionLineItem::ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *
     // --- Fill attributes ---
     this->blockA = blockA;
     this->blockB = blockB;
+    this->backendPortA = portA;
+    this->backendPortB = portB;
 
     // --- Link blocks to this ---
     // (Used for moving with objects etc)
@@ -52,7 +54,7 @@ void ConnectionLineItem::refreshPos()
 void ConnectionLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     QToolTip::hideText();
-    QToolTip::showText(event->screenPos(),QString("[float] 42.0 (Result -> Operand A)\n[float] 69.0 (Reuslt 2 -> Operand B"));
+    this->showToolTip(event);
 
     QGraphicsLineItem::hoverEnterEvent(event);
 }
@@ -60,9 +62,7 @@ void ConnectionLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 void ConnectionLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
     if(!QToolTip::isVisible())
-    {
-        QToolTip::showText(event->screenPos(),QString("[float] 42.0 (Result -> Operand A)\n[float] 69.0 (Reuslt 2 -> Operand B"));
-    }
+        this->showToolTip(event);
 
     QGraphicsLineItem::hoverMoveEvent(event);
 }
@@ -109,3 +109,8 @@ void ConnectionLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsLineItem::mouseReleaseEvent(event);
 }
 */
+
+void ConnectionLineItem::showToolTip(QGraphicsSceneHoverEvent *event)
+{
+    QToolTip::showText(event->screenPos(),this->backendPortA->printConnection());
+}
