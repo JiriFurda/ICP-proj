@@ -18,6 +18,7 @@ BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name, Block *back
 
     // --- Backend ---
     this->backendObject = backendObject;
+    //this->parentScene->parent()->backendScheme->addBlock(backendObject);  // @todo Temporary in mainwindow
 
     // --- Move if stacked on other block ---
     if(this->collidingItems().count() > 0)  // If colliding with some item

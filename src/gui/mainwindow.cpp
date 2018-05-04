@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setScene(scene);
 
     // --- Backend ---
-    this->scheme = new Scheme("Test Scheme");
+    this->backendScheme = new Scheme("Test Scheme");
 }
 
 MainWindow::~MainWindow()
@@ -49,12 +49,22 @@ void MainWindow::on_actionAdd_triggered()
 
 void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_requested (don't know why the fuck it's not working rename) -> QMetaObject::connectSlotsByName: No matching signal for on_addBlock_requested(QString)
 {
+    Block *block;
+
     if(name == "Add")
-        new BlockGraphicItem(this->scene, name, new BlockAdd());
+        block = new BlockAdd();
+
     else if(name == "Sub")
-        new BlockGraphicItem(this->scene, name, new BlockSub());
+        block = new BlockSub();
     else
+    {
         QMessageBox::critical(this, "Error creating block", "Unexpect name received when creating block");
+        return;
+    }
+
+    new BlockGraphicItem(this->scene, name, block);
+    this->backendScheme->addBlock(block);   // @todo Temporary, should be in SchemeScene
+
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -88,4 +98,9 @@ void MainWindow::on_actionOpen_File_triggered()
 void MainWindow::on_actionNew_File_triggered()
 {
     scene->clear();
+}
+
+void MainWindow::on_actionRun_triggered()
+{
+    this->backendScheme->run();
 }

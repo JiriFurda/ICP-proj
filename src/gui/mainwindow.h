@@ -29,6 +29,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    Scheme *backendScheme;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -41,6 +43,8 @@ private slots:
     void on_actionOpen_File_triggered();
     void on_actionNew_File_triggered();
 
+    void on_actionRun_triggered();
+
 public slots:
     void createBlock(QString);
 
@@ -48,7 +52,7 @@ private:
     Ui::MainWindow *ui;
     SchemeScene *scene;
 
-    Scheme *scheme;
+
 };
 
 #endif // MAINWINDOW_H
