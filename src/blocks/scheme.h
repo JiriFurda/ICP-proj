@@ -10,6 +10,10 @@
 #include "blockArithmetic.h"
 #include "blockLogic.h"
 
+#include <QString>
+#include <QInputDialog>
+#include <QMessageBox>
+
 using namespace std;
 class Scheme
 {

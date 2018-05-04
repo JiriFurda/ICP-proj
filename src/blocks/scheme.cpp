@@ -46,7 +46,7 @@ bool Scheme::runStep()
 
 	if (finished)
 	{
-		cerr << "Scheme::runStep(): Scheme already finished executing\n";
+        QMessageBox::information(0, "Information", "This scheme was already executed.");
 		return false;
 	}
 
@@ -74,12 +74,6 @@ bool Scheme::runStep()
 
 bool Scheme::preRun()
 {
-	if (finished)
-	{
-		cerr << "Scheme::preRun(): Can't run scheme twice";
-		return false;
-	}
-
 	readOnly = true;
 
 	searchUserDependentBlocks();
@@ -116,7 +110,6 @@ Block* Scheme::step_internal(Block* SIexpectedNextBlock)
 
 void Scheme::searchUserDependentBlocks()
 {
-
 	for (Block* block : blockScheme)
 	{
 		for (Port port : block->getInputPorts())
@@ -129,16 +122,22 @@ void Scheme::searchUserDependentBlocks()
 					if (value != value) //is value NaN ... value != value is true if value is NaN
 					{
 						cerr << "Scheme::searchUserDependentBlocks()\n";
-						port.setValue(name, 420);
-					}
-					
-				}
 
+                        bool ok;
+                        double value = QInputDialog::getDouble(0, QString("Missing value"),
+                                QString("Insert "+QString::fromStdString(name)+" value:"),
+                                0, -2147483647, 2147483647, 5, &ok);
+
+                        if(ok)
+                            port.setValue(name, value);
+                        else
+                            QMessageBox::critical(0, "Error inserting value", "Value was not inserted");
+                            // @todo End run
+					}
+				}
 			}
 		}
-
 	}
-
 }
 
 
