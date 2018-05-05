@@ -257,8 +257,12 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
 {
 
 	if(std::find(loopDetectionTrace.begin(), loopDetectionTrace.end(), block) != loopDetectionTrace.end())
+    {
+        this->finished = true;
+        QMessageBox::critical(0, "Executing error", "Loop detected.");
 		return Scheme::LoopDetected;
-	else
+    }
+    else
 		loopDetectionTrace.push_back(block);
 		
 	
