@@ -19,6 +19,7 @@ public:
     ~ConnectionLineItem();
 
     void refreshPos();
+    bool containsPort(Port *searched);
 
     QGraphicsLineItem *visibleLine;
 

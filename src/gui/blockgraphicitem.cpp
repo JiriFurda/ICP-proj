@@ -344,6 +344,47 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
         this->parentScene->connecting_temporaryLine_exists = false;
     }
 
+    // --- Check occupied port ---
+    if(finishingPort->getConnectedPort() != NULL)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0, "Replace connection", "This port is already connect, do you want to replace this connection?",
+                                      QMessageBox::Yes|QMessageBox::No);
+
+
+        if(reply == QMessageBox::Yes)
+        {
+            Port* oldConnectionOtherPort = finishingPort->getConnectedPort();   // Port of other block that is connected to connection we need to replace
+
+            // --- Destroy connections ---
+            for(int i = 0; i < this->connections.count(); ++i)  // For every connection in this block
+            {
+                if(connections.at(i)->containsPort(oldConnectionOtherPort)) // Check if it's connection we need to replace
+                {
+                    delete this->connections.at(i);
+                }
+            }
+
+          /*
+int count = connections.count(); // Save because it's decreasing every loop
+
+// --- Destroy connections ---
+for(int i = 0; i < count; ++i)
+{
+delete this->connections.first();
+}
+
+this->parentScene->removeItem(this);
+//this->parentScene->backendScheme->removeBlock(backendObject);
+//delete this->backendObject;
+this->backendObject->deleted = true;
+           */
+
+        }
+        else
+          return;
+    }
+
     // --- Exit connecting mode ---
     this->parentScene->isConnectingBlocks = false;
 

@@ -127,3 +127,14 @@ void ConnectionLineItem::showToolTip(QGraphicsSceneHoverEvent *event)
 {
     QToolTip::showText(event->screenPos(),this->backendPortA->printConnection());
 }
+
+bool ConnectionLineItem::containsPort(Port *searched)
+{
+    if(this->backendPortA != NULL)
+        if(this->backendPortA == searched)
+            return true;
+    if(this->backendPortB != NULL)
+        if(this->backendPortB == searched)
+            return true;
+    return false;
+}
