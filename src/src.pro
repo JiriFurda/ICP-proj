@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     blocks/blockArithmetic.cpp \
     blocks/blockLogic.cpp \
     blocks/port.cpp \
-    blocks/scheme.cpp
+    blocks/scheme.cpp \
+    blocks/blockComplex.cpp
 
 HEADERS  += gui/mainwindow.h \
     gui/schemescene.h \
@@ -38,7 +39,8 @@ HEADERS  += gui/mainwindow.h \
     blocks/blockArithmetic.h \
     blocks/blockLogic.h \
     blocks/port.h \
-    blocks/scheme.h
+    blocks/scheme.h \
+    blocks/blockComplex.h
 
 FORMS    += gui/mainwindow.ui \
 			gui/aboutdialog.ui \
