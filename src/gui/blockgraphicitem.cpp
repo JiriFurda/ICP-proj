@@ -143,7 +143,8 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     QMenu *inputMenu = new QMenu();
     QMenu *outputMenu = new QMenu();
 
-    if(!this->parentScene->isConnectingBlocks)
+    // --- Show connect option ---
+    if(!this->parentScene->isConnectingBlocks)  // Only when not in connecting mode
     {
         inputMenu = menu->addMenu(QIcon(":/img/input.png"),"Connect input port");
         outputMenu  = menu->addMenu(QIcon(":/img/output.png"),"Connect output port");
@@ -170,12 +171,15 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
                  object, SLOT(triggered(QAction *)));
     */
 
-    Port *selectedPort;
 
+    // --- Do action ---
+    Port *selectedPort;
     if(selectedAction)  // Some action was selected
     {
+        // --- Read selected action ---
         if(selectedAction == removeAction)
         {
+            // --- Action delete ---
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(0, QString("Delete block"),
                 QString("Do you really want to delete block \""+this->name+"\"?"),
@@ -185,6 +189,7 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
                 delete this;
             return;
         }
+        // --- Action connect ---
         else if(selectedAction == connectInput0Action)
             selectedPort = this->backendObject->getInputPort(0);
         else if(selectedAction == connectInput1Action)
@@ -197,7 +202,9 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
             return;
         }
 
-        // --- Check occupied port ---
+
+        // --- Action connect checks ---
+        // -- Check occupied port --
         if(selectedPort->getConnectedPort() != NULL)
         {
             QMessageBox::StandardButton reply;
@@ -221,6 +228,7 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
             else
               return;
         }
+
         this->parentScene->startConnectingBlocks(this, selectedPort);
 
         /*  Not working! .contains(selectedAction) is always false
@@ -408,7 +416,12 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
           return;
     }
 
-
+    // --- Check connecting to self ---
+    if(this->parentScene->connecting_startingBlock == this)
+    {
+        QMessageBox::critical(0, "Connecting port error", "Loop detected!\nCan't connect two ports of the same block");
+        return;
+    }
     // --- Remove new connection indicator ---
     if(this->parentScene->connecting_temporaryLine_exists)  // Temporary line exists
     {

@@ -194,8 +194,12 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
                         if(ok)
                             port->setValue(name, value);
                         else
-                            QMessageBox::critical(0, "Error inserting value", "Value was not inserted");
-                            // @todo End run
+                        {
+                            QMessageBox::critical(0, "Error inserting value", "Execution failed. \nValue was not inserted.");
+                            this->finished = true;
+                            block->GUIobject->unhighlight();
+                            return NULL;
+                        }
 					}
 				}
 			}
