@@ -140,14 +140,25 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     }
     */
 
+    QMenu *inputMenu = new QMenu();
+    QMenu *outputMenu = new QMenu();
+
+    if(!this->parentScene->isConnectingBlocks)
+    {
+        inputMenu = menu->addMenu(QIcon(":/img/input.png"),"Connect input port");
+        outputMenu  = menu->addMenu(QIcon(":/img/output.png"),"Connect output port");
+    }
+
     // -- Input ports submenu --
-    QMenu *inputMenu = menu->addMenu(QIcon(":/img/input.png"),"Connect input port");
+
     QAction *connectInput0Action(inputMenu->addAction(this->backendObject->getInputPort(0)->print()));
     QAction *connectInput1Action(inputMenu->addAction(this->backendObject->getInputPort(1)->print()));
 
     // -- Output ports submenu --
-    QMenu *outputMenu = menu->addMenu(QIcon(":/img/output.png"),"Connect output port");
+
     QAction *connectOutput0Action(outputMenu->addAction(this->backendObject->getOutputPort(0)->print()));
+
+
 
 
     // -- Show menu --
