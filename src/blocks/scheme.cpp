@@ -107,14 +107,20 @@ bool Scheme::runStep(bool highlight)
 }
 
 bool Scheme::preRun()
-{
+{   
     for (Block* block : blockScheme)
     {
         if(block->deleted)
         {
             this->removeBlock(block);
         }
-   }
+    }
+
+    if(blockScheme.size() == 0)
+    {
+        QMessageBox::warning(0, "No blocks", "Empty scheme cannot be executed.");
+        return false;
+    }
 
 	readOnly = true;
 
