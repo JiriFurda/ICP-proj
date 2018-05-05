@@ -27,6 +27,37 @@ bool Scheme::addBlock(Block* block)
 	return true;	
 }
 
+bool Scheme::removeBlock(Block* block)
+{
+    if (block == NULL)
+    {
+        cerr << "Scheme::removeBlock: Attempt to remove NULL Block";
+        return false;
+    }
+
+    int index = 0;
+    bool found = false;
+    for (vector<Block*>::iterator savedBlock = this->blockScheme.begin(); savedBlock != this->blockScheme.end(); ++savedBlock)
+    {
+        if(block == *savedBlock)
+        {
+            found = true;
+            return false;
+        }
+
+        index++;
+    }
+    if (!found)
+    {
+        cerr << "Scheme::removeBlock: Block wasn't found in scheme";
+        return false;
+    }
+
+    blockScheme.erase(blockScheme.begin()+index);
+
+    return true;
+}
+
 bool Scheme::run()
 {
 	do 

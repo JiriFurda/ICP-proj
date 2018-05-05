@@ -7,6 +7,7 @@
 #include <string>
 #include <limits>
 #include <algorithm>
+#include "block.h"
 #include "blockArithmetic.h"
 #include "blockLogic.h"
 
@@ -26,6 +27,7 @@ class Scheme
 		Block* step(Block* expectedNextBlock);
 		Block* findNonDependentBlock(Block* block);
 		bool addBlock(Block* block);	
+        bool removeBlock(Block* block);
         Block* searchUserDependentBlocks();
         Block* step_internal(Block* SIexpectedNextBlock, bool highlight);
 		bool preRun();

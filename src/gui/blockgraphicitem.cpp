@@ -277,7 +277,8 @@ BlockGraphicItem::~BlockGraphicItem()
         delete this->connections.first();
     }
 
-    this->scene()->removeItem(this);
+    this->parentScene->removeItem(this);
+    //this->parentScene->backendScheme->removeBlock(backendObject);
     delete this->backendObject;
 }
 
