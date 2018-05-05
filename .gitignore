@@ -1,2 +1,18 @@
+# C++ files
+*.o
+
+
+# Qt files
+build-*
+*.pro.user
+
+
+# Custom
+*.ignore
+ignore
+
+# IPP relevant
 xfurda00-xhavan00.zip
 doc/*
+
+

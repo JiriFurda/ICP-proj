@@ -11,4 +11,5 @@ pack: clean
 	zip xfurda00-xhavan00 ./src/ ./examples/ ./doc/ ./README.txt ./Makefile
 
 clean:
-	rm -r -f *.o blockeditor doc/*
+	rm -r -f blockeditor doc/*
+	find . -name '*.o' -delete

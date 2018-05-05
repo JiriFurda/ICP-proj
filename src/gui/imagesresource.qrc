@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/add.png</file>
+        <file>img/broken-link.png</file>
+        <file>img/credits.txt</file>
+        <file>img/input.png</file>
+        <file>img/link.png</file>
+        <file>img/output.png</file>
+        <file>img/run.png</file>
+        <file>img/step-forward.png</file>
+        <file>img/remove.png</file>
+    </qresource>
+</RCC>
