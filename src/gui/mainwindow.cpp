@@ -59,7 +59,7 @@ void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_reque
         block = new BlockMul();
     else if(name == "Div")
         block = new BlockDiv();
-    if(name == "CxAdd")
+    else if(name == "CxAdd")
         block = new BlockCxAdd();
     else if(name == "CxSub")
         block = new BlockCxSub();

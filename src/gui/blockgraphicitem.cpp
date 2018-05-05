@@ -365,13 +365,11 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
             return;
     }
 
-
-    // --- Remove new connection indicator ---
-    if(this->parentScene->connecting_temporaryLine_exists)  // Temporary line exists
+    // --- Check compatibility ---
+    if(!this->parentScene->connecting_startingPort->compatible(*finishingPort))
     {
-        // @todo This is also in on_connectingToThisBlock -> make a new method
-        delete this->parentScene->connecting_temporaryLine;
-        this->parentScene->connecting_temporaryLine_exists = false;
+       QMessageBox::critical(0, "Compatibility error", "Connected ports are not compatibile");
+       return;
     }
 
     // --- Check occupied port ---
@@ -397,6 +395,15 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
         }
         else
           return;
+    }
+
+
+    // --- Remove new connection indicator ---
+    if(this->parentScene->connecting_temporaryLine_exists)  // Temporary line exists
+    {
+        // @todo This is also in on_connectingToThisBlock -> make a new method
+        delete this->parentScene->connecting_temporaryLine;
+        this->parentScene->connecting_temporaryLine_exists = false;
     }
 
     // --- Create new connection ---
