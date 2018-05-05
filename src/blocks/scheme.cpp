@@ -187,9 +187,25 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
                         block->GUIobject->highlight();
 
                         bool ok;
-                        double value = QInputDialog::getDouble(0, QString("Missing value"),
+                        double value;
+                        if(name == "bool")
+                        {
+                            QStringList items;
+                            items << QString("True") << QString("False");
+                            QString item = QInputDialog::getItem(0, QString("Missing value"),
+                                QString("Select bool value (port #"+QString::number(portNum)+"):"), items, 0, false, &ok);
+
+                            if(item == "True")
+                                value = 0;
+                            else
+                                value = 1;
+                        }
+                        else
+                        {
+                            value = QInputDialog::getDouble(0, QString("Missing value"),
                                 QString("Insert "+QString::fromStdString(name)+" value (port #"+QString::number(portNum)+"):"),
                                 0, -2147483647, 2147483647, 5, &ok);
+                        }
 
                         if(ok)
                             port->setValue(name, value);
