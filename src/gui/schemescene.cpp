@@ -14,3 +14,10 @@ void SchemeScene::startConnectingBlocks(BlockGraphicItem *startingBlock, Port *s
     this->connecting_startingPort = startingPort;
     this->connecting_startingBlock = startingBlock;
 }
+
+void SchemeScene::exitConnectingBlocks()
+{
+    this->isConnectingBlocks = false;
+    this->connecting_startingPort = NULL;
+    this->connecting_startingBlock = NULL;
+}

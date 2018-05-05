@@ -47,6 +47,8 @@ private slots:
 
     void on_actionStep_triggered();
 
+    void on_actionExit_connection_mode_triggered();
+
 public slots:
     void createBlock(QString);
 

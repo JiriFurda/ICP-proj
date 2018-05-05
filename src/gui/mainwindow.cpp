@@ -109,3 +109,8 @@ void MainWindow::on_actionStep_triggered()
 {
     this->backendScheme->runStep(true);
 }
+
+void MainWindow::on_actionExit_connection_mode_triggered()
+{
+    this->scene->exitConnectingBlocks();
+}

@@ -23,6 +23,7 @@ public:
     Port *connecting_startingPort;
     ConnectionLineItem *connecting_temporaryLine;
     bool connecting_temporaryLine_exists;
+    void exitConnectingBlocks();
 
     BlockGraphicItem *highlightedBlock;
 };

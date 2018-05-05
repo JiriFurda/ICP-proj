@@ -42,6 +42,8 @@
     </property>
     <addaction name="actionRun"/>
     <addaction name="actionStep"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -50,18 +52,15 @@
     <addaction name="actionAbout_BlockEditor"/>
     <addaction name="actionCredits"/>
    </widget>
-   <widget class="QMenu" name="menuBlock">
+   <widget class="QMenu" name="menuEditor">
     <property name="title">
-     <string>Block</string>
+     <string>Editor</string>
     </property>
-    <addaction name="actionAdd"/>
-    <addaction name="actionRemove"/>
-    <addaction name="actionMove"/>
-    <addaction name="actionLink"/>
+    <addaction name="actionExit_connection_mode"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuScheme"/>
-   <addaction name="menuBlock"/>
+   <addaction name="menuEditor"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -78,9 +77,7 @@
    <addaction name="actionStep"/>
    <addaction name="separator"/>
    <addaction name="actionAdd"/>
-   <addaction name="actionRemove"/>
-   <addaction name="actionMove"/>
-   <addaction name="actionLink"/>
+   <addaction name="actionExit_connection_mode"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew_File">
@@ -116,7 +113,7 @@
   <action name="actionRun">
    <property name="icon">
     <iconset resource="imagesresource.qrc">
-     <normaloff>:/toolbar/img/buttons/run.png</normaloff>:/toolbar/img/buttons/run.png</iconset>
+     <normaloff>:/img/run.png</normaloff>:/img/run.png</iconset>
    </property>
    <property name="text">
     <string>Run</string>
@@ -125,7 +122,7 @@
   <action name="actionStep">
    <property name="icon">
     <iconset resource="imagesresource.qrc">
-     <normaloff>:/toolbar/img/buttons/step-forward.png</normaloff>:/toolbar/img/buttons/step-forward.png</iconset>
+     <normaloff>:/img/step-forward.png</normaloff>:/img/step-forward.png</iconset>
    </property>
    <property name="text">
     <string>Step</string>
@@ -139,37 +136,19 @@
   <action name="actionAdd">
    <property name="icon">
     <iconset resource="imagesresource.qrc">
-     <normaloff>:/toolbar/img/buttons/add.png</normaloff>:/toolbar/img/buttons/add.png</iconset>
+     <normaloff>:/img/add.png</normaloff>:/img/add.png</iconset>
    </property>
    <property name="text">
-    <string>Add</string>
+    <string>Add block</string>
    </property>
   </action>
-  <action name="actionMove">
+  <action name="actionExit_connection_mode">
    <property name="icon">
     <iconset resource="imagesresource.qrc">
-     <normaloff>:/toolbar/img/buttons/move.png</normaloff>:/toolbar/img/buttons/move.png</iconset>
+     <normaloff>:/img/broken-link.png</normaloff>:/img/broken-link.png</iconset>
    </property>
    <property name="text">
-    <string>Move</string>
-   </property>
-  </action>
-  <action name="actionRemove">
-   <property name="icon">
-    <iconset resource="imagesresource.qrc">
-     <normaloff>:/toolbar/img/buttons/remove.png</normaloff>:/toolbar/img/buttons/remove.png</iconset>
-   </property>
-   <property name="text">
-    <string>Remove</string>
-   </property>
-  </action>
-  <action name="actionLink">
-   <property name="icon">
-    <iconset resource="imagesresource.qrc">
-     <normaloff>:/toolbar/img/buttons/link.png</normaloff>:/toolbar/img/buttons/link.png</iconset>
-   </property>
-   <property name="text">
-    <string>Link</string>
+    <string>Exit connection mode</string>
    </property>
   </action>
  </widget>

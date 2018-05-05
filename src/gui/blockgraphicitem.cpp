@@ -111,7 +111,7 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
     // --- Context menu ---
     QMenu *menu = new QMenu();
-    QAction *removeAction = menu->addAction("Remove block");
+    QAction *removeAction = menu->addAction(QIcon(":/img/remove.png"),"Remove block");
 
 
     /* Not working! .contains(selectedAction) is always false
@@ -140,12 +140,12 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     */
 
     // -- Input ports submenu --
-    QMenu *inputMenu = menu->addMenu("Connect input port");
+    QMenu *inputMenu = menu->addMenu(QIcon(":/img/input.png"),"Connect input port");
     QAction *connectInput0Action(inputMenu->addAction(this->backendObject->getInputPort(0)->print()));
     QAction *connectInput1Action(inputMenu->addAction(this->backendObject->getInputPort(1)->print()));
 
     // -- Output ports submenu --
-    QMenu *outputMenu = menu->addMenu("Connect output port");
+    QMenu *outputMenu = menu->addMenu(QIcon(":/img/output.png"),"Connect output port");
     QAction *connectOutput0Action(outputMenu->addAction(this->backendObject->getOutputPort(0)->print()));
 
 
@@ -364,34 +364,18 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
                     delete this->connections.at(i);
                 }
             }
-
-          /*
-int count = connections.count(); // Save because it's decreasing every loop
-
-// --- Destroy connections ---
-for(int i = 0; i < count; ++i)
-{
-delete this->connections.first();
-}
-
-this->parentScene->removeItem(this);
-//this->parentScene->backendScheme->removeBlock(backendObject);
-//delete this->backendObject;
-this->backendObject->deleted = true;
-           */
-
         }
         else
           return;
     }
 
-    // --- Exit connecting mode ---
-    this->parentScene->isConnectingBlocks = false;
-
     // --- Create new connection ---
     ConnectionLineItem *line = new ConnectionLineItem(this->parentScene,
                                     this->parentScene->connecting_startingBlock, this,
                                     this->parentScene->connecting_startingPort, finishingPort);
+
+    // --- Exit connecting mode ---
+    this->parentScene->exitConnectingBlocks();
 }
 
 void BlockGraphicItem::showToolTip(QGraphicsSceneMouseEvent *event)

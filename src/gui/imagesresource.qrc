@@ -1,13 +1,13 @@
 <RCC>
-    <qresource prefix="/toolbar">
-        <file>img/buttons/run.png</file>
-        <file>img/buttons/step-forward.png</file>
-        <file>img/buttons/remove.png</file>
-        <file>img/buttons/move.png</file>
-        <file>img/buttons/add.png</file>
-        <file>img/buttons/link.png</file>
-    </qresource>
-    <qresource prefix="/block">
-        <file>img/blocks/block.png</file>
+    <qresource prefix="/">
+        <file>img/add.png</file>
+        <file>img/broken-link.png</file>
+        <file>img/credits.txt</file>
+        <file>img/input.png</file>
+        <file>img/link.png</file>
+        <file>img/output.png</file>
+        <file>img/run.png</file>
+        <file>img/step-forward.png</file>
+        <file>img/remove.png</file>
     </qresource>
 </RCC>
