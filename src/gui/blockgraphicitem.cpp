@@ -1,3 +1,10 @@
+/**
+ * Graphics item representing block.
+ * @brief Source file for BlockGraphicItem
+ * @file blockgraphicitem.cpp
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "blockgraphicitem.h"
 
 BlockGraphicItem::BlockGraphicItem(SchemeScene *scene, QString name, Block *backendObject)

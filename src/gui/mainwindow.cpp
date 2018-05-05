@@ -1,3 +1,10 @@
+/**
+ * Main window of the application.
+ * @brief Source file for MainWindow
+ * @file mainwindow.c
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
