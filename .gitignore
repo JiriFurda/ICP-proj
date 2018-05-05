@@ -1,5 +1,9 @@
-# C++ files
-*.o
+# Makefile files
+src/*.o
+src/moc_*.cpp
+src/ui_*.h
+src/qrc_*.cpp
+blockeditor
 
 
 # Qt files
