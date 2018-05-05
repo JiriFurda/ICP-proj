@@ -172,8 +172,7 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
              if(reply == QMessageBox::Yes)
                 delete this;
-             else
-                 return;
+            return;
         }
         else if(selectedAction == connectInput0Action)
             selectedPort = this->backendObject->getInputPort(0);
