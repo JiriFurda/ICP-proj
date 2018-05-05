@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
+#include <QMessageBox>
 
 //#include "blockgraphicitem.h";
 #include "blocks/port.h"

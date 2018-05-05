@@ -92,7 +92,7 @@ void ConnectionLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     // --- Context menu ---
     QMenu *menu = new QMenu();
-    QAction *removeAction = menu->addAction(QIcon(":/img/input.png"),"Remove connection");
+    QAction *removeAction = menu->addAction(QIcon(":/img/remove.png"),"Remove connection");
     QAction *selectedAction = menu->exec(event->screenPos());
     if(selectedAction)  // Some action was selected
     {

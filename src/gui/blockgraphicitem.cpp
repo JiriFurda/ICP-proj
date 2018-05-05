@@ -90,14 +90,15 @@ void BlockGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         this->isPressed = false;
 
         // -- Call events --
-        if(this->parentScene->isConnectingBlocks == true)
-            this->on_connectingToThisBlock(event);
-
-        if(this->parentScene->isConnectingBlocks == false && this->isMoving == false)
-            this->showToolTip(event); // Show port values
-
         if(this->isMoving)
             this->on_moving_ended();
+        else
+        {
+            if(this->parentScene->isConnectingBlocks == true)
+                this->on_connectingToThisBlock(event);
+            else
+                this->showToolTip(event); // Show port values
+        }
     }
 
     // --- Propagate further ---
@@ -158,6 +159,7 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
                  object, SLOT(triggered(QAction *)));
     */
 
+    Port *selectedPort;
 
     if(selectedAction)  // Some action was selected
     {
@@ -174,13 +176,42 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
                  return;
         }
         else if(selectedAction == connectInput0Action)
-            this->parentScene->startConnectingBlocks(this, this->backendObject->getInputPort(0));
+            selectedPort = this->backendObject->getInputPort(0);
         else if(selectedAction == connectInput1Action)
-            this->parentScene->startConnectingBlocks(this, this->backendObject->getInputPort(1));
+            selectedPort = this->backendObject->getInputPort(1);
         else if(selectedAction == connectOutput0Action)
-            this->parentScene->startConnectingBlocks(this, this->backendObject->getOutputPort(0));
+            selectedPort = this->backendObject->getOutputPort(0);
         else
+        {
             QMessageBox::critical(0, "Connecting port error", "Unexpected action selected");
+            return;
+        }
+
+        // --- Check occupied port ---
+        if(selectedPort->getConnectedPort() != NULL)
+        {
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(0, "Replace connection", "This port is already connect, do you want to replace this connection?",
+                                          QMessageBox::Yes|QMessageBox::No);
+
+
+            if(reply == QMessageBox::Yes)
+            {
+                Port* oldConnectionOtherPort = selectedPort->getConnectedPort();   // Port of other block that is connected to connection we need to replace
+
+                // --- Destroy connections ---
+                for(int i = 0; i < this->connections.count(); ++i)  // For every connection in this block
+                {
+                    if(connections.at(i)->containsPort(oldConnectionOtherPort)) // Check if it's connection we need to replace
+                    {
+                        delete this->connections.at(i);
+                    }
+                }
+            }
+            else
+              return;
+        }
+        this->parentScene->startConnectingBlocks(this, selectedPort);
 
         /*  Not working! .contains(selectedAction) is always false
         if(connectInputActions.contains(selectedAction))
