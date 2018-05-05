@@ -42,7 +42,7 @@ bool Scheme::removeBlock(Block* block)
         if(block == *savedBlock)
         {
             found = true;
-            return false;
+            break;
         }
 
         index++;
@@ -108,6 +108,14 @@ bool Scheme::runStep(bool highlight)
 
 bool Scheme::preRun()
 {
+    for (Block* block : blockScheme)
+    {
+        if(block->deleted)
+        {
+            this->removeBlock(block);
+        }
+   }
+
 	readOnly = true;
 
     Block* lastBlock = searchUserDependentBlocks();
@@ -153,8 +161,6 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
     Block* lastBlock = NULL;
     for (Block* block : blockScheme)
 	{
-        lastBlock = block;
-
         //for (Port port : *block->getInputPortsPointer())
         //for (vector<Port>::iterator it = block->getInputPorts().begin(); it != block->getInputPorts().end(); ++it)
         //for (vector<Port>::iterator it = (*block->getInputPortsPointer()).begin(); it != (*block->getInputPortsPointer()).end(); ++it)
@@ -178,6 +184,7 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
                     double value = port->getValue(name);
 					if (value != value) //is value NaN ... value != value is true if value is NaN
 					{
+                        lastBlock = block;
                         block->GUIobject->highlight();
 
                         bool ok;

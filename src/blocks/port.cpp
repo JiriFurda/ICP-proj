@@ -86,6 +86,12 @@ vector<string> Port::getNames()
 
 bool Port::setConnectedPort(Port* other)
 {
+    if(other == NULL)   // Removing connection
+    {
+        this->connectedPort = NULL;
+        return true;
+    }
+
 	if (compatible(*other))
 	{
 		connectedPort = other;

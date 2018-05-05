@@ -279,7 +279,8 @@ BlockGraphicItem::~BlockGraphicItem()
 
     this->parentScene->removeItem(this);
     //this->parentScene->backendScheme->removeBlock(backendObject);
-    delete this->backendObject;
+    //delete this->backendObject;
+    this->backendObject->deleted = true;
 }
 
 

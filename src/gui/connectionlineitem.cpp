@@ -41,8 +41,14 @@ ConnectionLineItem::~ConnectionLineItem()
     this->scene()->removeItem(this->visibleLine);
     delete this->visibleLine;
     this->scene()->removeItem(this);
-    blockA->connections.removeOne(this);
-    blockB->connections.removeOne(this);
+    this->blockA->connections.removeOne(this);
+    this->blockB->connections.removeOne(this);
+
+    if(this->backendPortA != NULL && this->backendPortB != NULL)  // It's not temporary line indicator
+    {
+        this->backendPortA->setConnectedPort(NULL);
+        this->backendPortB->setConnectedPort(NULL);
+    }
 }
 
 

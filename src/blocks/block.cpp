@@ -9,6 +9,7 @@ Block::Block(const vector<Port>& in, const vector<Port>& out)
 	outputPorts = out;
 	setPorts();
     this->GUIobject = NULL;
+    this->deleted = false;
 }
 
 Block::Block(const Port& in, const Port& out)

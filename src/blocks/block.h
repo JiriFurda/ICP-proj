@@ -36,6 +36,7 @@ class Block
         vector<Port> inputPorts;
         void linkGUIobject(BlockGraphicItem *GUIobject);
         BlockGraphicItem *GUIobject;
+        bool deleted;
 
 	private:
 		int blockID;
