@@ -37,9 +37,9 @@ AddBlockDialog::~AddBlockDialog()
 
 void AddBlockDialog::fillTree()
 {
-    QTreeWidgetItem *arithmeticGroup = this->addTreeGroup("Arithmetic", "Basic arithmetic blocks for float numbers");
-    QTreeWidgetItem *complexGroup = this->addTreeGroup("Complex Arithmetic", "Basic arithmetic blocks for complex numbers");
-    QTreeWidgetItem *logicGroup = this->addTreeGroup("Logic", "Basic logic blocks for boolean values");
+    QTreeWidgetItem *arithmeticGroup = this->addTreeGroup("Arithmetic", "Arithmetic blocks for float numbers");
+    QTreeWidgetItem *complexGroup = this->addTreeGroup("Complex Arithmetic", "Arithmetic blocks for complex numbers");
+    QTreeWidgetItem *logicGroup = this->addTreeGroup("Logic", "Logic blocks for boolean values");
 
     this->addTreeItem("Add", "Adds two float numbers", arithmeticGroup);
     this->addTreeItem("Sub", "Subtracts two float numbers", arithmeticGroup);
@@ -51,7 +51,10 @@ void AddBlockDialog::fillTree()
     this->addTreeItem("CxMul", "Multiplties two complex numbers", complexGroup);
     this->addTreeItem("CxDiv", "Divides two complex numbers", complexGroup);
 
-    this->addTreeItem("Not", "Reverses boolean value", logicGroup);
+    //this->addTreeItem("Not", "Reverts one bool value", logicGroup);
+    this->addTreeItem("And", "Does logical conjuction of two bool values", logicGroup);
+    this->addTreeItem("Or", "Does logical disjuction of two bool values", logicGroup);
+    this->addTreeItem("Xor", "Does exclusive logical disjuction of two bool values", logicGroup);
 }
 
 QTreeWidgetItem *AddBlockDialog::addTreeGroup(QString name, QString decsription)

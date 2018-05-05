@@ -151,12 +151,10 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     }
 
     // -- Input ports submenu --
-
     QAction *connectInput0Action(inputMenu->addAction(this->backendObject->getInputPort(0)->print()));
     QAction *connectInput1Action(inputMenu->addAction(this->backendObject->getInputPort(1)->print()));
 
     // -- Output ports submenu --
-
     QAction *connectOutput0Action(outputMenu->addAction(this->backendObject->getOutputPort(0)->print()));
 
 

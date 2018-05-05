@@ -67,6 +67,14 @@ void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_reque
         block = new BlockCxMul();
     else if(name == "CxDiv")
         block = new BlockCxDiv();
+    //else if(name == "Not")
+    //    block = new BlockNot();
+    else if(name == "And")
+        block = new BlockAnd();
+    else if(name == "Or")
+        block = new BlockOr();
+    else if(name == "Xor")
+        block = new BlockXor();
     else
     {
         QMessageBox::critical(this, "Error creating block", "Unexpect name received when creating block");

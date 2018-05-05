@@ -8,12 +8,8 @@ BlockLogic::BlockLogic()
 		
 void BlockAnd::executeSpecific()
 {
-	bool resultB = checkBool(getInputPort(0)->getValue("bool")) & checkBool(getInputPort(1)->getValue("bool"));
-	double resultD;
-	if (resultB)
-		resultD = 1.0;
-	else
-		resultD = -1.0;
+    bool resultB = double2bool(getInputPort(0)->getValue("bool")) & double2bool(getInputPort(1)->getValue("bool"));
+    double resultD = bool2double(resultB);
 
 	getOutputPort(0)->setValue(
 		"bool", resultD);
@@ -21,12 +17,8 @@ void BlockAnd::executeSpecific()
 
 void BlockOr::executeSpecific()
 {
-	bool resultB = checkBool(getInputPort(0)->getValue("bool")) | checkBool(getInputPort(1)->getValue("bool"));
-	double resultD;
-	if (resultB)
-		resultD = 1.0;
-	else
-		resultD = -1.0;
+    bool resultB = double2bool(getInputPort(0)->getValue("bool")) | double2bool(getInputPort(1)->getValue("bool"));
+    double resultD = bool2double(resultB);
 
 	getOutputPort(0)->setValue(
 		"bool", resultD);
@@ -34,12 +26,8 @@ void BlockOr::executeSpecific()
 
 void BlockXor::executeSpecific()
 {
-	bool resultB = checkBool(getInputPort(0)->getValue("bool")) ^ checkBool(getInputPort(1)->getValue("bool"));
-	double resultD;
-	if (resultB)
-		resultD = 1.0;
-	else
-		resultD = -1.0;
+    bool resultB = double2bool(getInputPort(0)->getValue("bool")) ^ double2bool(getInputPort(1)->getValue("bool"));
+    double resultD = bool2double(resultB);
 
 	getOutputPort(0)->setValue(
 		"bool", resultD);
@@ -47,21 +35,26 @@ void BlockXor::executeSpecific()
 
 void BlockNot::executeSpecific()
 {
-	bool resultB = checkBool(getInputPort(0)->getValue("bool"));
-	double resultD;
-	if (!resultB)
-		resultD = 1.0;
-	else
-		resultD = -1.0;
+    bool resultB = double2bool(getInputPort(0)->getValue("bool"));
+    double resultD = bool2double(resultB);
 
 	getOutputPort(0)->setValue(
 		"bool", resultD);
 }
 
-bool checkBool(double booleanVal)
+bool double2bool(double value)
 {
-	if (booleanVal > 0)
-		return true;
-	else
-		return false;
+    if (value > 0.5)
+        return true;
+    else
+        return false;
 }
+
+double bool2double(bool value)
+{
+    if (value)
+        return 1;
+    else
+        return 0;
+}
+

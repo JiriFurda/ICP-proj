@@ -47,6 +47,7 @@ class BlockNot : public BlockLogic
 		void executeSpecific();
 };
 
-bool checkBool(double booleanVal);
+bool double2bool(double value);
+double bool2double(bool value);
 
 #endif // LOGIC_H
