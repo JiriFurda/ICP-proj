@@ -53,9 +53,20 @@ void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_reque
 
     if(name == "Add")
         block = new BlockAdd();
-
     else if(name == "Sub")
         block = new BlockSub();
+    else if(name == "Mul")
+        block = new BlockMul();
+    else if(name == "Div")
+        block = new BlockDiv();
+    if(name == "CxAdd")
+        block = new BlockCxAdd();
+    else if(name == "CxSub")
+        block = new BlockCxSub();
+    else if(name == "CxMul")
+        block = new BlockCxMul();
+    else if(name == "CxDiv")
+        block = new BlockCxDiv();
     else
     {
         QMessageBox::critical(this, "Error creating block", "Unexpect name received when creating block");

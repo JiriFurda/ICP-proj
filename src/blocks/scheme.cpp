@@ -173,10 +173,9 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
            |  / \
            |
         */
-
+        int portNum = 1;
         for (vector<Port>::iterator port = block->inputPorts.begin(); port != block->inputPorts.end(); ++port)
 		{
-            //Port port = *it;
             if (port->getConnectedPort() == NULL)
 			{
                 for (string name : port->getNames())
@@ -189,7 +188,7 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
 
                         bool ok;
                         double value = QInputDialog::getDouble(0, QString("Missing value"),
-                                QString("Insert "+QString::fromStdString(name)+" value:"),
+                                QString("Insert "+QString::fromStdString(name)+" value (port #"+QString::number(portNum)+"):"),
                                 0, -2147483647, 2147483647, 5, &ok);
 
                         if(ok)
@@ -200,6 +199,7 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
 					}
 				}
 			}
+            portNum++;
 		}
 	}
 

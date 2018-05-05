@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "block.h"
 #include "blockArithmetic.h"
+#include "blockComplex.h"
 #include "blockLogic.h"
 
 #include <QString>

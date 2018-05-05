@@ -38,10 +38,18 @@ AddBlockDialog::~AddBlockDialog()
 void AddBlockDialog::fillTree()
 {
     QTreeWidgetItem *arithmeticGroup = this->addTreeGroup("Arithmetic", "Basic arithmetic blocks for float numbers");
+    QTreeWidgetItem *complexGroup = this->addTreeGroup("Complex Arithmetic", "Basic arithmetic blocks for complex numbers");
     QTreeWidgetItem *logicGroup = this->addTreeGroup("Logic", "Basic logic blocks for boolean values");
 
     this->addTreeItem("Add", "Adds two float numbers", arithmeticGroup);
-    this->addTreeItem("Sub", "Subs two float numbers", arithmeticGroup);
+    this->addTreeItem("Sub", "Subtracts two float numbers", arithmeticGroup);
+    this->addTreeItem("Mul", "Multiplties two float numbers", arithmeticGroup);
+    this->addTreeItem("Div", "Divides two float numbers", arithmeticGroup);
+
+    this->addTreeItem("CxAdd", "Adds two complex numbers", complexGroup);
+    this->addTreeItem("CxSub", "Subtracts two complex numbers", complexGroup);
+    this->addTreeItem("CxMul", "Multiplties two complex numbers", complexGroup);
+    this->addTreeItem("CxDiv", "Divides two complex numbers", complexGroup);
 
     this->addTreeItem("Not", "Reverses boolean value", logicGroup);
 }
