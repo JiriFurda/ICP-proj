@@ -10,7 +10,6 @@
 ConnectionLineItem::ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *blockA, BlockGraphicItem *blockB, Port *portA, Port *portB)
 {
     // --- Settings ---
-    this->setAcceptHoverEvents(true);
     this->setZValue(-1);    // Drawn behind blocks
     this->setPen(QPen(Qt::NoBrush, 30)); // Invisible line (Easier to click on)
 
@@ -23,7 +22,11 @@ ConnectionLineItem::ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *
     {
         portA->setConnectedPort(portB);
         portB->setConnectedPort(portA);
+        this->setAcceptHoverEvents(true);
     }
+    else
+        this->setAcceptHoverEvents(false);
+
     this->backendPortA = portA;
     this->backendPortB = portB;
 

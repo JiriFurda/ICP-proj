@@ -32,9 +32,10 @@
     <addaction name="actionNew_File"/>
     <addaction name="actionOpen_File"/>
     <addaction name="actionSave_File"/>
-    <addaction name="actionClose_File"/>
+    <addaction name="actionRename_file"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuScheme">
     <property name="title">
@@ -43,7 +44,9 @@
     <addaction name="actionRun"/>
     <addaction name="actionStep"/>
     <addaction name="separator"/>
+    <addaction name="separator"/>
     <addaction name="actionAdd"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -149,6 +152,11 @@
    </property>
    <property name="text">
     <string>Exit connection mode</string>
+   </property>
+  </action>
+  <action name="actionRename_file">
+   <property name="text">
+    <string>Rename File</string>
    </property>
   </action>
  </widget>

@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setWindowTitle("Unnamed scheme - BlockEditor");
     this->showMaximized();
 
     // === Scheme view ===
@@ -25,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setScene(scene);
 
     // --- Backend ---
-    this->backendScheme = new Scheme("Test Scheme");
+    this->backendScheme = new Scheme("Unnamed scheme");
 }
 
 MainWindow::~MainWindow()
@@ -124,6 +125,9 @@ void MainWindow::on_actionOpen_File_triggered()
 void MainWindow::on_actionNew_File_triggered()
 {
     scene->clear();
+    delete this->backendScheme;
+    this->backendScheme = new Scheme("Unnamed scheme");
+    this->setWindowTitle("Unnamed scheme - BlockEditor");
 }
 
 void MainWindow::on_actionRun_triggered()
@@ -139,4 +143,14 @@ void MainWindow::on_actionStep_triggered()
 void MainWindow::on_actionExit_connection_mode_triggered()
 {
     this->scene->exitConnectingBlocks();
+}
+
+void MainWindow::on_actionRename_file_triggered()
+{
+    bool ok;
+        QString text = QInputDialog::getText(this, tr("Rename scheme"),
+                                             tr("New name:"), QLineEdit::Normal,
+                                             "", &ok);
+        if (ok && !text.isEmpty())
+            this->setWindowTitle(text+" - BlockEditor");
 }
