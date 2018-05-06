@@ -1,5 +1,5 @@
 all:
-	cd ./src && $(MAKE)
+	cd ./src && qmake src.pro && $(MAKE)
 
 run: all
 	./blockeditor
@@ -8,7 +8,7 @@ doxygen:
 	cd ./src && doxygen
 
 pack: clean
-	zip xfurda00-xhavan00 ./src/ ./examples/ ./doc/ ./README.txt ./Makefile
+	zip -r xfurda00-xhavan00.zip  ./src ./examples ./doc ./README.txt ./Makefile
 
 clean:
 	rm -r -f blockeditor doc/*

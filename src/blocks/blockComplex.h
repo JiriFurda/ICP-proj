@@ -15,6 +15,7 @@
 #include <string>
 #include <limits>
 #include <algorithm>
+#include <math.h>
 #include "port.h"
 #include "block.h"
 

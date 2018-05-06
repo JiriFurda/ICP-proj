@@ -129,7 +129,7 @@ bool Scheme::preRun()
     if(lastBlock != NULL)
         lastBlock->GUIobject->unhighlight();
 
-	notExecutedBlocks = blockScheme;
+    notExecutedBlocks = blockScheme;
 
 	expectedNextBlock = NULL;
 
@@ -153,7 +153,7 @@ Block* Scheme::step_internal(Block* SIexpectedNextBlock, bool highlight)
     if(highlight)
         realNextBlock->GUIobject->highlight();
 
-	if (realNextBlock->getOutputPorts().size() != 0)
+    if (realNextBlock->getOutputPorts().size() != 0)
 	{
 		if (realNextBlock->getOutputPort(0)->getConnectedPort() != NULL)
 			return realNextBlock->getOutputPort(0)->getConnectedPort()->getOwnerBlock();
