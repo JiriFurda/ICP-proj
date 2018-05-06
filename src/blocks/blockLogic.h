@@ -58,15 +58,6 @@ class BlockXor : public BlockLogic
 };
 
 /**
- * @brief The BlockNot class is Block inverting bool value.
- */
-class BlockNot : public BlockLogic
-{
-	public:
-        void executeSpecific(); /// @brief executeSpecific realises invertion of one bool value from input Port and saves it to output Port
-};
-
-/**
  * @brief double2bool is method converting double value to bool value.
  * @param value Double to be converted.
  * @return Converted bool value.

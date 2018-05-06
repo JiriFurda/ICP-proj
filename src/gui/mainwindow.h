@@ -61,6 +61,7 @@ private slots:
     void on_actionRun_triggered();
     void on_actionStep_triggered();
     void on_actionExit_connection_mode_triggered();
+    void on_actionRename_file_triggered();
 
 public slots:
     /**

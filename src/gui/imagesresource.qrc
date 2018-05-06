@@ -9,5 +9,14 @@
         <file>img/run.png</file>
         <file>img/step-forward.png</file>
         <file>img/remove.png</file>
+        <file>img/copyright.png</file>
+        <file>img/empty.png</file>
+        <file>img/exit.png</file>
+        <file>img/file.png</file>
+        <file>img/full.png</file>
+        <file>img/info.png</file>
+        <file>img/name.png</file>
+        <file>img/open.png</file>
+        <file>img/save.png</file>
     </qresource>
 </RCC>
