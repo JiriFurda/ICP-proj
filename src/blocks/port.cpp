@@ -36,7 +36,6 @@ bool Port::compatible(Port other)
 
 bool Port::setValue(string name, double value)
 {
-	//cout << "Port::setValue\n";
 	map<string, double>::iterator it = content.find(name); 
 	if (it != content.end())
 	{
