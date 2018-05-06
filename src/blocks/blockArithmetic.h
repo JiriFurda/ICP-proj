@@ -32,7 +32,7 @@ class BlockArithmetic : public Block
 };
 
 /**
- * @brief The BlockAdd class is Block multiplying two float numbers
+ * @brief The BlockAdd class is Block adding two float numbers
  */
 class BlockAdd : public BlockArithmetic
 {

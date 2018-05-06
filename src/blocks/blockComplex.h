@@ -33,7 +33,7 @@ class BlockComplex : public Block
 };
 
 /**
- * @brief The BlockCxAdd class is Block multiplying two complex numbers
+ * @brief The BlockCxAdd class is Block adding two complex numbers
  */
 class BlockCxAdd : public BlockComplex
 {

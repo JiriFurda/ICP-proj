@@ -41,14 +41,6 @@ void BlockXor::executeSpecific()
 		"bool", resultD);
 }
 
-void BlockNot::executeSpecific()
-{
-    bool resultB = double2bool(getInputPort(0)->getValue("bool"));
-    double resultD = bool2double(resultB);
-
-	getOutputPort(0)->setValue(
-		"bool", resultD);
-}
 
 bool double2bool(double value)
 {

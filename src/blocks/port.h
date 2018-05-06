@@ -37,8 +37,8 @@ class Port
 		Port(string name, bool declaredType);
 
         /**
-         * @brief Constructor of class Port with value type consisting of only one part.
-         * @param name  Name of value type.
+         * @brief Constructor of class Port with value type consisting of more than one part.
+         * @param name  Array of value type names.
          * @param declaredType  False for output, true for input.
          */
 		Port(vector<string> arrayOfNames, bool declaredType);

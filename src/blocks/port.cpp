@@ -153,7 +153,6 @@ QString Port::printConnection()
     }
 
     return result;  // [real] 42, [imaginary] 78
-    return NULL;
 }
 
 bool Port::isInputType()
