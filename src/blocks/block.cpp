@@ -1,3 +1,11 @@
+/**
+ * Backend representation of block.
+ * @brief Source file for Block
+ * @file block.cpp
+ * @author Peter Havan (xhavan00)
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "block.h"
 #include "port.h"
 
@@ -41,46 +49,17 @@ void Block::execute()
 		exit(-1);
 	}
 
-/*	for (Port port : getInputPorts())
-	{
-		vector<double> values;
-		for(map<string,double>::iterator it = port.getContent().begin(); it != port.getContent().end(); ++it) 
-		{
-			values.push_back(it->second);
-			//cout << it->second << "\n";
-		}
-		for (double value : values)
-		{
-			if (value != value) //is value NaN ... value != value is true if value is NaN
-			{
-				return false;
-			}
-
-		}
-
-	}*/
-
 	executeSpecific();
 	executed = true;
-	//return true;
 }
-
-/*void Block::executeSpecific()
-{
-	cerr << "Block::executeSpecific(): non-overriden member function called\n";
-	exit(-1);
-}*/
 
 Port* Block::getInputPort(int index)
 {
-	//cout << "Block::getInputPort\n";
 	return &(inputPorts[index]);
 }
 
 Port* Block::getOutputPort(int index)
 {
-
-	//cout << "Block::getOutputPort\n";
 	return &(outputPorts[index]);
 }
 
@@ -99,18 +78,6 @@ bool Block::wasExecuted()
 	return executed;
 }
 
-int Block::getID()
-{
-
-	return blockID;
-}
-
-void Block::setID(int ID)
-{
-	blockID = ID;
-
-}
-
 void Block::setPorts()
 {
 
@@ -125,11 +92,6 @@ void Block::setPorts()
 		(*it).setOwnerBlock(this);
 	}
 }
-
-/*Block::~Block()
-{
-}
-*/
 
 QString Block::printPorts()
 {

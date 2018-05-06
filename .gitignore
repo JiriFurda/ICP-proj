@@ -9,6 +9,7 @@ blockeditor
 # Qt files
 build-*
 *.pro.user
+*.autosave
 
 
 # Custom

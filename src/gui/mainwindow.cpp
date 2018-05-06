@@ -1,3 +1,10 @@
+/**
+ * Main window of the application.
+ * @brief Source file for MainWindow
+ * @file mainwindow.c
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -47,7 +54,7 @@ void MainWindow::on_actionAdd_triggered()
     dialog.exec();
 }
 
-void MainWindow::createBlock(QString name)  // @todo Rename to on_addBlock_requested (don't know why the fuck it's not working rename) -> QMetaObject::connectSlotsByName: No matching signal for on_addBlock_requested(QString)
+void MainWindow::createBlock(QString name)
 {
     Block *block;
 

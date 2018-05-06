@@ -1,3 +1,10 @@
+/**
+ * Dialog window containing tree list of all available blocks.
+ * @brief Source file for AddBlockDialog
+ * @file addblockdialog.cpp
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "addblockdialog.h"
 
 AddBlockDialog::AddBlockDialog(QWidget *parent) : QDialog(parent)

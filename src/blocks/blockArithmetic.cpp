@@ -1,3 +1,11 @@
+/**
+ * Backend representation of arithmetic blocks.
+ * @brief Header file for Block classes from group "Arithmetic"
+ * @file blockArithmetic.cpp
+ * @author Peter Havan (xhavan00)
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "blockArithmetic.h"
 #include "port.h"
 #include "block.h"

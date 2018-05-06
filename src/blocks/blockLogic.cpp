@@ -1,3 +1,11 @@
+/**
+ * Backend representation of logic blocks.
+ * @brief Source file for Block classes from group "Logic"
+ * @file blockLogic.cpp
+ * @author Peter Havan (xhavan00)
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "blockLogic.h"
 #include "port.h"
 #include "block.h"

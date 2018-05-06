@@ -1,3 +1,10 @@
+/**
+ * Graphics scene representing scheme.
+ * @brief Source file for SchemeScene
+ * @file schemescene.h
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "schemescene.h"
 
 SchemeScene::SchemeScene()

@@ -12,4 +12,8 @@ pack: clean
 
 clean:
 	rm -r -f blockeditor doc/*
-	find . -name '*.o' -delete
+	find src/. -name '*.o' -delete
+	find src/. -name 'moc_*.cpp' -delete
+	find src/. -name 'ui_*.h' -delete
+	find src/. -name 'qrc_*.cpp' -delete
+	

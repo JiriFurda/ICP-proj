@@ -1,3 +1,10 @@
+/**
+ * Graphics item representing connection between ports.
+ * @brief Source file for ConnectionLineItem
+ * @file connectionlineitem.h
+ * @author Jiri Furda (xfurda00)
+ */
+
 #include "connectionlineitem.h"
 
 ConnectionLineItem::ConnectionLineItem(QGraphicsScene *scene, BlockGraphicItem *blockA, BlockGraphicItem *blockB, Port *portA, Port *portB)
@@ -110,18 +117,6 @@ void ConnectionLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
         }
     }
 }
-/*
-void ConnectionLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    // --- Left Button ---
-    if(event->button() == Qt::RightButton)   // Pressed left mouse button
-    {
-
-    }
-
-    QGraphicsLineItem::mouseReleaseEvent(event);
-}
-*/
 
 void ConnectionLineItem::showToolTip(QGraphicsSceneHoverEvent *event)
 {
