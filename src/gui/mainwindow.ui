@@ -84,31 +84,46 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew_File">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/file.png</normaloff>:/img/file.png</iconset>
+   </property>
    <property name="text">
     <string>New File</string>
    </property>
   </action>
   <action name="actionOpen_File">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/open.png</normaloff>:/img/open.png</iconset>
+   </property>
    <property name="text">
     <string>Open File</string>
    </property>
   </action>
   <action name="actionSave_File">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/save.png</normaloff>:/img/save.png</iconset>
+   </property>
    <property name="text">
     <string>Save File</string>
    </property>
   </action>
-  <action name="actionClose_File">
-   <property name="text">
-    <string>Close File</string>
-   </property>
-  </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/exit.png</normaloff>:/img/exit.png</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
   <action name="actionAbout_BlockEditor">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/info.png</normaloff>:/img/info.png</iconset>
+   </property>
    <property name="text">
     <string>About BlockEditor</string>
    </property>
@@ -132,6 +147,10 @@
    </property>
   </action>
   <action name="actionCredits">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/copyright.png</normaloff>:/img/copyright.png</iconset>
+   </property>
    <property name="text">
     <string>Credits</string>
    </property>
@@ -155,6 +174,10 @@
    </property>
   </action>
   <action name="actionRename_file">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/name.png</normaloff>:/img/name.png</iconset>
+   </property>
    <property name="text">
     <string>Rename File</string>
    </property>

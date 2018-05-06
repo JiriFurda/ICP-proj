@@ -113,6 +113,11 @@ void MainWindow::on_actionSave_File_triggered()
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save scheme to file"), "",
         tr("Block scheme (*.scheme);;All Files (*)"));
+    QMessageBox::information(
+        this,
+        tr("Not implemeted"),
+        tr("Saving scheme to file is not yet implemented.") );
+
 }
 
 void MainWindow::on_actionOpen_File_triggered()
@@ -120,6 +125,10 @@ void MainWindow::on_actionOpen_File_triggered()
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open scheme from file"), "",
         tr("Block scheme (*.scheme);;All Files (*)"));
+    QMessageBox::information(
+        this,
+        tr("Not implemeted"),
+        tr("Opening scheme from file is not yet implemented.") );
 }
 
 void MainWindow::on_actionNew_File_triggered()
