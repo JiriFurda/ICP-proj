@@ -117,18 +117,6 @@ void ConnectionLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
         }
     }
 }
-/*
-void ConnectionLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    // --- Left Button ---
-    if(event->button() == Qt::RightButton)   // Pressed left mouse button
-    {
-
-    }
-
-    QGraphicsLineItem::mouseReleaseEvent(event);
-}
-*/
 
 void ConnectionLineItem::showToolTip(QGraphicsSceneHoverEvent *event)
 {

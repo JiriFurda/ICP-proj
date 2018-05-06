@@ -436,9 +436,9 @@ void BlockGraphicItem::on_connectingToThisBlock(QGraphicsSceneMouseEvent *event)
     }
 
     // --- Create new connection ---
-    ConnectionLineItem *line = new ConnectionLineItem(this->parentScene,
-                                    this->parentScene->connecting_startingBlock, this,
-                                    this->parentScene->connecting_startingPort, finishingPort);
+    new ConnectionLineItem(this->parentScene,
+        this->parentScene->connecting_startingBlock, this,
+        this->parentScene->connecting_startingPort, finishingPort);
 
     // --- Exit connecting mode ---
     this->parentScene->exitConnectingBlocks();

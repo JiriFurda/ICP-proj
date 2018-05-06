@@ -1,3 +1,12 @@
+/**
+ * Backend representation of complex arithmetic blocks.
+ * @brief Source file for Block classes from group "Complex arithmetic"
+ * @file blockComplex.cpp
+ * @author Peter Havan (xhavan00)
+ * @author Jiri Furda (xfurda00)
+ */
+
+
 #include "blockComplex.h"
 
 BlockComplex::BlockComplex()

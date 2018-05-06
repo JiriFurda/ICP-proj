@@ -1,13 +1,13 @@
-#include "scheme.h"
+/**
+ * Backend representation of scheme.
+ * @brief Source file for Scheme
+ * @file scheme.cpp
+ * @author Peter Havan (xhavan00)
+ * @author Jiri Furda (xfurda00)
+ */
 
-//ADD 100
-//MUL 101
-//DIV 102
-//SUB 103
-//AND 104
-//OR 105
-//XOR 106
-//NOT 107
+
+#include "scheme.h"
 
 Scheme::Scheme(string declaredName)
 {
@@ -167,18 +167,6 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
     Block* lastBlock = NULL;
     for (Block* block : blockScheme)
 	{
-        //for (Port port : *block->getInputPortsPointer())
-        //for (vector<Port>::iterator it = block->getInputPorts().begin(); it != block->getInputPorts().end(); ++it)
-        //for (vector<Port>::iterator it = (*block->getInputPortsPointer()).begin(); it != (*block->getInputPortsPointer()).end(); ++it)
-
-        /* Gotta love pointers ^.^
-           ____
-           |/  |
-           |   O
-           |  /|\
-           |  / \
-           |
-        */
         int portNum = 1;
         for (vector<Port>::iterator port = block->inputPorts.begin(); port != block->inputPorts.end(); ++port)
 		{
@@ -233,38 +221,6 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
 }
 
 
-
-/*void Scheme::run()
-{
-	notExecutedBlocks = blockScheme;
-	Block* expectedNextBlock = NULL;
-	
-	while(!notExecutedBlocks.empty())
-	{
-		if(expectedNextBlock == NULL)
-			expectedNextBlock = notExecutedBlocks[0];
-		
-		expectedNextBlock = step(expectedNextBlock);
-	}
-
-}*/
-
-/*Block* Scheme::step(Block* expectedNextBlock)
-{
-	Block* realNextBlock = findNonDependentBlock(expectedNextBlock);	
-
-	realNextBlock->execute();
-	notExecutedBlocks.erase(std::remove(notExecutedBlocks.begin(), notExecutedBlocks.end(), realNextBlock), notExecutedBlocks.end());
-	if (realNextBlock->getOutputPorts().size() != 0)
-	{
-		if (realNextBlock->getOutputPort(0)->getConnectedPort() != NULL)
-			return realNextBlock->getOutputPort(0)->getConnectedPort()->getOwnerBlock();
-	}
-
-	return NULL;
-
-}*/
-
 Block* Scheme::findNonDependentBlock(Block* block)
 {
 	loopDetectionTrace.clear();
@@ -286,10 +242,7 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
     }
     else
 		loopDetectionTrace.push_back(block);
-		
-	
 
-	//TODO loop detection
 
 	vector<Port> inputPorts = block->getInputPorts();
 
@@ -301,7 +254,6 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
 		if (connectedPort == NULL)
 		{
 			continue;
-			//TODO needed?
 		} 
 
 		else
@@ -315,93 +267,4 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
 	}
 
 	return block;
-}
-
-
-void testAdvanced();
-void testLoop();
-
-void testLoop()
-{
-	Scheme* myScheme = new Scheme("test");
-	Block* blockA = new BlockAdd;
-	Block* blockB = new BlockSub;
-	
-	myScheme->addBlock(blockA);
-	myScheme->addBlock(blockB);
-
-	blockA->getInputPort(0)->setConnectedPort(blockB->getOutputPort(0));
-	blockA->getInputPort(1)->setValue("float", 1);
-	
-	blockB->getInputPort(0)->setConnectedPort(blockA->getOutputPort(0));
-	blockA->getInputPort(1)->setValue("float", 1);
-
-	if(!myScheme->run())
-		cout << "testLoop(): OK!\n";
-	else
-		cout << "testLoop(): NotOK!\n";
-}
-
-void testAdvanced()
-{
-	BlockAdd* blockA = new BlockAdd;
-	BlockSub* blockB = new BlockSub;
-	BlockMul* blockC = new BlockMul;
-	BlockDiv* blockD = new BlockDiv;
-	BlockAdd* blockE = new BlockAdd;
-	BlockSub* blockF = new BlockSub;
-	BlockMul* blockG = new BlockMul;
-
-	Scheme* myScheme = new Scheme("test");
-
-	myScheme->addBlock(blockD);
-	myScheme->addBlock(blockF);
-	myScheme->addBlock(blockG);
-	myScheme->addBlock(blockB);
-        myScheme->addBlock(blockE);
-        myScheme->addBlock(blockC);
-	myScheme->addBlock(blockA);	
-
-
-	blockA->getInputPort(0)->setConnectedPort(blockB->getOutputPort(0));
-	blockA->getInputPort(1)->setConnectedPort(blockC->getOutputPort(0));
-
-       
-	blockB->getInputPort(0)->setConnectedPort(blockD->getOutputPort(0));
-	blockB->getInputPort(1)->setConnectedPort(blockE->getOutputPort(0));
-
-	blockC->getInputPort(0)->setConnectedPort(blockF->getOutputPort(0));
-        blockC->getInputPort(1)->setValue("float", 8);  
- 
-	blockD->getInputPort(0)->setValue("float", 3);
-	blockD->getInputPort(1)->setValue("float", 4); 
-      
-	blockE->getInputPort(0)->setValue("float", 5);  
-	blockE->getInputPort(1)->setConnectedPort(blockG->getOutputPort(0)); 
-	
-	blockF->getInputPort(0)->setValue("float", 6);  
-	blockF->getInputPort(1)->setValue("float", 7); 
-	
-	blockG->getInputPort(0)->setValue("float", 1);  
-	blockG->getInputPort(1)->setValue("float", 2);
-
-
-
-/*	cout << "blockA: " << blockA->getInputPort(0)->getOwnerBlock() << "\n";
-	cout << "blockB: " << blockB->getInputPort(0)->getOwnerBlock() << "\n";
-	cout << "blockC: " << blockC->getInputPort(0)->getOwnerBlock() << "\n";
-	cout << "blockD: " << blockD->getInputPort(0)->getOwnerBlock() << "\n";
-	cout << "blockE: " << blockE->getInputPort(0)->getOwnerBlock() << "\n";
-	cout << "blockF: " << blockF->getInputPort(0)->getOwnerBlock() << "\n";
-	cout << "blockG: " << blockG->getInputPort(0)->getOwnerBlock() << "\n";*/
-	
-	myScheme->run();
-
-	cout << "blockA result: " << blockA->getOutputPort(0)->getValue("float") << "\n";
-	cout << "blockB result: " << blockB->getOutputPort(0)->getValue("float") << "\n";
-	cout << "blockC result: " << blockC->getOutputPort(0)->getValue("float") << "\n";
-	cout << "blockD result: " << blockD->getOutputPort(0)->getValue("float") << "\n";
-	cout << "blockE result: " << blockE->getOutputPort(0)->getValue("float") << "\n";
-	cout << "blockF result: " << blockF->getOutputPort(0)->getValue("float") << "\n";
-	cout << "blockG result: " << blockG->getOutputPort(0)->getValue("float") << "\n";
 }
