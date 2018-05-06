@@ -121,32 +121,6 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     QMenu *menu = new QMenu();
     QAction *removeAction = menu->addAction(QIcon(":/img/remove.png"),"Remove block");
 
-
-    /* Not working! .contains(selectedAction) is always false
-    // -- Input ports submenu --
-    QMenu *inputMenu = menu->addMenu("Connect input port");
-    QList<QAction *> connectInputActions;
-
-    vector<Port> ports = this->backendObject->getInputPorts();
-    for(vector<Port>::iterator port = ports.begin(); port != ports.end(); ++port)
-    {
-        connectInputActions.append(new QAction(inputMenu->addAction(port->print())));
-    }
-
-
-    // -- Output ports submenu --
-    QMenu *outputMenu = menu->addMenu("Connect output port");
-    QList<QAction *> connectOutputActions;
-
-    ports = this->backendObject->getOutputPorts();
-    for(vector<Port>::iterator port = ports.begin(); port != ports.end(); ++port)
-    {
-        QAction *action = new QAction(outputMenu->addAction(port->print()));
-        qDebug(qUtf8Printable(action->text()));
-        connectOutputActions.append(action);
-    }
-    */
-
     QMenu *inputMenu = new QMenu();
     QMenu *outputMenu = new QMenu();
 
@@ -169,13 +143,6 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
     // -- Show menu --
     QAction *selectedAction = menu->exec(event->screenPos());
-
-    /* @todo
-    menu->popup(event->screenPos()); // Someone said this is better than exec because it does't block loop but whatever
-    connect(menu, SIGNAL(triggered(QAction *)),
-                 object, SLOT(triggered(QAction *)));
-    */
-
 
     // --- Do action ---
     Port *selectedPort;
@@ -235,19 +202,6 @@ void BlockGraphicItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
         }
 
         this->parentScene->startConnectingBlocks(this, selectedPort);
-
-        /*  Not working! .contains(selectedAction) is always false
-        if(connectInputActions.contains(selectedAction))
-        {
-            this->parentScene->startConnectingBlocks(this,
-                this->backendObject->getInputPort(connectInputActions.indexOf(selectedAction)));
-        }
-        else if(connectOutputActions.contains(selectedAction))
-        {
-            this->parentScene->startConnectingBlocks(this,
-                this->backendObject->getOutputPort(connectOutputActions.indexOf(selectedAction)));
-        }
-        */
     }
 }
 
@@ -332,8 +286,6 @@ BlockGraphicItem::~BlockGraphicItem()
     }
 
     this->parentScene->removeItem(this);
-    //this->parentScene->backendScheme->removeBlock(backendObject);
-    //delete this->backendObject;
     this->backendObject->deleted = true;
 }
 
