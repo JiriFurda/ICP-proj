@@ -77,6 +77,12 @@ public:
      */
     void unhighlight();
 
+    /**
+     * @brief getName is method used to found out name (type) of the block.
+     * @return Name of the block.
+     */
+    QString getName();
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);

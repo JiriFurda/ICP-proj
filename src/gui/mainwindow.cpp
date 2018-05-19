@@ -113,11 +113,23 @@ void MainWindow::on_actionSave_File_triggered()
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save scheme to file"), "",
         tr("Block scheme (*.scheme);;All Files (*)"));
-    QMessageBox::information(
-        this,
-        tr("Not implemeted"),
-        tr("Saving scheme to file is not yet implemented.") );
 
+    bool ok = this->backendScheme->saveToFile(fileName);
+
+    if(ok)
+    {
+        QMessageBox::information(
+            this,
+            tr("Scheme saved"),
+            tr("Scheme was successfuly saved to file."));
+    }
+    else
+    {
+        QMessageBox::critical(
+            this,
+            tr("Saving error"),
+            tr("There was an error saving scheme to file."));
+    }
 }
 
 void MainWindow::on_actionOpen_File_triggered()

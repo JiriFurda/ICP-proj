@@ -106,8 +106,8 @@ bool Scheme::runStep(bool highlight)
 	return true;
 }
 
-bool Scheme::preRun()
-{   
+void Scheme::removeDeletedBlocks()
+{
     for (Block* block : blockScheme)
     {
         if(block->deleted)
@@ -115,6 +115,11 @@ bool Scheme::preRun()
             this->removeBlock(block);
         }
     }
+}
+
+bool Scheme::preRun()
+{   
+    this->removeDeletedBlocks();
 
     if(blockScheme.size() == 0)
     {
@@ -267,4 +272,70 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
 	}
 
 	return block;
+}
+
+bool Scheme::saveToFile(QString path)
+{
+    if(path.isEmpty())
+        return false;
+
+    QFile file(path);
+    if (!file.open(QFile::WriteOnly | QFile::Text))
+        return false;
+
+    this->removeDeletedBlocks();
+
+
+    QXmlStreamWriter stream(&file);
+    stream.setAutoFormatting(true);
+    stream.writeStartDocument();
+
+
+    stream.writeStartElement("scheme");
+    stream.writeAttribute("name", QString::fromStdString(this->name));
+
+    for (Block* block : blockScheme)
+    {
+        stream.writeStartElement("block");
+        stream.writeAttribute("type", block->GUIobject->getName());
+
+        for(int i=0; i<2; i++)  // i==0...input  i==1...output
+        {
+            vector<Port> portVector;
+
+            if(i == 0)
+            {
+                stream.writeStartElement("input");
+                portVector = block->getInputPorts();
+            }
+            else
+            {
+                stream.writeStartElement("output");
+                portVector = block->getOutputPorts();
+            }
+
+            for (Port port : portVector)
+            {
+                stream.writeStartElement("port");
+
+                for (string name : port.getNames())
+                {
+                    stream.writeStartElement("value");
+                    stream.writeAttribute("name", QString::fromStdString(name));
+                    stream.writeCharacters(QString::number(port.getValue(name)));
+                    stream.writeEndElement(); // value
+                }
+
+                stream.writeEndElement(); // port
+            }
+            stream.writeEndElement(); // input/output
+        }
+
+        stream.writeEndElement(); // block
+    }
+
+    stream.writeEndElement(); // scheme
+    stream.writeEndDocument();
+
+    return true;
 }

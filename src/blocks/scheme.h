@@ -24,6 +24,8 @@
 #include <QString>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QXmlStreamWriter>
+#include <QFile>
 
 using namespace std;
 
@@ -61,6 +63,13 @@ class Scheme
          */
         bool runStep(bool highlight);
 
+        /**
+         * @brief saveToFile saves the scheme to XML file
+         * @param path Destination file to save the scheme to
+         * @return True when successful, false when not
+         */
+        bool saveToFile(QString path);
+
 	private:
         Block* searchUserDependentBlocks();
         Block* step_internal(Block* SIexpectedNextBlock, bool highlight);
@@ -68,6 +77,7 @@ class Scheme
         Block* findNonDependentBlock(Block* block);
         bool removeBlock(Block* block);
 		Block* findNonDependentBlock_private(Block* block);
+        void removeDeletedBlocks();
 
 		Block* LoopDetected = new BlockAdd();
 		string name;
