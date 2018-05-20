@@ -44,6 +44,7 @@
     <addaction name="actionRun"/>
     <addaction name="actionStep"/>
     <addaction name="separator"/>
+    <addaction name="actionRevert"/>
     <addaction name="separator"/>
     <addaction name="actionAdd"/>
     <addaction name="separator"/>
@@ -78,6 +79,7 @@
    </attribute>
    <addaction name="actionRun"/>
    <addaction name="actionStep"/>
+   <addaction name="actionRevert"/>
    <addaction name="separator"/>
    <addaction name="actionAdd"/>
    <addaction name="actionExit_connection_mode"/>
@@ -180,6 +182,15 @@
    </property>
    <property name="text">
     <string>Rename File</string>
+   </property>
+  </action>
+  <action name="actionRevert">
+   <property name="icon">
+    <iconset resource="imagesresource.qrc">
+     <normaloff>:/img/revert.png</normaloff>:/img/revert.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert</string>
    </property>
   </action>
  </widget>

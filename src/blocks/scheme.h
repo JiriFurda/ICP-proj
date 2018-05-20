@@ -61,6 +61,11 @@ class Scheme
          */
         bool runStep(bool highlight);
 
+        /**
+         * @brief revert reverts Scheme to pre-execute state.
+         */
+        void revert();
+
 	private:
         Block* searchUserDependentBlocks();
         Block* step_internal(Block* SIexpectedNextBlock, bool highlight);

@@ -46,7 +46,6 @@ void Block::execute()
 	if (executed)
 	{
 		cerr << "Block::execute(): Found loop\n";
-		exit(-1);
 	}
 
 	executeSpecific();
@@ -113,4 +112,9 @@ QString Block::printPorts()
 void Block::linkGUIobject(BlockGraphicItem *GUIobject)
 {
     this->GUIobject = GUIobject;
+}
+
+void Block::resetExecuted()
+{
+    this->executed = false;
 }

@@ -17,5 +17,6 @@
         <file>img/name.png</file>
         <file>img/open.png</file>
         <file>img/save.png</file>
+        <file>img/revert.png</file>
     </qresource>
 </RCC>

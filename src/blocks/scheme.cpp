@@ -268,3 +268,35 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
 
 	return block;
 }
+
+void Scheme::revert()
+{
+    // --- Check if executed ---
+    if(!this->readOnly)
+    {
+        QMessageBox::critical(0, "Reverting error", "Nothing to revert. Scheme wasn't executed yet.");
+        return;
+    }
+
+    // --- Reset all ports values ---
+    for (Block* block : this->blockScheme)
+    {
+        block->resetExecuted();
+
+        for (vector<Port>::iterator port = block->inputPorts.begin(); port != block->inputPorts.end(); ++port)
+        {
+            port->reset();
+        }
+        for (vector<Port>::iterator port = block->outputPorts.begin(); port != block->outputPorts.end(); ++port)
+        {
+            port->reset();
+        }
+     }
+
+    // --- Reset scheme flags ---
+    this->readOnly = false;
+    this->finished = false;
+
+    // --- Success dialog ---
+    QMessageBox::information(0, "Reverting", "Scheme was successfuly reverted.");
+}

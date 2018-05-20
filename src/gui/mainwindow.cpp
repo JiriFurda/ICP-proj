@@ -163,3 +163,11 @@ void MainWindow::on_actionRename_file_triggered()
         if (ok && !text.isEmpty())
             this->setWindowTitle(text+" - BlockEditor");
 }
+
+void MainWindow::on_actionRevert_triggered()
+{
+    if (QMessageBox::Yes == QMessageBox::question(this, "Revert scheme", "Do you really want to revert this to pre-execute state?", QMessageBox::Yes | QMessageBox::No))
+    {
+        this->backendScheme->revert();
+    }
+}

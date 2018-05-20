@@ -164,3 +164,11 @@ bool Port::isOutputType()
 {
     return this->type;
 }
+
+void Port::reset()
+{
+    for (string name : this->getNames())
+    {
+        this->setValue(name, numeric_limits<double>::quiet_NaN());
+    }
+}

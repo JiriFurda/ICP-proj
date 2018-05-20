@@ -366,23 +366,24 @@ compiler_rcc_make_all: qrc_imagesresource.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_imagesresource.cpp
 qrc_imagesresource.cpp: gui/imagesresource.qrc \
-		gui/img/full.png \
-		gui/img/save.png \
 		gui/img/link.png \
-		gui/img/output.png \
-		gui/img/open.png \
-		gui/img/input.png \
-		gui/img/copyright.png \
-		gui/img/file.png \
-		gui/img/add.png \
-		gui/img/empty.png \
 		gui/img/broken-link.png \
-		gui/img/remove.png \
+		gui/img/open.png \
+		gui/img/info.png \
+		gui/img/empty.png \
+		gui/img/revert.png \
+		gui/img/copyright.png \
+		gui/img/add.png \
 		gui/img/exit.png \
-		gui/img/run.png \
-		gui/img/step-forward.png \
 		gui/img/name.png \
-		gui/img/info.png
+		gui/img/file.png \
+		gui/img/input.png \
+		gui/img/run.png \
+		gui/img/save.png \
+		gui/img/full.png \
+		gui/img/output.png \
+		gui/img/remove.png \
+		gui/img/step-forward.png
 	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name imagesresource gui/imagesresource.qrc -o qrc_imagesresource.cpp
 
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_aboutdialog.cpp moc_addblockdialog.cpp moc_creditsdialog.cpp
