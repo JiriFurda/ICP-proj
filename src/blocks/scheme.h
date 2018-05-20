@@ -82,6 +82,8 @@ class Scheme
 
         static bool showError(string msg);
 
+        Block* getBlockById(int id);
+
 	private:
         Block* searchUserDependentBlocks();
         Block* step_internal(Block* SIexpectedNextBlock, bool highlight);

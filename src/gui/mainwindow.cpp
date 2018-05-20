@@ -179,35 +179,71 @@ bool MainWindow::loadFromFile(QString path)
     if(schemeNode == nullptr)
         return Scheme::showError("Scheme node not found");
 
+    // --- Block prototypes ---
     for (tinyxml2::XMLElement* blockNode = schemeNode->FirstChildElement("block"); blockNode != NULL; blockNode = blockNode->NextSiblingElement("block"))
     {
-        qDebug("<block>");
-
         Block* newBlock = this->createBlock(blockNode->Attribute("type"));
         newBlock->GUIobject->setPos(QString(blockNode->Attribute("x")).toDouble(),QString(blockNode->Attribute("y")).toDouble());
+    }
+
+    // --- Ports ---
+    for (tinyxml2::XMLElement* blockNode = schemeNode->FirstChildElement("block"); blockNode != NULL; blockNode = blockNode->NextSiblingElement("block"))
+    {
+        int portNum = 0;
 
         tinyxml2::XMLElement *inputNode = blockNode->FirstChildElement("input");
         if(inputNode == nullptr)
             return Scheme::showError("Input node not found");
 
-        qDebug("<input>");
-
         for (tinyxml2::XMLElement* portNode = inputNode->FirstChildElement("port"); portNode != NULL; portNode = portNode->NextSiblingElement("port"))
         {
+            int id;
+            blockNode->QueryIntAttribute("id", &id);
+            Block *block = this->backendScheme->getBlockById(id);
+
+            if(block == NULL)
+                return Scheme::showError("Block search by id was not successful");
+
+            qDebug("1");
+
+            if(portNode->Attribute("connectedblock") != NULL)
+            {
+                qDebug("2");
+
+                int connectedBlockId;
+                portNode->QueryIntAttribute("connectedblock", &connectedBlockId);
+
+                Port* port = block->getInputPort(portNum);
+                Block* otherBlock = this->backendScheme->getBlockById(connectedBlockId);
+                Port* otherPort = otherBlock->getOutputPort(0); // Port to connect to
+
+                new ConnectionLineItem(this->scene, block->GUIobject, otherBlock->GUIobject, port, otherPort);
+            }
+            // @todo connectedPort
+
             for (tinyxml2::XMLElement* valueNode = portNode->FirstChildElement("value"); valueNode != NULL; valueNode = valueNode->NextSiblingElement("value"))
             {
-                /*
-                if(name == NULL)    @todo
-                    return Scheme::showError("Name param not found");
-                */
+
+                qDebug("3.1");
+                //if(name == NULL)    @todo
+                //    return Scheme::showError("Name param not found")
 
                 qDebug("<value>");
-                qDebug(valueNode->Attribute("name"));
-                qDebug(valueNode->GetText());   // QueryDoubleText()
+
+                double value;
+                valueNode->QueryDoubleText(&value);
+
+                block->getInputPort(portNum)->setValue(valueNode->Attribute("name"), value);
+
+                qDebug("3.2");
             }
+
+            portNum++;
         }
 
-        //XMLElement *outputNode = doc.FirstChildElement("output");
+
+        // @todo outputNode
+
     }
 
     return true;

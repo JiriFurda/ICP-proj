@@ -326,6 +326,14 @@ bool Scheme::saveToFile(QString path)
             {
                 stream.writeStartElement("port");
 
+                if(i == 0)  // Input port
+                {
+                    if(port.getConnectedPort() != NULL)
+                    {
+                        stream.writeAttribute("connectedblock", QString::number(port.getConnectedPort()->getOwnerBlock()->getId()));
+                    }
+                }
+
                 for (string name : port.getNames())
                 {
                     stream.writeStartElement("value");
@@ -516,4 +524,15 @@ bool Scheme::showError(string msg)
 {
     qDebug() << QString::fromStdString(msg);
     return false;
+}
+
+Block* Scheme::getBlockById(int id)
+{
+    for (Block* block : this->blockScheme)
+    {
+        if(block->getId() == id)
+            return block;
+    }
+
+    return NULL;
 }
