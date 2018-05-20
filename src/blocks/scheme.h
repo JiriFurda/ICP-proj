@@ -75,6 +75,11 @@ class Scheme
 
         Block* getBlockById(int id);
 
+        /**
+         * @brief revert reverts Scheme to pre-execute state.
+         */
+        void revert();
+
 	private:
         Block* searchUserDependentBlocks();
         Block* step_internal(Block* SIexpectedNextBlock, bool highlight);

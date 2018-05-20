@@ -63,6 +63,8 @@ private slots:
     void on_actionExit_connection_mode_triggered();
     void on_actionRename_file_triggered();
 
+    void on_actionRevert_triggered();
+
 public slots:
     /**
      * @brief createBlock is slot used to create new block on the scheme.

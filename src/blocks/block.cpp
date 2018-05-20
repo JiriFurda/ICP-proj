@@ -46,7 +46,6 @@ void Block::execute()
 	if (executed)
 	{
 		cerr << "Block::execute(): Found loop\n";
-		exit(-1);
 	}
 
 	executeSpecific();
@@ -123,4 +122,9 @@ void Block::setId(int id)
 int Block::getId()
 {
     return this->id;
+}
+
+void Block::resetExecuted()
+{
+    this->executed = false;
 }
