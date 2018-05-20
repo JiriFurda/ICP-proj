@@ -304,6 +304,9 @@ bool Scheme::saveToFile(QString path)
         stream.writeAttribute("type", block->GUIobject->getName());
         stream.writeAttribute("id", QString::number(block->getId()));
 
+        stream.writeAttribute("x", QString::number(block->GUIobject->scenePos().x()));
+        stream.writeAttribute("y", QString::number(block->GUIobject->scenePos().y()));
+
         for(int i=0; i<2; i++)  // i==0...input  i==1...output
         {
             vector<Port> portVector;

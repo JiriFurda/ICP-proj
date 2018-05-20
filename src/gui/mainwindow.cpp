@@ -183,7 +183,8 @@ bool MainWindow::loadFromFile(QString path)
     {
         qDebug("<block>");
 
-        this->createBlock(blockNode->Attribute("type"));
+        Block* newBlock = this->createBlock(blockNode->Attribute("type"));
+        newBlock->GUIobject->setPos(QString(blockNode->Attribute("x")).toDouble(),QString(blockNode->Attribute("y")).toDouble());
 
         tinyxml2::XMLElement *inputNode = blockNode->FirstChildElement("input");
         if(inputNode == nullptr)
