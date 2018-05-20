@@ -18,12 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->showMaximized();
 
     // === Scheme view ===
-    QGraphicsView *view = new QGraphicsView(this);
-    view->setRenderHint(QPainter::Antialiasing);
+    this->view = new QGraphicsView(this);
+    this->view->setRenderHint(QPainter::Antialiasing);
     this->centralWidget()->layout()->addWidget(view);
 
-    scene = new SchemeScene();
-    view->setScene(scene);
+    this->scene = new SchemeScene();
+    this->view->setScene(this->scene);
 
     // --- Backend ---
     this->backendScheme = new Scheme("Unnamed scheme");
@@ -55,7 +55,7 @@ void MainWindow::on_actionAdd_triggered()
     dialog.exec();
 }
 
-void MainWindow::createBlock(QString name)
+Block* MainWindow::createBlock(QString name)
 {
     Block *block;
 
@@ -86,12 +86,13 @@ void MainWindow::createBlock(QString name)
     else
     {
         QMessageBox::critical(this, "Error creating block", "Unexpect name received when creating block");
-        return;
+        return NULL;
     }
 
     new BlockGraphicItem(this->scene, name, block);
     this->backendScheme->addBlock(block);   // @todo Temporary, should be in SchemeScene
 
+    return block;
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -113,11 +114,23 @@ void MainWindow::on_actionSave_File_triggered()
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save scheme to file"), "",
         tr("Block scheme (*.scheme);;All Files (*)"));
-    QMessageBox::information(
-        this,
-        tr("Not implemeted"),
-        tr("Saving scheme to file is not yet implemented.") );
 
+    bool ok = this->backendScheme->saveToFile(fileName);
+
+    if(ok)
+    {
+        QMessageBox::information(
+            this,
+            tr("Scheme saved"),
+            tr("Scheme was successfuly saved to file."));
+    }
+    else
+    {
+        QMessageBox::critical(
+            this,
+            tr("Saving error"),
+            tr("There was an error saving scheme to file."));
+    }
 }
 
 void MainWindow::on_actionOpen_File_triggered()
@@ -125,10 +138,144 @@ void MainWindow::on_actionOpen_File_triggered()
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open scheme from file"), "",
         tr("Block scheme (*.scheme);;All Files (*)"));
+
+    SchemeScene* oldFrontendScheme = this->scene;
+    Scheme* oldBackendScheme = this->backendScheme;
+
+    this->scene = new SchemeScene();
+    this->backendScheme = new Scheme("Test");
+
+
+
+
+
+    if(this->loadFromFile(fileName))
+    {
+        this->view->setScene(this->scene);
+    }
+    else
+    {
+        this->scene = oldFrontendScheme;
+        this->backendScheme = oldBackendScheme;
+    }
+
+    /*
     QMessageBox::information(
         this,
         tr("Not implemeted"),
-        tr("Opening scheme from file is not yet implemented.") );
+        tr("Opening scheme from file is not yet implemented.") );*/
+}
+
+bool MainWindow::loadFromFile(QString path)
+{
+    // --- Check path ---
+    if(path.isEmpty())
+        return this->showOpeningError("Empty file path");
+
+    // --- Load XML ---
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile(path.toLatin1());
+
+
+    // --- <scheme> node ---
+    tinyxml2::XMLElement *schemeNode = doc.FirstChildElement("scheme");
+
+    if(schemeNode == nullptr)
+        return this->showOpeningError("Scheme node not found");
+
+
+    // --- <block> nodes ---
+    for (tinyxml2::XMLElement* blockNode = schemeNode->FirstChildElement("block"); blockNode != NULL; blockNode = blockNode->NextSiblingElement("block"))
+    {
+        Block* newBlock = this->createBlock(blockNode->Attribute("type"));
+        newBlock->GUIobject->setPos(QString(blockNode->Attribute("x")).toDouble(),QString(blockNode->Attribute("y")).toDouble());
+    }
+
+
+    // --- <port> and <value> nodes ---
+    for(tinyxml2::XMLElement* blockNode = schemeNode->FirstChildElement("block"); blockNode != NULL; blockNode = blockNode->NextSiblingElement("block"))
+    {
+        int portNum = 0;
+
+
+        // -- <input> --
+        tinyxml2::XMLElement *inputNode = blockNode->FirstChildElement("input");
+        if(inputNode == nullptr)
+            return this->showOpeningError("Input node not found");
+
+        for(tinyxml2::XMLElement* portNode = inputNode->FirstChildElement("port"); portNode != NULL; portNode = portNode->NextSiblingElement("port"))
+        {
+            int id;
+            blockNode->QueryIntAttribute("id", &id);
+            Block *block = this->backendScheme->getBlockById(id);
+
+            if(block == NULL)
+                return this->showOpeningError("Block search by id was not successful");
+
+            if(portNode->Attribute("connectedblock") != NULL)
+            {
+                int connectedBlockId;
+                portNode->QueryIntAttribute("connectedblock", &connectedBlockId);
+
+                Port* port = block->getInputPort(portNum);
+                Block* otherBlock = this->backendScheme->getBlockById(connectedBlockId);
+                Port* otherPort = otherBlock->getOutputPort(0); // Port to connect to
+
+                new ConnectionLineItem(this->scene, block->GUIobject, otherBlock->GUIobject, port, otherPort);
+            }
+
+            for (tinyxml2::XMLElement* valueNode = portNode->FirstChildElement("value"); valueNode != NULL; valueNode = valueNode->NextSiblingElement("value"))
+            {
+                //if(name == NULL)    @todo
+                //    return this->showOpeningError("Name param not found")
+
+                double value;
+                valueNode->QueryDoubleText(&value);
+
+                block->getInputPort(portNum)->setValue(valueNode->Attribute("name"), value);
+            }
+
+            portNum++;
+        }
+
+
+        // -- <output> --
+        tinyxml2::XMLElement *outputNode = blockNode->FirstChildElement("output");
+        if(inputNode == nullptr)
+            return this->showOpeningError("Output node not found");
+
+        for(tinyxml2::XMLElement* portNode = outputNode->FirstChildElement("port"); portNode != NULL; portNode = portNode->NextSiblingElement("port"))
+        {
+            int id;
+            blockNode->QueryIntAttribute("id", &id);
+            Block *block = this->backendScheme->getBlockById(id);
+
+            if(block == NULL)
+                return this->showOpeningError("Block search by id was not successful");
+
+            for (tinyxml2::XMLElement* valueNode = portNode->FirstChildElement("value"); valueNode != NULL; valueNode = valueNode->NextSiblingElement("value"))
+            {
+                //if(name == NULL)    @todo
+                //    return this->showOpeningError("Name param not found")
+
+                double value;
+                valueNode->QueryDoubleText(&value);
+
+                block->getOutputPort(0)->setValue(valueNode->Attribute("name"), value);
+            }
+        }
+    }
+
+    return true;
+}
+
+bool MainWindow::showOpeningError(string msg)
+{
+    QMessageBox::critical(
+        this,
+        tr("Opening error"),
+        QString::fromStdString(msg));
+    return false;
 }
 
 void MainWindow::on_actionNew_File_triggered()

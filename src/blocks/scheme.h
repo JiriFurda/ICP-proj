@@ -16,6 +16,7 @@
 #include <string>
 #include <limits>
 #include <algorithm>
+
 #include "block.h"
 #include "blockArithmetic.h"
 #include "blockComplex.h"
@@ -24,6 +25,10 @@
 #include <QString>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QXmlStreamWriter>
+#include <QFile>
+
+#include "tinyxml2.h"
 
 using namespace std;
 
@@ -61,6 +66,15 @@ class Scheme
          */
         bool runStep(bool highlight);
 
+        /**
+         * @brief saveToFile saves the scheme to XML file
+         * @param path Destination file to save the scheme to
+         * @return True when successful, false when not
+         */
+        bool saveToFile(QString path);
+
+        Block* getBlockById(int id);
+
 	private:
         Block* searchUserDependentBlocks();
         Block* step_internal(Block* SIexpectedNextBlock, bool highlight);
@@ -68,6 +82,7 @@ class Scheme
         Block* findNonDependentBlock(Block* block);
         bool removeBlock(Block* block);
 		Block* findNonDependentBlock_private(Block* block);
+        void removeDeletedBlocks();
 
 		Block* LoopDetected = new BlockAdd();
 		string name;
@@ -79,6 +94,7 @@ class Scheme
 		vector<Block*> blockScheme;
 		vector<Block*> loopDetectionTrace;
 		Block* expectedNextBlock = NULL;
+        int nextId;
 };
 
 #endif // SCHEME_H

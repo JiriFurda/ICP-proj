@@ -12,6 +12,7 @@
 Scheme::Scheme(string declaredName)
 {
 	name = declaredName;	
+    this->nextId = 1;
 }
 
 bool Scheme::addBlock(Block* block)
@@ -23,6 +24,8 @@ bool Scheme::addBlock(Block* block)
 	}
 
 	blockScheme.push_back(block);
+
+    block->setId(this->nextId++);
 
 	return true;	
 }
@@ -106,8 +109,8 @@ bool Scheme::runStep(bool highlight)
 	return true;
 }
 
-bool Scheme::preRun()
-{   
+void Scheme::removeDeletedBlocks()
+{
     for (Block* block : blockScheme)
     {
         if(block->deleted)
@@ -115,6 +118,11 @@ bool Scheme::preRun()
             this->removeBlock(block);
         }
     }
+}
+
+bool Scheme::preRun()
+{   
+    this->removeDeletedBlocks();
 
     if(blockScheme.size() == 0)
     {
@@ -267,4 +275,94 @@ Block* Scheme::findNonDependentBlock_private(Block* block)
 	}
 
 	return block;
+}
+
+bool Scheme::saveToFile(QString path)
+{
+    if(path.isEmpty())
+        return false;
+
+    QFile file(path);
+    if (!file.open(QFile::WriteOnly | QFile::Text))
+        return false;
+
+    this->removeDeletedBlocks();
+
+
+    QXmlStreamWriter stream(&file);
+    stream.setAutoFormatting(true);
+    stream.writeStartDocument();
+
+
+    stream.writeStartElement("scheme");
+    stream.writeAttribute("name", QString::fromStdString(this->name));
+    stream.writeAttribute("nextid", QString::number(this->nextId));
+
+    for (Block* block : blockScheme)
+    {
+        stream.writeStartElement("block");
+        stream.writeAttribute("type", block->GUIobject->getName());
+        stream.writeAttribute("id", QString::number(block->getId()));
+
+        stream.writeAttribute("x", QString::number(block->GUIobject->scenePos().x()));
+        stream.writeAttribute("y", QString::number(block->GUIobject->scenePos().y()));
+
+        for(int i=0; i<2; i++)  // i==0...input  i==1...output
+        {
+            vector<Port> portVector;
+
+            if(i == 0)
+            {
+                stream.writeStartElement("input");
+                portVector = block->getInputPorts();
+            }
+            else
+            {
+                stream.writeStartElement("output");
+                portVector = block->getOutputPorts();
+            }
+
+            for (Port port : portVector)
+            {
+                stream.writeStartElement("port");
+
+                if(i == 0)  // Input port
+                {
+                    if(port.getConnectedPort() != NULL)
+                    {
+                        stream.writeAttribute("connectedblock", QString::number(port.getConnectedPort()->getOwnerBlock()->getId()));
+                    }
+                }
+
+                for (string name : port.getNames())
+                {
+                    stream.writeStartElement("value");
+                    stream.writeAttribute("name", QString::fromStdString(name));
+                    stream.writeCharacters(QString::number(port.getValue(name)));
+                    stream.writeEndElement(); // value
+                }
+
+                stream.writeEndElement(); // port
+            }
+            stream.writeEndElement(); // input/output
+        }
+
+        stream.writeEndElement(); // block
+    }
+
+    stream.writeEndElement(); // scheme
+    stream.writeEndDocument();
+
+    return true;
+}
+
+Block* Scheme::getBlockById(int id)
+{
+    for (Block* block : this->blockScheme)
+    {
+        if(block->getId() == id)
+            return block;
+    }
+
+    return NULL;
 }

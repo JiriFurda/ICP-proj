@@ -61,7 +61,8 @@ SOURCES       = main.cpp \
 		blocks/blockLogic.cpp \
 		blocks/port.cpp \
 		blocks/scheme.cpp \
-		blocks/blockComplex.cpp qrc_imagesresource.cpp \
+		blocks/blockComplex.cpp \
+		blocks/tinyxml2.cpp qrc_imagesresource.cpp \
 		moc_mainwindow.cpp \
 		moc_aboutdialog.cpp \
 		moc_addblockdialog.cpp \
@@ -80,6 +81,7 @@ OBJECTS       = main.o \
 		port.o \
 		scheme.o \
 		blockComplex.o \
+		tinyxml2.o \
 		qrc_imagesresource.o \
 		moc_mainwindow.o \
 		moc_aboutdialog.o \
@@ -154,7 +156,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		blocks/blockLogic.h \
 		blocks/port.h \
 		blocks/scheme.h \
-		blocks/blockComplex.h main.cpp \
+		blocks/blockComplex.h \
+		blocks/tinyxml2.h main.cpp \
 		gui/mainwindow.cpp \
 		gui/schemescene.cpp \
 		gui/aboutdialog.cpp \
@@ -167,7 +170,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		blocks/blockLogic.cpp \
 		blocks/port.cpp \
 		blocks/scheme.cpp \
-		blocks/blockComplex.cpp
+		blocks/blockComplex.cpp \
+		blocks/tinyxml2.cpp
 QMAKE_TARGET  = blockeditor
 DESTDIR       = ../#avoid trailing-slash linebreak
 TARGET        = ../blockeditor
@@ -339,8 +343,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents gui/imagesresource.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents gui/mainwindow.h gui/schemescene.h gui/aboutdialog.h gui/addblockdialog.h gui/blockgraphicitem.h gui/connectionlineitem.h gui/creditsdialog.h blocks/block.h blocks/blockArithmetic.h blocks/blockLogic.h blocks/port.h blocks/scheme.h blocks/blockComplex.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp gui/mainwindow.cpp gui/schemescene.cpp gui/aboutdialog.cpp gui/addblockdialog.cpp gui/blockgraphicitem.cpp gui/connectionlineitem.cpp gui/creditsdialog.cpp blocks/block.cpp blocks/blockArithmetic.cpp blocks/blockLogic.cpp blocks/port.cpp blocks/scheme.cpp blocks/blockComplex.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents gui/mainwindow.h gui/schemescene.h gui/aboutdialog.h gui/addblockdialog.h gui/blockgraphicitem.h gui/connectionlineitem.h gui/creditsdialog.h blocks/block.h blocks/blockArithmetic.h blocks/blockLogic.h blocks/port.h blocks/scheme.h blocks/blockComplex.h blocks/tinyxml2.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp gui/mainwindow.cpp gui/schemescene.cpp gui/aboutdialog.cpp gui/addblockdialog.cpp gui/blockgraphicitem.cpp gui/connectionlineitem.cpp gui/creditsdialog.cpp blocks/block.cpp blocks/blockArithmetic.cpp blocks/blockLogic.cpp blocks/port.cpp blocks/scheme.cpp blocks/blockComplex.cpp blocks/tinyxml2.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents gui/mainwindow.ui gui/aboutdialog.ui gui/creditsdialog.ui $(DISTDIR)/
 
 
@@ -366,24 +370,23 @@ compiler_rcc_make_all: qrc_imagesresource.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_imagesresource.cpp
 qrc_imagesresource.cpp: gui/imagesresource.qrc \
-		gui/img/link.png \
-		gui/img/broken-link.png \
-		gui/img/open.png \
-		gui/img/info.png \
-		gui/img/empty.png \
-		gui/img/copyright.png \
-		gui/img/credits.txt \
-		gui/img/add.png \
-		gui/img/exit.png \
-		gui/img/name.png \
-		gui/img/file.png \
-		gui/img/input.png \
-		gui/img/run.png \
-		gui/img/save.png \
 		gui/img/full.png \
+		gui/img/save.png \
+		gui/img/link.png \
 		gui/img/output.png \
+		gui/img/open.png \
+		gui/img/input.png \
+		gui/img/copyright.png \
+		gui/img/file.png \
+		gui/img/add.png \
+		gui/img/empty.png \
+		gui/img/broken-link.png \
 		gui/img/remove.png \
-		gui/img/step-forward.png
+		gui/img/exit.png \
+		gui/img/run.png \
+		gui/img/step-forward.png \
+		gui/img/name.png \
+		gui/img/info.png
 	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name imagesresource gui/imagesresource.qrc -o qrc_imagesresource.cpp
 
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_aboutdialog.cpp moc_addblockdialog.cpp moc_creditsdialog.cpp
@@ -401,6 +404,7 @@ moc_mainwindow.cpp: gui/aboutdialog.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
 		blocks/blockLogic.h \
+		blocks/tinyxml2.h \
 		gui/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/furdys/VUT/2018summer/ICP-proj/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include gui/mainwindow.h -o moc_mainwindow.cpp
 
@@ -449,7 +453,8 @@ main.o: main.cpp gui/mainwindow.h \
 		blocks/scheme.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
-		blocks/blockLogic.h
+		blocks/blockLogic.h \
+		blocks/tinyxml2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: gui/mainwindow.cpp gui/mainwindow.h \
@@ -465,6 +470,7 @@ mainwindow.o: gui/mainwindow.cpp gui/mainwindow.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
 		blocks/blockLogic.h \
+		blocks/tinyxml2.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o gui/mainwindow.cpp
 
@@ -535,7 +541,8 @@ scheme.o: blocks/scheme.cpp blocks/scheme.h \
 		gui/connectionlineitem.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
-		blocks/blockLogic.h
+		blocks/blockLogic.h \
+		blocks/tinyxml2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o scheme.o blocks/scheme.cpp
 
 blockComplex.o: blocks/blockComplex.cpp blocks/blockComplex.h \
@@ -545,6 +552,9 @@ blockComplex.o: blocks/blockComplex.cpp blocks/blockComplex.h \
 		gui/schemescene.h \
 		gui/connectionlineitem.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o blockComplex.o blocks/blockComplex.cpp
+
+tinyxml2.o: blocks/tinyxml2.cpp blocks/tinyxml2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tinyxml2.o blocks/tinyxml2.cpp
 
 qrc_imagesresource.o: qrc_imagesresource.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_imagesresource.o qrc_imagesresource.cpp

@@ -114,3 +114,13 @@ void Block::linkGUIobject(BlockGraphicItem *GUIobject)
 {
     this->GUIobject = GUIobject;
 }
+
+void Block::setId(int id)
+{
+    this->id = id;
+}
+
+int Block::getId()
+{
+    return this->id;
+}

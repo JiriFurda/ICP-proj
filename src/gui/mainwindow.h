@@ -68,11 +68,14 @@ public slots:
      * @brief createBlock is slot used to create new block on the scheme.
      * @param QString determining type of new block.
      */
-    void createBlock(QString);
+    Block* createBlock(QString);
 
 private:
     Ui::MainWindow *ui;
     SchemeScene *scene;
+    bool loadFromFile(QString path);
+    QGraphicsView *view;
+    bool showOpeningError(string msg);
 
 
 };

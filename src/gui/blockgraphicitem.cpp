@@ -422,3 +422,8 @@ void BlockGraphicItem::unhighlight()
 
     this->update(); // Force paint()
 }
+
+QString BlockGraphicItem::getName()
+{
+    return this->name;
+}
