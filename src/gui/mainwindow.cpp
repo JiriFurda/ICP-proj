@@ -18,12 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->showMaximized();
 
     // === Scheme view ===
-    QGraphicsView *view = new QGraphicsView(this);
-    view->setRenderHint(QPainter::Antialiasing);
+    this->view = new QGraphicsView(this);
+    this->view->setRenderHint(QPainter::Antialiasing);
     this->centralWidget()->layout()->addWidget(view);
 
-    scene = new SchemeScene();
-    view->setScene(scene);
+    this->scene = new SchemeScene();
+    this->view->setScene(this->scene);
 
     // --- Backend ---
     this->backendScheme = new Scheme("Unnamed scheme");
@@ -55,7 +55,7 @@ void MainWindow::on_actionAdd_triggered()
     dialog.exec();
 }
 
-void MainWindow::createBlock(QString name)
+Block* MainWindow::createBlock(QString name)
 {
     Block *block;
 
@@ -86,12 +86,13 @@ void MainWindow::createBlock(QString name)
     else
     {
         QMessageBox::critical(this, "Error creating block", "Unexpect name received when creating block");
-        return;
+        return NULL;
     }
 
     new BlockGraphicItem(this->scene, name, block);
     this->backendScheme->addBlock(block);   // @todo Temporary, should be in SchemeScene
 
+    return block;
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -137,10 +138,78 @@ void MainWindow::on_actionOpen_File_triggered()
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Open scheme from file"), "",
         tr("Block scheme (*.scheme);;All Files (*)"));
+
+    SchemeScene* oldFrontendScheme = this->scene;
+    Scheme* oldBackendScheme = this->backendScheme;
+
+    this->scene = new SchemeScene();
+    this->backendScheme = new Scheme("Test");
+
+
+
+
+
+    if(this->loadFromFile(fileName))
+    {
+        this->view->setScene(this->scene);
+    }
+    else
+    {
+        this->scene = oldFrontendScheme;
+        this->backendScheme = oldBackendScheme;
+    }
+
+    /*
     QMessageBox::information(
         this,
         tr("Not implemeted"),
-        tr("Opening scheme from file is not yet implemented.") );
+        tr("Opening scheme from file is not yet implemented.") );*/
+}
+
+bool MainWindow::loadFromFile(QString path)
+{
+    if(path.isEmpty())
+        return Scheme::showError("Empty file path");
+
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile(path.toLatin1());
+
+    tinyxml2::XMLElement *schemeNode = doc.FirstChildElement("scheme");
+
+    if(schemeNode == nullptr)
+        return Scheme::showError("Scheme node not found");
+
+    for (tinyxml2::XMLElement* blockNode = schemeNode->FirstChildElement("block"); blockNode != NULL; blockNode = blockNode->NextSiblingElement("block"))
+    {
+        qDebug("<block>");
+
+        this->createBlock(blockNode->Attribute("type"));
+
+        tinyxml2::XMLElement *inputNode = blockNode->FirstChildElement("input");
+        if(inputNode == nullptr)
+            return Scheme::showError("Input node not found");
+
+        qDebug("<input>");
+
+        for (tinyxml2::XMLElement* portNode = inputNode->FirstChildElement("port"); portNode != NULL; portNode = portNode->NextSiblingElement("port"))
+        {
+            for (tinyxml2::XMLElement* valueNode = portNode->FirstChildElement("value"); valueNode != NULL; valueNode = valueNode->NextSiblingElement("value"))
+            {
+                /*
+                if(name == NULL)    @todo
+                    return Scheme::showError("Name param not found");
+                */
+
+                qDebug("<value>");
+                qDebug(valueNode->Attribute("name"));
+                qDebug(valueNode->GetText());   // QueryDoubleText()
+            }
+        }
+
+        //XMLElement *outputNode = doc.FirstChildElement("output");
+    }
+
+    return true;
 }
 
 void MainWindow::on_actionNew_File_triggered()

@@ -16,6 +16,7 @@
 #include <string>
 #include <limits>
 #include <algorithm>
+
 #include "block.h"
 #include "blockArithmetic.h"
 #include "blockComplex.h"
@@ -26,6 +27,8 @@
 #include <QMessageBox>
 #include <QXmlStreamWriter>
 #include <QFile>
+
+#include "tinyxml2.h"
 
 using namespace std;
 
@@ -70,6 +73,15 @@ class Scheme
          */
         bool saveToFile(QString path);
 
+        /**
+         * @brief loadFromFile is static method loading scheme from file
+         * @param path Source file to load the scheme from
+         * @return Pointer to loaded Scheme or NULL if an error occured
+         */
+        static Scheme* loadFromFile(QString path);
+
+        static bool showError(string msg);
+
 	private:
         Block* searchUserDependentBlocks();
         Block* step_internal(Block* SIexpectedNextBlock, bool highlight);
@@ -89,6 +101,7 @@ class Scheme
 		vector<Block*> blockScheme;
 		vector<Block*> loopDetectionTrace;
 		Block* expectedNextBlock = NULL;
+        int nextId;
 };
 
 #endif // SCHEME_H

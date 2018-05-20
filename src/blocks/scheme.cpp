@@ -12,6 +12,7 @@
 Scheme::Scheme(string declaredName)
 {
 	name = declaredName;	
+    this->nextId = 1;
 }
 
 bool Scheme::addBlock(Block* block)
@@ -23,6 +24,8 @@ bool Scheme::addBlock(Block* block)
 	}
 
 	blockScheme.push_back(block);
+
+    block->setId(this->nextId++);
 
 	return true;	
 }
@@ -293,11 +296,13 @@ bool Scheme::saveToFile(QString path)
 
     stream.writeStartElement("scheme");
     stream.writeAttribute("name", QString::fromStdString(this->name));
+    stream.writeAttribute("nextid", QString::number(this->nextId));
 
     for (Block* block : blockScheme)
     {
         stream.writeStartElement("block");
         stream.writeAttribute("type", block->GUIobject->getName());
+        stream.writeAttribute("id", QString::number(block->getId()));
 
         for(int i=0; i<2; i++)  // i==0...input  i==1...output
         {
@@ -338,4 +343,174 @@ bool Scheme::saveToFile(QString path)
     stream.writeEndDocument();
 
     return true;
+}
+
+Scheme* Scheme::loadFromFile(QString path)
+{
+
+}
+
+
+    /*
+    QFile file(path);
+    if (!file.open(QFile::ReadOnly))
+        return Scheme::showError("Can't read file");
+
+    QXmlStreamReader stream(file.readAll());
+
+    if(!stream.readNextStartElement() || stream.name() != QLatin1String("scheme"))
+        return Scheme::showError("Scheme node not found");
+
+
+    int fsm = 0;
+    stream.readNextStartElement();
+
+    // --- Reading XML ---
+    while(!stream.atEnd() &&  !stream.hasError())
+    {
+        if(fsm == -1)
+            break;
+
+        qDebug("FSM=%d",fsm);
+
+        switch(fsm)
+        {
+            case 0: // -- <block> node --
+
+                if(stream.name() != QLatin1String("block"))
+                    return Scheme::showError("Block node not found");
+
+                if(!stream.attributes().hasAttribute(QString("type")))
+                    return Scheme::showError("Block type attribute not found");
+
+
+                qDebug("Block"+stream.attributes().value("type").toLatin1());
+
+                stream.readNextStartElement();
+                fsm = 1;
+
+                break;
+
+            case 1: // --- input ---
+                if(stream.name() != QLatin1String("input"))
+                    return Scheme::showError("Input node not found");
+
+                stream.readNextStartElement();
+                fsm = 2;
+
+                break;
+
+           case 2: // input.port
+                if(stream.name() != QLatin1String("port"))
+                    return Scheme::showError("Input.Port node not found");
+
+                stream.readNextStartElement();
+                fsm = 3;
+
+                break;
+
+            case 3: // input.value
+                qDebug() << stream.name();
+
+                if(stream.name() != QLatin1String("value"))
+                    return Scheme::showError("Input.Value node not found");
+
+                if(!stream.attributes().hasAttribute(QString("name")))
+                    return Scheme::showError("Input.Name attribute not found");
+
+                qDebug(stream.attributes().value("name").toLatin1());
+                qDebug(stream.text().toLatin1());  //.toDouble
+
+
+                stream.readNextStartElement();  // skip </value>
+                stream.readNextStartElement();
+
+                if(stream.name() == QLatin1String("port"))
+                {
+                    stream.readNextStartElement();  // skip </port>
+                    fsm = 2;
+                }
+                else if(stream.name() == QLatin1String("value"))
+                    fsm = 3;
+                else if(stream.name() == QLatin1String("output"))
+                    fsm = 4;
+                else
+                {
+                    qDebug("Unexpected node after Input.Value");
+                    fsm = -1;
+
+                }
+        }
+
+        */
+
+        /*
+        // -- <block> node --
+        stream.readNextStartElement();
+
+        if(stream.name() != QLatin1String("block"))
+            return Scheme::showError("Block node not found");
+
+        if(!stream.attributes().hasAttribute(QString("type")))
+            return Scheme::showError("Block type attribute not found");
+
+
+        qDebug("Block"+stream.attributes().value("type").toLatin1());
+
+
+        // -- <input> node --
+        stream.readNextStartElement();
+        if(stream.name() != QLatin1String("input"))
+            return Scheme::showError("Input node not found");
+
+
+        stream.readNextStartElement();
+
+
+
+        stream.readNextStartElement();
+        for(int portNum = 0; stream.name() == QLatin1String("port"); portNum++)
+        {
+
+            if(stream.name() != QLatin1String("port"))
+                return Scheme::showError("Port node not found");
+
+            qDebug("Port #%d",portNum);
+
+            stream.readNextStartElement();
+            qDebug("Processig1 "+stream.name().toLatin1());
+            do
+            {
+                if(stream.name() != QLatin1String("value"))
+                    return Scheme::showError("Value node not found");
+
+                if(!stream.attributes().hasAttribute(QString("name")))
+                    return Scheme::showError("Name attribute not found");
+
+                qDebug(stream.attributes().value("name").toLatin1());
+                qDebug(stream.text().toLatin1());  //.toDouble
+
+                stream.readNextStartElement();  ////////////////////////////////// Tu je problem do pizdy
+                stream.readNextStartElement();
+                qDebug("Processig2 "+stream.name().toLatin1());
+            }
+            while(stream.name() == QLatin1String("value"));
+
+        }
+
+
+
+
+        //qDebug("---------next");
+
+    }
+
+    return NULL; // @todo TEMP
+}
+*/
+
+bool Scheme::showError(string msg)
+{
+    qDebug() << QString::fromStdString(msg);
+    return false;
 }
