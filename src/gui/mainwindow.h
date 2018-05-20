@@ -75,6 +75,7 @@ private:
     SchemeScene *scene;
     bool loadFromFile(QString path);
     QGraphicsView *view;
+    bool showOpeningError(string msg);
 
 
 };

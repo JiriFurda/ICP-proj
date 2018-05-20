@@ -73,15 +73,6 @@ class Scheme
          */
         bool saveToFile(QString path);
 
-        /**
-         * @brief loadFromFile is static method loading scheme from file
-         * @param path Source file to load the scheme from
-         * @return Pointer to loaded Scheme or NULL if an error occured
-         */
-        static Scheme* loadFromFile(QString path);
-
-        static bool showError(string msg);
-
         Block* getBlockById(int id);
 
 	private:
