@@ -54,11 +54,13 @@ void BlockGraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->setRenderHint(QPainter::Antialiasing); // Enable antialiasing
     painter->setPen(QPen(Qt::black, 2));    // 2px black border
 
+    /*
     // --- Transparent when dragged ---
     if(this->isMoving == true)
         painter->setOpacity(0.7);
     else
         painter->setOpacity(1);
+    */
 
     // --- Highlight ---
     QBrush brush;

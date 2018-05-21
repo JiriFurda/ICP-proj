@@ -198,6 +198,10 @@ bool MainWindow::loadFromFile(QString path)
     {
         Block* newBlock = this->createBlock(blockNode->Attribute("type"));
         newBlock->GUIobject->setPos(QString(blockNode->Attribute("x")).toDouble(),QString(blockNode->Attribute("y")).toDouble());
+
+        int id;
+        blockNode->QueryIntAttribute("id", &id);
+        newBlock->setId(id);
     }
 
 
