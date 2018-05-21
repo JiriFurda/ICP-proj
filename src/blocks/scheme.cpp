@@ -297,6 +297,7 @@ bool Scheme::saveToFile(QString path)
     stream.writeStartElement("scheme");
     stream.writeAttribute("name", QString::fromStdString(this->name));
     stream.writeAttribute("nextid", QString::number(this->nextId));
+    stream.writeAttribute("finished", QString::number(this->finished));
 
     for (Block* block : blockScheme)
     {
@@ -369,13 +370,6 @@ Block* Scheme::getBlockById(int id)
 
 void Scheme::revert()
 {
-    // --- Check if executed ---
-    if(!this->readOnly)
-    {
-        QMessageBox::critical(0, "Reverting error", "Nothing to revert. Scheme wasn't executed yet.");
-        return;
-    }
-
     // --- Reset all ports values ---
     for (Block* block : this->blockScheme)
     {
@@ -397,4 +391,27 @@ void Scheme::revert()
 
     // --- Success dialog ---
     QMessageBox::information(0, "Reverting", "Scheme was successfuly reverted.");
+}
+
+void Scheme::setFinished(bool newFinished)
+{
+    this->finished = newFinished;
+
+    if(newFinished == false)
+        this->readOnly = false;
+}
+
+void Scheme::setNextId(int newNextId)
+{
+    this->nextId = newNextId;
+}
+
+void Scheme::setName(string newName)
+{
+    this->name = newName;
+}
+
+string Scheme::getName()
+{
+    return this->name;
 }

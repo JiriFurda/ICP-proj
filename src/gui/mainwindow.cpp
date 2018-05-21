@@ -183,6 +183,14 @@ bool MainWindow::loadFromFile(QString path)
     if(schemeNode == nullptr)
         return this->showOpeningError("Scheme node not found");
 
+    int nextId;
+    schemeNode->QueryIntAttribute("nextid", &nextId);
+    this->backendScheme->setNextId(nextId);
+
+    bool finished;
+    schemeNode->QueryBoolAttribute("finished", &finished);
+    this->backendScheme->setFinished(finished);
+
 
     // --- <block> nodes ---
     for (tinyxml2::XMLElement* blockNode = schemeNode->FirstChildElement("block"); blockNode != NULL; blockNode = blockNode->NextSiblingElement("block"))

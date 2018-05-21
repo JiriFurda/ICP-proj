@@ -62,7 +62,7 @@ SOURCES       = main.cpp \
 		blocks/port.cpp \
 		blocks/scheme.cpp \
 		blocks/blockComplex.cpp \
-		blocks/tinyxml2.cpp qrc_imagesresource.cpp \
+		../lib/tinyxml2.cpp qrc_imagesresource.cpp \
 		moc_mainwindow.cpp \
 		moc_aboutdialog.cpp \
 		moc_addblockdialog.cpp \
@@ -157,7 +157,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		blocks/port.h \
 		blocks/scheme.h \
 		blocks/blockComplex.h \
-		blocks/tinyxml2.h main.cpp \
+		../lib/tinyxml2.h main.cpp \
 		gui/mainwindow.cpp \
 		gui/schemescene.cpp \
 		gui/aboutdialog.cpp \
@@ -171,7 +171,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		blocks/port.cpp \
 		blocks/scheme.cpp \
 		blocks/blockComplex.cpp \
-		blocks/tinyxml2.cpp
+		../lib/tinyxml2.cpp
 QMAKE_TARGET  = blockeditor
 DESTDIR       = ../#avoid trailing-slash linebreak
 TARGET        = ../blockeditor
@@ -343,8 +343,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents gui/imagesresource.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents gui/mainwindow.h gui/schemescene.h gui/aboutdialog.h gui/addblockdialog.h gui/blockgraphicitem.h gui/connectionlineitem.h gui/creditsdialog.h blocks/block.h blocks/blockArithmetic.h blocks/blockLogic.h blocks/port.h blocks/scheme.h blocks/blockComplex.h blocks/tinyxml2.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp gui/mainwindow.cpp gui/schemescene.cpp gui/aboutdialog.cpp gui/addblockdialog.cpp gui/blockgraphicitem.cpp gui/connectionlineitem.cpp gui/creditsdialog.cpp blocks/block.cpp blocks/blockArithmetic.cpp blocks/blockLogic.cpp blocks/port.cpp blocks/scheme.cpp blocks/blockComplex.cpp blocks/tinyxml2.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents gui/mainwindow.h gui/schemescene.h gui/aboutdialog.h gui/addblockdialog.h gui/blockgraphicitem.h gui/connectionlineitem.h gui/creditsdialog.h blocks/block.h blocks/blockArithmetic.h blocks/blockLogic.h blocks/port.h blocks/scheme.h blocks/blockComplex.h ../lib/tinyxml2.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp gui/mainwindow.cpp gui/schemescene.cpp gui/aboutdialog.cpp gui/addblockdialog.cpp gui/blockgraphicitem.cpp gui/connectionlineitem.cpp gui/creditsdialog.cpp blocks/block.cpp blocks/blockArithmetic.cpp blocks/blockLogic.cpp blocks/port.cpp blocks/scheme.cpp blocks/blockComplex.cpp ../lib/tinyxml2.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents gui/mainwindow.ui gui/aboutdialog.ui gui/creditsdialog.ui $(DISTDIR)/
 
 
@@ -405,7 +405,7 @@ moc_mainwindow.cpp: gui/aboutdialog.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
 		blocks/blockLogic.h \
-		blocks/tinyxml2.h \
+		../lib/tinyxml2.h \
 		gui/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/furdys/VUT/2018summer/ICP-proj/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include gui/mainwindow.h -o moc_mainwindow.cpp
 
@@ -455,7 +455,7 @@ main.o: main.cpp gui/mainwindow.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
 		blocks/blockLogic.h \
-		blocks/tinyxml2.h
+		../lib/tinyxml2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: gui/mainwindow.cpp gui/mainwindow.h \
@@ -471,7 +471,7 @@ mainwindow.o: gui/mainwindow.cpp gui/mainwindow.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
 		blocks/blockLogic.h \
-		blocks/tinyxml2.h \
+		../lib/tinyxml2.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o gui/mainwindow.cpp
 
@@ -542,8 +542,7 @@ scheme.o: blocks/scheme.cpp blocks/scheme.h \
 		gui/connectionlineitem.h \
 		blocks/blockArithmetic.h \
 		blocks/blockComplex.h \
-		blocks/blockLogic.h \
-		blocks/tinyxml2.h
+		blocks/blockLogic.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o scheme.o blocks/scheme.cpp
 
 blockComplex.o: blocks/blockComplex.cpp blocks/blockComplex.h \
@@ -554,8 +553,8 @@ blockComplex.o: blocks/blockComplex.cpp blocks/blockComplex.h \
 		gui/connectionlineitem.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o blockComplex.o blocks/blockComplex.cpp
 
-tinyxml2.o: blocks/tinyxml2.cpp blocks/tinyxml2.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tinyxml2.o blocks/tinyxml2.cpp
+tinyxml2.o: ../lib/tinyxml2.cpp ../lib/tinyxml2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tinyxml2.o ../lib/tinyxml2.cpp
 
 qrc_imagesresource.o: qrc_imagesresource.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_imagesresource.o qrc_imagesresource.cpp

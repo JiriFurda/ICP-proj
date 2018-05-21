@@ -24,6 +24,9 @@
 // Backend headers
 #include "blocks/scheme.h"
 
+// Libraries
+#include "../lib/tinyxml2.h"
+
 namespace Ui {
 class MainWindow;
 }

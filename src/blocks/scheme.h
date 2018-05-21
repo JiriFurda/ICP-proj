@@ -28,8 +28,6 @@
 #include <QXmlStreamWriter>
 #include <QFile>
 
-#include "tinyxml2.h"
-
 using namespace std;
 
 
@@ -79,6 +77,11 @@ class Scheme
          * @brief revert reverts Scheme to pre-execute state.
          */
         void revert();
+
+        void setFinished(bool newFinished);
+        void setNextId(int newNextId);
+        void setName(string newName);
+        string getName();
 
 	private:
         Block* searchUserDependentBlocks();
