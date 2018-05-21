@@ -91,6 +91,7 @@ Block* MainWindow::createBlock(QString name)
 
     new BlockGraphicItem(this->scene, name, block);
     this->backendScheme->addBlock(block);   // @todo Temporary, should be in SchemeScene
+    this->backendScheme->setFinished(false);
 
     return block;
 }

@@ -214,8 +214,8 @@ Block* Scheme::searchUserDependentBlocks()  // Returns block to store pointer to
                         else
                         {
                             QMessageBox::critical(0, "Error inserting value", "Execution failed. \nValue was not inserted.");
-                            this->finished = true;
                             block->GUIobject->unhighlight();
+                            this->revert();
                             return NULL;
                         }
 					}

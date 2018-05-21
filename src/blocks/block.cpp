@@ -45,7 +45,7 @@ void Block::execute()
 {
 	if (executed)
 	{
-		cerr << "Block::execute(): Found loop\n";
+        return;
 	}
 
 	executeSpecific();
