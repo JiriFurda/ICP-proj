@@ -126,6 +126,11 @@ class Port
          */
         bool isOutputType();
 
+        /**
+         * @brief reset is method used to reset values to default on this Port
+         */
+        void reset();
+
 	protected:
 		map<string, double> content;
 	private:

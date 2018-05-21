@@ -86,22 +86,26 @@ class Block
          */
 		Port* getOutputPort(int index);
 
+        void setId(int id);
+        int getId();
+
         virtual ~Block() {};    /// @brief Destructor of this class.
         void setPorts();    /// @brief setPorts is method that sets ownerBlock to every Port owned by the block.
         vector<Port>getInputPorts();    /// @brief getInputPorts is method returning vector of the block's input Ports.
         vector<Port>getOutputPorts();   /// @brief getInputPorts is method returning vector of the block's output Ports.
         bool wasExecuted(); /// @brief wasExecuted is method returning bool value indicating if the block was already executed.
+        void resetExecuted(); /// @brief resetExecuted is method setting bool value indicating if the block was already executed to false.
         QString printPorts();   /// @brief printPorts is method used by GUI to print the block's Ports and it's values.
         vector<Port> inputPorts;    /// @brief Vector containing the block's input Ports
+        vector<Port> outputPorts;   /// @brief Vector containing the block's output Ports
         void linkGUIobject(BlockGraphicItem *GUIobject);    /// @brief linkGUIobject is method used by GUI to link the backend block to GUI block.
         BlockGraphicItem *GUIobject;    /// @brief Pointer to GUI block.
         bool deleted;   /// @brief Bool value indicating if this block was removed from the scheme.
-
     protected:
 
 	private:
-		vector<Port> outputPorts;
 		bool executed = false;
+        int id;
 };
 
 

@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     blocks/blockLogic.cpp \
     blocks/port.cpp \
     blocks/scheme.cpp \
-    blocks/blockComplex.cpp
+    blocks/blockComplex.cpp \
+    ../lib/tinyxml2.cpp \
 
 HEADERS  += gui/mainwindow.h \
     gui/schemescene.h \
@@ -40,7 +41,8 @@ HEADERS  += gui/mainwindow.h \
     blocks/blockLogic.h \
     blocks/port.h \
     blocks/scheme.h \
-    blocks/blockComplex.h
+    blocks/blockComplex.h \
+    ../lib/tinyxml2.h \
 
 FORMS    += gui/mainwindow.ui \
 			gui/aboutdialog.ui \

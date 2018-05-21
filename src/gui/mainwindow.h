@@ -24,6 +24,9 @@
 // Backend headers
 #include "blocks/scheme.h"
 
+// Libraries
+#include "../lib/tinyxml2.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -63,16 +66,21 @@ private slots:
     void on_actionExit_connection_mode_triggered();
     void on_actionRename_file_triggered();
 
+    void on_actionRevert_triggered();
+
 public slots:
     /**
      * @brief createBlock is slot used to create new block on the scheme.
      * @param QString determining type of new block.
      */
-    void createBlock(QString);
+    Block* createBlock(QString);
 
 private:
     Ui::MainWindow *ui;
     SchemeScene *scene;
+    bool loadFromFile(QString path);
+    QGraphicsView *view;
+    bool showOpeningError(string msg);
 
 
 };
