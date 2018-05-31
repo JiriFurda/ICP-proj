@@ -16,7 +16,7 @@ build-*
 *.ignore
 ignore
 
-# IPP relevant
+# ICP relevant
 xfurda00-xhavan00.zip
 doc/*
 

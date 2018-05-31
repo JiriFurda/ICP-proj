@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scheme name="Unnamed scheme" nextid="5" finished="0">
+    <block type="Add" id="1" x="-22" y="117">
+        <input>
+            <port>
+                <value name="float">nan</value>
+            </port>
+            <port>
+                <value name="float">nan</value>
+            </port>
+        </input>
+        <output>
+            <port>
+                <value name="float">nan</value>
+            </port>
+        </output>
+    </block>
+    <block type="Sub" id="2" x="240" y="-20">
+        <input>
+            <port connectedblock="3">
+                <value name="float">nan</value>
+            </port>
+            <port connectedblock="1">
+                <value name="float">nan</value>
+            </port>
+        </input>
+        <output>
+            <port>
+                <value name="float">nan</value>
+            </port>
+        </output>
+    </block>
+    <block type="Mul" id="3" x="-24" y="-173">
+        <input>
+            <port>
+                <value name="float">nan</value>
+            </port>
+            <port>
+                <value name="float">nan</value>
+            </port>
+        </input>
+        <output>
+            <port>
+                <value name="float">nan</value>
+            </port>
+        </output>
+    </block>
+    <block type="Div" id="4" x="555" y="-20">
+        <input>
+            <port connectedblock="2">
+                <value name="float">nan</value>
+            </port>
+            <port>
+                <value name="float">nan</value>
+            </port>
+        </input>
+        <output>
+            <port>
+                <value name="float">nan</value>
+            </port>
+        </output>
+    </block>
+</scheme>
