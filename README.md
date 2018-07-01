@@ -1,7 +1,7 @@
 # Block Editor (ICP project)
 Bachelor study at FIT VUT Brno  
 4th semester - summer 2018  
-Subject: **	The C++ Programming Language (ICP)**
+Subject: **The C++ Programming Language (ICP)**
 
 Similar project: *[Java Block Editor](https://github.com/Furdys/IJA-proj)*
 
